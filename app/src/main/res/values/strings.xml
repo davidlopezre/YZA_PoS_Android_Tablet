@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">YZA POS</string>
+    <string name="new_transaction">New Transaction</string>
+    <string name="view_transaction">View Transaction</string>
+    <string name="admin">Admin</string>
+    <string name="generate_report">Generate Report</string>
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="del">Delete</string>
 </resources>
