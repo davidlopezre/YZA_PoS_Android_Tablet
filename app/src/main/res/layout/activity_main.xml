@@ -28,7 +28,8 @@
             android:layout_height="250dp"
             android:background="@drawable/main_buttons"
             android:drawableTop="@drawable/ic_create_transaction"
-            android:paddingTop="40dp" />
+            android:paddingTop="40dp"
+            android:onClick="newTransaction"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +76,8 @@
             android:layout_height="250dp"
             android:background="@drawable/main_buttons"
             android:drawableTop="@drawable/ic_admin"
-            android:paddingTop="40dp"/>
+            android:paddingTop="40dp"
+            android:onClick="admin"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

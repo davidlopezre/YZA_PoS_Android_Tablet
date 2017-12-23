@@ -13,4 +13,9 @@
     <string name="products">Products</string>
     <string name="product_categories">Product Categories</string>
     <string name="view">View</string>
+    <string name="view_products">View Products</string>
+    <string name="print">Print</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
