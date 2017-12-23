@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/product_navigation_menu_item"
+        android:title="@string/products" />
+    <item
+        android:id="@+id/category_navigation_menu_item"
+        android:title="@string/product_categories" />
+    <item
+        android:id="@+id/staff_navigation_menu_item"
+        android:title="@string/staff" />
+</menu>
