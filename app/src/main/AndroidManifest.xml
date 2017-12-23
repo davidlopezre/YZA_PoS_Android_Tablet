@@ -34,10 +34,10 @@
             android:name=".ProductActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AdminLoginActivity"
+            android:name=".adminlogin.AdminLoginActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".AdminOptionsActivity"
+            android:name=".adminoptions.AdminOptionsActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ViewTransactionActivity"

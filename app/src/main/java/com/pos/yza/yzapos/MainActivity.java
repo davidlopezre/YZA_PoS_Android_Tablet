@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

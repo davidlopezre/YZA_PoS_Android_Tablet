@@ -1,13 +1,17 @@
-package com.pos.yza.yzapos;
+package com.pos.yza.yzapos.adminoptions;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity {
 
@@ -32,6 +36,26 @@ public class AdminOptionsActivity extends AppCompatActivity {
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+
+        AdminOptionsFragment adminOptionsFragment =
+                (AdminOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (adminOptionsFragment == null) {
+            // Create the fragment
+            adminOptionsFragment = AdminOptionsFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(
+                    getSupportFragmentManager(), adminOptionsFragment, R.id.contentFrame);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Open the navigation drawer when the home icon is selected from the toolbar.
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminOptionsActivity"
+    tools:context=".adminoptions.AdminOptionsActivity"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -36,14 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <!--<android.support.design.widget.FloatingActionButton-->
-                <!--android:id="@+id/fab_add_task"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_add"-->
-                <!--app:fabSize="normal"-->
-                <!--app:layout_anchor="@id/contentFrame"-->
-                <!--app:layout_anchorGravity="bottom|right|end" />-->
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                app:fabSize="normal"
+                app:layout_anchor="@id/contentFrame"
+                app:layout_anchorGravity="bottom|right|end" />
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
