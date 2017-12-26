@@ -11,11 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.DataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity {
 
+    private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
+
     private DrawerLayout mDrawerLayout;
+
+    private AdminOptionsPresenter mPresenter;
+
+    private DataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,19 @@ public class AdminOptionsActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), adminOptionsFragment, R.id.contentFrame);
         }
+
+        // Create the presenter
+        mPresenter = new AdminOptionsPresenter(datasource ,adminOptionsFragment);
+
+        if (savedInstanceState != null){
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(CURRENT_FILTERING_KEY, mPresenter.getFiltering());
+        super.onSaveInstanceState(outState);
     }
 
     @Override

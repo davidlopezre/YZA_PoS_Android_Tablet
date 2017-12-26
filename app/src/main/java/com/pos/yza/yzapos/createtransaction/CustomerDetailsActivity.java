@@ -1,7 +1,9 @@
-package com.pos.yza.yzapos;
+package com.pos.yza.yzapos.createtransaction;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.pos.yza.yzapos.R;
 
 public class CustomerDetailsActivity extends AppCompatActivity {
 

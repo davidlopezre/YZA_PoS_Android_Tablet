@@ -19,19 +19,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewTransactionActivity"
+            android:name=".createtransaction.NewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".CustomerDetailsActivity"
+            android:name=".createtransaction.CustomerDetailsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".createtransaction.PaymentActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ProductCategoryActivity"
+            android:name=".createtransaction.ProductCategoryActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ProductActivity"
+            android:name=".createtransaction.ProductActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".adminlogin.AdminLoginActivity"

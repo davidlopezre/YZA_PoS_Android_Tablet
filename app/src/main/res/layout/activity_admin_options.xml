@@ -26,9 +26,14 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.AppBarLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
-            android:layout_width="match_parent"
+            android:layout_width="600dp"
             android:layout_height="match_parent">
 
             <FrameLayout
@@ -40,12 +45,17 @@
                 android:id="@+id/fab_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/ic_add2"
+                app:backgroundTint="@color/colorAdd"
                 app:fabSize="normal"
                 app:layout_anchor="@id/contentFrame"
                 app:layout_anchorGravity="bottom|right|end" />
         </android.support.design.widget.CoordinatorLayout>
-
+            <FrameLayout
+                android:layout_width="500dp"
+                android:layout_height="match_parent">
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Navigation Drawer -->
