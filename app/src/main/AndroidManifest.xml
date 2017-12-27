@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pos.yza.yzapos">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -43,7 +45,8 @@
             android:name=".ViewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewProductsActivity" />
-        <activity android:name=".manageproduct.ManageProductActivity"></activity>
+        <activity android:name=".CreateItemActivity" />
+        <activity android:name=".addproduct.AddProductActivity"></activity>
     </application>
 
 </manifest>

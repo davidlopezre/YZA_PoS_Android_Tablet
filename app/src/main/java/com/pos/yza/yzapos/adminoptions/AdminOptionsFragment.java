@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.Product;
+import com.pos.yza.yzapos.util.ActivityUtils;
 
 import java.util.List;
 
@@ -63,6 +64,7 @@ public class AdminOptionsFragment extends Fragment implements AdminOptionsContra
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                assert(mPresenter != null);
                 mPresenter.addNewProduct();
             }
         });
@@ -86,6 +88,17 @@ public class AdminOptionsFragment extends Fragment implements AdminOptionsContra
 
     @Override
     public void showAddProduct() {
+//        Bundle bundle = new Bundle();
+//        AddProductFragment addProductFragment =
+//                (AddProductFragment) getActivity().getSupportFragmentManager().
+//                        findFragmentById(R.id.frame_add);
+//        if (addProductFragment == null) {
+//            // Create the fragment
+//            addProductFragment = addProductFragment.newInstance();
+//            ActivityUtils.addFragmentToActivity(
+//                    getActivity().getSupportFragmentManager(), addProductFragment, R.id.frame_add);
+//        }
+
 
     }
 

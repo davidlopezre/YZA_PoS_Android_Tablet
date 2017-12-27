@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.DataSource;
+import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity {
@@ -22,7 +21,7 @@ public class AdminOptionsActivity extends AppCompatActivity {
 
     private AdminOptionsPresenter mPresenter;
 
-    private DataSource mDataSource;
+    private AdminOptionsDataSource mAdminOptionsDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class AdminOptionsActivity extends AppCompatActivity {
         }
 
         // Create the presenter
-        mPresenter = new AdminOptionsPresenter(datasource ,adminOptionsFragment);
+        mPresenter = new AdminOptionsPresenter(mAdminOptionsDataSource,adminOptionsFragment);
 
         if (savedInstanceState != null){
 
@@ -63,7 +62,7 @@ public class AdminOptionsActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CURRENT_FILTERING_KEY, mPresenter.getFiltering());
+//        outState.putSerializable(CURRENT_FILTERING_KEY, mPresenter.getFiltering());
         super.onSaveInstanceState(outState);
     }
 

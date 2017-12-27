@@ -2,7 +2,7 @@ package com.pos.yza.yzapos.adminoptions;
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.data.DataSource;
+import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 
 /**
  * Created by Dlolpez on 23/12/17.
@@ -12,11 +12,11 @@ public class AdminOptionsPresenter implements AdminOptionsContract.Presenter {
 
     private final AdminOptionsContract.View mAdminOptionsView;
 
-    private final DataSource mDataSource;
+    private final AdminOptionsDataSource mAdminOptionsDataSource;
 
-    public AdminOptionsPresenter(@NonNull DataSource dataSource,
+    public AdminOptionsPresenter(@NonNull AdminOptionsDataSource adminOptionsDataSource,
                                  @NonNull AdminOptionsContract.View view){
-        mDataSource = dataSource;
+        mAdminOptionsDataSource = adminOptionsDataSource;
         mAdminOptionsView = view;
 
         mAdminOptionsView.setPresenter(this);
@@ -34,7 +34,7 @@ public class AdminOptionsPresenter implements AdminOptionsContract.Presenter {
 
     @Override
     public void addNewProduct() {
-
+        mAdminOptionsView.showAddProduct();
     }
 
     @Override
