@@ -7,6 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
 
 import org.json.JSONArray;
 import org.json.JSONException;

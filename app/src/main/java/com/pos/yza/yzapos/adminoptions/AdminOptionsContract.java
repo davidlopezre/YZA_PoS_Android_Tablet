@@ -1,6 +1,6 @@
 package com.pos.yza.yzapos.adminoptions;
 
-import com.pos.yza.yzapos.data.Product;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.util.BasePresenter;
 import com.pos.yza.yzapos.util.BaseView;
 

@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,8 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.Product;
-import com.pos.yza.yzapos.util.ActivityUtils;
+import com.pos.yza.yzapos.data.representations.Product;
 
 import java.util.List;
 

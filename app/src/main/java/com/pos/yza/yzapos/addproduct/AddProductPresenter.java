@@ -2,8 +2,6 @@ package com.pos.yza.yzapos.addproduct;
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.data.Product;
-
 /**
  * Created by Dlolpez on 27/12/17.
  */

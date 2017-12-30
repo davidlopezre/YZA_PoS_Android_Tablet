@@ -1,13 +1,14 @@
-package com.pos.yza.yzapos.data;
+package com.pos.yza.yzapos.data.representations;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by Dlolpez on 26/12/17.
  */
 
-public final class Product {
+public final class Product implements Item {
     Double unitPrice;
     String unitMeasure;
     HashMap<String, String> propertyMap;
@@ -35,6 +36,16 @@ public final class Product {
 
     public HashMap<String, String> getPropertyMap() {
         return propertyMap;
+    }
+
+    @Override
+    public List<String> showEditableFields() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 }
 

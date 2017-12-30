@@ -8,7 +8,7 @@ import android.view.View;
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.createtransaction.NewTransactionActivity;
 import com.pos.yza.yzapos.data.AdminOptionsDataSource;
-import com.pos.yza.yzapos.data.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.RequestHandler;
 
 import java.util.ArrayList;
