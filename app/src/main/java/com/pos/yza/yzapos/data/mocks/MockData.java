@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 
 public class MockData {
-    public ArrayList<Product> getMockProducts() {
+    public static ArrayList<Product> getMockProducts() {
         ArrayList<Product> products = new ArrayList<Product>();
         products.add(new Product(3.5, "kg", "Paper"));
         products.add(new Product(18.0, "kg", "Paper"));
@@ -21,7 +21,7 @@ public class MockData {
         return products;
     }
 
-    public ArrayList<ProductCategory> getMockCategories() {
+    public static ArrayList<ProductCategory> getMockCategories() {
         ArrayList<ProductCategory> categories = new ArrayList<ProductCategory>();
         ArrayList<String> properties_1 =
                 new ArrayList<String>( Arrays.asList("Color", "Type", "Size", "Thickness"));

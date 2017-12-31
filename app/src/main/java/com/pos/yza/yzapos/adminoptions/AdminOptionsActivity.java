@@ -7,9 +7,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
+import com.pos.yza.yzapos.adminoptions.item.ItemListPresenter;
 import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
@@ -19,7 +22,7 @@ public class AdminOptionsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
-    private AdminOptionsPresenter mPresenter;
+    private ItemListPresenter mPresenter;
 
     private AdminOptionsDataSource mAdminOptionsDataSource;
 
@@ -43,17 +46,17 @@ public class AdminOptionsActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        AdminOptionsFragment adminOptionsFragment =
-                (AdminOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (adminOptionsFragment == null) {
+        ItemListFragment itemListFragment =
+                (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (itemListFragment == null) {
             // Create the fragment
-            adminOptionsFragment = AdminOptionsFragment.newInstance();
+                itemListFragment = ItemListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), adminOptionsFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame);
         }
 
         // Create the presenter
-        mPresenter = new AdminOptionsPresenter(mAdminOptionsDataSource,adminOptionsFragment);
+        mPresenter = new ItemListPresenter(mAdminOptionsDataSource,itemListFragment);
 
         if (savedInstanceState != null){
 
@@ -64,6 +67,13 @@ public class AdminOptionsActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
 //        outState.putSerializable(CURRENT_FILTERING_KEY, mPresenter.getFiltering());
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_actions, menu);
+        return true;
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ItemListContract {
     interface View extends BaseView<Presenter> {
-        void showItem(List<Item> items);
+        void showItems(List<Item> items);
         void showItemDetailsUi(String itemId);
         void showFilteringPopUpMenu();
         void showAddItem();

@@ -1,109 +1,171 @@
 package com.pos.yza.yzapos.adminoptions.item;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.mocks.MockData;
+import com.pos.yza.yzapos.data.representations.Item;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ItemListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ItemListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ItemListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ItemListFragment extends Fragment implements ItemListContract.View {
+    private ItemAdapter mListAdapter;
+    private ItemListContract.Presenter mPresenter;
 
-    private OnFragmentInteractionListener mListener;
+    public ItemListFragment(){
 
-    public ItemListFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ItemListFragment newInstance(String param1, String param2) {
-        ItemListFragment fragment = new ItemListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ItemListFragment newInstance(){
+        return new ItemListFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mListAdapter = new ItemAdapter(new ArrayList<Item>(MockData.getMockProducts()),
+                mItemListener);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
+    public void setPresenter(@NonNull ItemListContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item, container, false);
-    }
+                             Bundle savedInstanceState){
+        View root = inflater.inflate(R.layout.fragment_admin_options, container,
+                false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        // Set up the items view
+        ListView listView = (ListView) root.findViewById(R.id.list_view);
+        listView.setAdapter(mListAdapter);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_add);
+        fab.setImageResource(R.drawable.ic_add2);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                assert(mPresenter != null);
+                mPresenter.addNewItem();
+            }
+        });
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
+
+        return root;
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Listener for clicks on items in the ListView
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+    ItemListener mItemListener = new ItemListener() {
+        @Override
+        public void onItemClick(Item clickedItem) {
+            Log.i("Item", "clicked" + clickedItem.getTitleForList());
+        }
+    };
+
+    @Override
+    public void showItems(List<Item> items) {
+
+    }
+
+    @Override
+    public void showItemDetailsUi(String itemId) {
+
+    }
+
+    @Override
+    public void showFilteringPopUpMenu() {
+
+    }
+
+    @Override
+    public void showAddItem() {
+
+
+    }
+
+    @Override
+    public void showEditItem() {
+
+    }
+
+    private static class ItemAdapter extends BaseAdapter {
+
+        private List<Item> mItems;
+        private ItemListener mItemListener;
+
+        public ItemAdapter(List<Item> items, ItemListener itemListener) {
+            this.mItems = items;
+            this.mItemListener = itemListener;
+        }
+
+        @Override
+        public int getCount() {
+            return mItems.size();
+        }
+
+        @Override
+        public Item getItem(int i) {
+            return mItems.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View rowView = view;
+            if (rowView == null) {
+                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                rowView = inflater.inflate(R.layout.list_item,
+                        viewGroup, false);
+            }
+            final Item item = getItem(i);
+
+            TextView titleTV = (TextView) rowView.findViewById(R.id.title);
+            titleTV.setText(item.getTitleForList());
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mItemListener.onItemClick(item);
+                }
+            });
+
+            return rowView;
+        }
+    }
+
+    public interface ItemListener {
+        void onItemClick(Item clickedItem);
     }
 }

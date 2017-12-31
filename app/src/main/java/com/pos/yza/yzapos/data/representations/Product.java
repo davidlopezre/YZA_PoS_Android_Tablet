@@ -44,8 +44,8 @@ public final class Product implements Item {
     }
 
     @Override
-    public String getDescription() {
-        return null;
+    public String getTitleForList() {
+        return category + Double.toString(unitPrice) + unitMeasure;
     }
 }
 

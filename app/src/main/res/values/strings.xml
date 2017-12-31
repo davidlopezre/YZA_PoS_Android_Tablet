@@ -15,9 +15,16 @@
     <string name="view">View</string>
     <string name="view_products">View Products</string>
     <string name="print">Print</string>
+    <string name="choose_category">Choose Category</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="apirootlocal">http://localhost:8000</string>
     <string name="apirootcloud">http://35.197.185.80:8000</string>
+
+    <string-array name="spinner_example">
+        <item>Paper</item>
+        <item>Sticker</item>
+        <item>Tarpaulin</item>
+    </string-array>
 </resources>
