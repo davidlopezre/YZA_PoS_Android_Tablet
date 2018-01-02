@@ -2,7 +2,6 @@ package com.pos.yza.yzapos.adminoptions.item;
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.adminoptions.AdminOptionsContract;
 import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 
 /**

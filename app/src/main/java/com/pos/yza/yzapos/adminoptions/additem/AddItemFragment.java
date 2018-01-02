@@ -1,58 +1,42 @@
-package com.pos.yza.yzapos.adminoptions.item;
+package com.pos.yza.yzapos.adminoptions.additem;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
 import com.pos.yza.yzapos.data.mocks.MockData;
 import com.pos.yza.yzapos.data.representations.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListFragment extends Fragment implements ItemListContract.View {
-    private ItemAdapter mListAdapter;
-    private ItemListContract.Presenter mPresenter;
+public class AddItemFragment extends DialogFragment implements AddItemContract.View {
+    private AddItemContract.Presenter mPresenter;
 
-    private ItemListListener listener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            listener = (ItemListListener) context;
-        } catch (ClassCastException castException) {
-            /** The activity does not implement the listener. */
-        }
-    }
-
-    public ItemListFragment(){
+    public AddItemFragment(){
 
     }
 
-    public static ItemListFragment newInstance(){
-        return new ItemListFragment();
+    public static AddItemFragment newInstance(){
+        return new AddItemFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<Item>(MockData.getMockProducts()),
-                mItemListener);
     }
 
     @Override
@@ -62,7 +46,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void setPresenter(@NonNull ItemListContract.Presenter presenter) {
+    public void setPresenter(@NonNull AddItemContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -70,23 +54,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_admin_options, container,
+        View root = inflater.inflate(R.layout.fragment_add_item, container,
                 false);
-
-        // Set up the items view
-        ListView listView = (ListView) root.findViewById(R.id.list_view);
-        listView.setAdapter(mListAdapter);
-
-        FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_add);
-        fab.setImageResource(R.drawable.ic_add2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                assert(mPresenter != null);
-                mPresenter.addNewItem();
-            }
-        });
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
 
@@ -105,29 +74,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     };
 
     @Override
-    public void showItems(List<Item> items) {
+    public void showItemProperties() {
 
     }
 
-    @Override
-    public void showItemDetailsUi(String itemId) {
-
-    }
-
-    @Override
-    public void showFilteringPopUpMenu() {
-
-    }
-
-    @Override
-    public void showAddItem() {
-        listener.addItem();
-    }
-
-    @Override
-    public void showEditItem() {
-
-    }
 
     private static class ItemAdapter extends BaseAdapter {
 
@@ -180,9 +130,5 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     public interface ItemListener {
         void onItemClick(Item clickedItem);
-    }
-
-    public interface ItemListListener{
-        public void addItem();
     }
 }

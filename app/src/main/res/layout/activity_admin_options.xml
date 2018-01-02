@@ -49,6 +49,7 @@
                 app:layout_anchorGravity="bottom|right|end" />
         </android.support.design.widget.CoordinatorLayout>
             <FrameLayout
+                android:id="@+id/contentFrameRight"
                 android:layout_width="500dp"
                 android:layout_height="match_parent">
             </FrameLayout>

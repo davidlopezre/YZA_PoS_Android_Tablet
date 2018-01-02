@@ -27,4 +27,6 @@
         <item>Sticker</item>
         <item>Tarpaulin</item>
     </string-array>
+    <string name="unit_of_measure">Unit of measure</string>
+    <string name="unit_price">Unit price</string>
 </resources>
