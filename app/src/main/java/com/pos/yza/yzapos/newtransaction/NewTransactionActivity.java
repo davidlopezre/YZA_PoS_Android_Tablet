@@ -1,15 +1,15 @@
-package com.pos.yza.yzapos.createtransaction;
+package com.pos.yza.yzapos.newtransaction;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.pos.yza.yzapos.R;
 
-public class ProductActivity extends AppCompatActivity {
+public class NewTransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
+        setContentView(R.layout.fragment_cart);
     }
 }

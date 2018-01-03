@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.createtransaction;
+package com.pos.yza.yzapos.newtransaction;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +10,6 @@ public class CustomerDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_details);
+        setContentView(R.layout.fragment_customer);
     }
 }

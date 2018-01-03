@@ -29,4 +29,14 @@
     </string-array>
     <string name="unit_of_measure">Unit of measure</string>
     <string name="unit_price">Unit price</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="contact">Contact</string>
+    <string name="total_due">Total due</string>
+    <string name="mode_of_payment">Mode of payment</string>
+    <string name="payment_details">Payment details</string>
+    <string name="amount_paid">Amount paid</string>
+    <string name="confirm">confirm</string>
+    <string name="quantity">Quantity</string>
+    <string name="product_category">Product category</string>
 </resources>
