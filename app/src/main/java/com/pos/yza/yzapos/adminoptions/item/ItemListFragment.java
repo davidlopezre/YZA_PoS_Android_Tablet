@@ -10,19 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.data.mocks.MockData;
 import com.pos.yza.yzapos.data.representations.Item;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ItemListFragment extends Fragment implements ItemListContract.View {
     private ItemAdapter mListAdapter;
@@ -51,8 +52,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<Item>(MockData.getMockProducts()),
-                mItemListener);
+        mListAdapter = new ItemAdapter(new ArrayList<Item>(), mItemListener);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_admin_options, container,
+        View root = inflater.inflate(R.layout.fragment_item, container,
                 false);
 
         // Set up the items view
@@ -106,7 +106,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     @Override
     public void showItems(List<Item> items) {
-
+        mListAdapter.setList(items);
+        mListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -142,6 +143,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         @Override
         public int getCount() {
             return mItems.size();
+        }
+
+        public void setList(List<Item> items){
+            mItems = items;
         }
 
         @Override

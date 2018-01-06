@@ -2,8 +2,7 @@ package com.pos.yza.yzapos.adminoptions.additem;
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
-import com.pos.yza.yzapos.data.AdminOptionsDataSource;
+import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 
 /**
  * Created by Dlolpez on 31/12/17.
@@ -12,11 +11,11 @@ import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 public class AddItemPresenter implements AddItemContract.Presenter {
     private final AddItemContract.View mAddItemView;
 
-    private final AdminOptionsDataSource mAdminOptionsDataSource;
+    private final ProductsRemoteDataSource mProductsRemoteDataSource;
 
-    public AddItemPresenter(@NonNull AdminOptionsDataSource adminOptionsDataSource,
+    public AddItemPresenter(@NonNull ProductsRemoteDataSource productsRemoteDataSource,
                             @NonNull AddItemContract.View view){
-        mAdminOptionsDataSource = adminOptionsDataSource;
+        mProductsRemoteDataSource = productsRemoteDataSource;
         mAddItemView = view;
 
         mAddItemView.setPresenter(this);

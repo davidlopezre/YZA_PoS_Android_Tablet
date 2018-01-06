@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions;
 
-import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,12 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemFragment;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemPresenter;
 import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
 import com.pos.yza.yzapos.adminoptions.item.ItemListPresenter;
-import com.pos.yza.yzapos.data.AdminOptionsDataSource;
+import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity implements ItemListFragment.ItemListListener {
@@ -30,7 +30,7 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 
     private AddItemPresenter mAddItemPresenter;
 
-    private AdminOptionsDataSource mAdminOptionsDataSource;
+    private ProductsRemoteDataSource mProductsRemoteDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,8 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
         }
 
         // Create the presenter
-        mItemListPresenter = new ItemListPresenter(mAdminOptionsDataSource,itemListFragment);
+        mItemListPresenter = new ItemListPresenter(
+                Injection.provideProductsRepository(getApplicationContext()),itemListFragment);
 
         if (savedInstanceState != null){
 
@@ -139,7 +140,7 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 //        }
 
         // Create the presenter
-        mAddItemPresenter = new AddItemPresenter(mAdminOptionsDataSource,mAddItemFragment);
+        mAddItemPresenter = new AddItemPresenter(mProductsRemoteDataSource,mAddItemFragment);
     }
 
 }
