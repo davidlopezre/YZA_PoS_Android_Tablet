@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +60,19 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
                 false);
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
+
+        final EditText unitOfMeasure = (EditText) root.findViewById(R.id.unit_of_measure);
+        final EditText unitPrice = (EditText) root.findViewById(R.id.unit_price);
+
+
+        Button button = (Button) root.findViewById(R.id.button_add_item);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("button", "button pressed");
+                mPresenter.confirmItem(unitOfMeasure.getText().toString(), unitPrice.getText().toString());
+            }
+        });
 
         return root;
     }

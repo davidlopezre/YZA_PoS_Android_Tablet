@@ -113,7 +113,8 @@ public class ProductsRepository implements ProductsDataSource{
 
     @Override
     public void saveProduct(@NonNull Product product) {
-
+        Log.i("saveItem", "in repo");
+        mProductsRemoteDataSource.saveProduct(product);
     }
 
     @Override

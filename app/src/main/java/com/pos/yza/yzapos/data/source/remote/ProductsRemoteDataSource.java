@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
@@ -20,7 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -142,8 +146,65 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
     }
 
     @Override
-    public void saveProduct(@NonNull Product product) {
+    public void saveProduct(@NonNull final Product product) {
+        Log.i("saveItem", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT + PRODUCTS)
+                .buildUpon()
+                .build();
 
+//        StringRequest strRequest = new StringRequest(Request.Method.POST, builtUri.toString(),
+//                new Response.Listener<String>()
+//                {
+//                    @Override
+//                    public void onResponse(String response)
+//                    {
+//                        Log.i("success", "success");
+//                    }
+//                },
+//                new Response.ErrorListener()
+//                {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error)
+//                    {
+//                        Log.e("ERROR", "Error occurred ", error);
+//                    }
+//                })
+//        {
+//            @Override
+//            protected Map<String, String> getParams()
+//            {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("name", "test");
+//                params.put("unit_price", product.getUnitPrice().toString());
+//                params.put("unit_of_measure", product.getUnitMeasure());
+//                params.put("category", Integer.toString(1));
+//                params.put("properties", "");
+//                return params;
+//            }
+//        };
+//        addToRequestQueue(strRequest);
+//        Log.i("saveItem", "got to the end");
+
+        HashMap<String,String> params = new HashMap<String, String>();
+        params.put("name", "test");
+        params.put("unit_price", product.getUnitPrice().toString());
+        params.put("unit_of_measure", product.getUnitMeasure());
+        params.put("category", Integer.toString(1));
+        params.put("properties[]", "");
+
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, builtUri.toString(), new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("success", "success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERROR", "Error occurred ", error);
+            }
+        });
+        addToRequestQueue(jsObjRequest);
     }
 
     @Override

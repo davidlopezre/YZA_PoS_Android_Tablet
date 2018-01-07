@@ -140,7 +140,8 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 //        }
 
         // Create the presenter
-        mAddItemPresenter = new AddItemPresenter(mProductsRemoteDataSource,mAddItemFragment);
+        mAddItemPresenter = new AddItemPresenter(
+                Injection.provideProductsRepository(getApplicationContext()), mAddItemFragment);
     }
 
 }
