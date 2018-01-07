@@ -36,8 +36,8 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
     private static ProductsRemoteDataSource INSTANCE;
 
-    final String ROOT = "http://35.197.185.80:8000";
-    final String PRODUCTS = "/products/";
+    final String ROOT = "http://35.197.185.80:8000/";
+    final String PRODUCTS = "products/";
 
     private RequestQueue mRequestQueue;
 
@@ -152,41 +152,8 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                 .buildUpon()
                 .build();
 
-//        StringRequest strRequest = new StringRequest(Request.Method.POST, builtUri.toString(),
-//                new Response.Listener<String>()
-//                {
-//                    @Override
-//                    public void onResponse(String response)
-//                    {
-//                        Log.i("success", "success");
-//                    }
-//                },
-//                new Response.ErrorListener()
-//                {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error)
-//                    {
-//                        Log.e("ERROR", "Error occurred ", error);
-//                    }
-//                })
-//        {
-//            @Override
-//            protected Map<String, String> getParams()
-//            {
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("name", "test");
-//                params.put("unit_price", product.getUnitPrice().toString());
-//                params.put("unit_of_measure", product.getUnitMeasure());
-//                params.put("category", Integer.toString(1));
-//                params.put("properties", "");
-//                return params;
-//            }
-//        };
-//        addToRequestQueue(strRequest);
-//        Log.i("saveItem", "got to the end");
-
         HashMap<String,String> params = new HashMap<String, String>();
-        params.put("name", "test2");
+        params.put("name", "test3");
         params.put("unit_price", product.getUnitPrice().toString());
         params.put("unit_of_measure", product.getUnitMeasure());
         params.put("category", Integer.toString(1));
@@ -215,6 +182,9 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
             e.printStackTrace();
         }
 
+        HashMap<String, String> editMap = new HashMap<String, String>();
+        editMap.put("name", "FantasticEdit");
+        editProduct("4", editMap);
 
     }
 
@@ -230,6 +200,51 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
     @Override
     public void deleteProduct(@NonNull String productId) {
+        Log.i("deleteItem", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT + PRODUCTS + productId + "/")
+                .buildUpon()
+                .build();
 
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                Request.Method.DELETE, builtUri.toString(),
+                null,new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("success", "success");
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("ERROR", "Error occurred ", error);
+                }
+            });
+
+        addToRequestQueue(jsObjRequest);
+    }
+
+
+    // NOT YET WORKING! NEEDS REWORK ON THE SERVER
+    @Override
+    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits){
+        Log.i("editItem", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT + PRODUCTS + productId + "/")
+                .buildUpon()
+                .build();
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                Request.Method.PATCH, builtUri.toString(),
+                new JSONObject(edits),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("success", "success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERROR", "Error occurred ", error);
+            }
+        });
+
+        addToRequestQueue(jsObjRequest);
     }
 }

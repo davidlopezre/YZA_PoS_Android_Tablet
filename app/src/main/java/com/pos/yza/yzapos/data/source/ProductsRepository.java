@@ -11,6 +11,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -129,8 +130,13 @@ public class ProductsRepository implements ProductsDataSource{
 
     @Override
     public void deleteProduct(@NonNull String productId) {
-
+        Log.i("deleteItem", "in repo");
+        mProductsRemoteDataSource.deleteProduct(productId);
     }
 
+    @Override
+    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits){
+        mProductsRemoteDataSource.editProduct(productId, edits);
+    }
 
 }
