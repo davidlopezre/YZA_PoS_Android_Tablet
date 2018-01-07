@@ -37,7 +37,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
     private static ProductsRemoteDataSource INSTANCE;
 
     final String ROOT = "http://35.197.185.80:8000";
-    final String PRODUCTS = "/products";
+    final String PRODUCTS = "/products/";
 
     private RequestQueue mRequestQueue;
 
@@ -186,25 +186,36 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 //        Log.i("saveItem", "got to the end");
 
         HashMap<String,String> params = new HashMap<String, String>();
-        params.put("name", "test");
+        params.put("name", "test2");
         params.put("unit_price", product.getUnitPrice().toString());
         params.put("unit_of_measure", product.getUnitMeasure());
         params.put("category", Integer.toString(1));
-        params.put("properties[]", "");
+
+        try {
+            JSONObject paramsJson = new JSONObject(params);
+            paramsJson.put("properties", new JSONArray());
+
+            Log.i("saveItem", paramsJson.toString());
+
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
+                    builtUri.toString(), paramsJson, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("success", "success");
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("ERROR", "Error occurred ", error);
+                }
+            });
+            addToRequestQueue(jsObjRequest);
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
 
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, builtUri.toString(), new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("success", "success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR", "Error occurred ", error);
-            }
-        });
-        addToRequestQueue(jsObjRequest);
     }
 
     @Override
