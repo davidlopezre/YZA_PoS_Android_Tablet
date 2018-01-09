@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,7 +49,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<Item>(), mItemListener);
+        mListAdapter = new ItemAdapter(new ArrayList<Item>());
         mSpinnerAdapter =
                 new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_list_item_1);
@@ -99,17 +99,6 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         return root;
     }
 
-    /**
-     * Listener for clicks on items in the ListView
-     */
-
-    ItemListener mItemListener = new ItemListener() {
-        @Override
-        public void onItemClick(Item clickedItem) {
-            Log.i("Item", "clicked" + clickedItem.getName());
-        }
-    };
-
     @Override
     public void showItems(List<Item> items) {
         mListAdapter.setList(items);
@@ -136,14 +125,12 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
-    private static class ItemAdapter extends BaseAdapter {
+    private class ItemAdapter extends BaseAdapter {
 
         private List<Item> mItems;
-        private ItemListener mItemListener;
 
-        public ItemAdapter(List<Item> items, ItemListener itemListener) {
+        public ItemAdapter(List<Item> items) {
             this.mItems = items;
-            this.mItemListener = itemListener;
         }
 
         @Override
@@ -178,19 +165,17 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(item.getName());
 
-            rowView.setOnClickListener(new View.OnClickListener() {
+            ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mItemListener.onItemClick(item);
+                    mPresenter.deleteItem(item);
                 }
             });
 
+
             return rowView;
         }
-    }
-
-    public interface ItemListener {
-        void onItemClick(Item clickedItem);
     }
 
     public interface ItemListListener{

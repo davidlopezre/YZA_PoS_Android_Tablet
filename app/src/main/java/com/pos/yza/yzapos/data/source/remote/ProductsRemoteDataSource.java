@@ -105,10 +105,11 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
            for (int i = 0; i < response.length(); i++){
                try {
                    JSONObject object = response.getJSONObject(i);
+                   int id = object.getInt("product_id");
                    String name = object.getString("name");
                    Double unitPrice = object.getDouble("unit_price");
                    String unitOfMeasure = object.getString("unit_of_measure");
-                   products.add(new Product(unitPrice, unitOfMeasure, ""));
+                   products.add(new Product(id, unitPrice, unitOfMeasure, ""));
                    Log.d("requestTest", name);
                }catch (JSONException e) {
                    e.printStackTrace();

@@ -16,4 +16,9 @@ public class Staff implements Item {
     public String getName() {
         return null;
     }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
 }
