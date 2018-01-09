@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface Item {
     public List<String> showEditableFields();
-    public String getTitleForList();
+    public String getName();
 }

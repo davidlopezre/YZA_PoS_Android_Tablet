@@ -7,9 +7,9 @@ import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
-import com.pos.yza.yzapos.data.AdminOptionsDataSource;
+import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.RequestHandler;
+import com.pos.yza.yzapos.data.source.ProductsRepository;
 
 import java.util.ArrayList;
 
@@ -19,11 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ProductCategory category = new ProductCategory(2, new ArrayList<String>());
-        RequestHandler rh = RequestHandler.getInstance(this);
-        AdminOptionsDataSource dataSource = new AdminOptionsDataSource(rh);
-        dataSource.getProductsByCategory(category);
-
     }
 
     public void newTransaction(View view){

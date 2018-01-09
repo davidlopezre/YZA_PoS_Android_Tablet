@@ -30,9 +30,9 @@ public class MockData {
         ArrayList<String> properties_3 =
                 new ArrayList<String>();
 
-        categories.add(new ProductCategory(1, properties_1));
-        categories.add(new ProductCategory(2, properties_2));
-        categories.add(new ProductCategory(3, properties_3));
+        categories.add(new ProductCategory(1,"", properties_1));
+        categories.add(new ProductCategory(2, "", properties_2));
+        categories.add(new ProductCategory(3, "", properties_3));
 
         return categories;
     }

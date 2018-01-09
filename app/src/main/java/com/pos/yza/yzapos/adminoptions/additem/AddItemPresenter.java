@@ -1,9 +1,11 @@
 package com.pos.yza.yzapos.adminoptions.additem;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
-import com.pos.yza.yzapos.data.AdminOptionsDataSource;
+import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.source.ProductsRepository;
+import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 
 /**
  * Created by Dlolpez on 31/12/17.
@@ -12,11 +14,11 @@ import com.pos.yza.yzapos.data.AdminOptionsDataSource;
 public class AddItemPresenter implements AddItemContract.Presenter {
     private final AddItemContract.View mAddItemView;
 
-    private final AdminOptionsDataSource mAdminOptionsDataSource;
+    private final ProductsRepository mProductsRepository;
 
-    public AddItemPresenter(@NonNull AdminOptionsDataSource adminOptionsDataSource,
+    public AddItemPresenter(@NonNull ProductsRepository productsRepository,
                             @NonNull AddItemContract.View view){
-        mAdminOptionsDataSource = adminOptionsDataSource;
+        mProductsRepository = productsRepository;
         mAddItemView = view;
 
         mAddItemView.setPresenter(this);
@@ -28,8 +30,10 @@ public class AddItemPresenter implements AddItemContract.Presenter {
     }
 
     @Override
-    public void confirmItem() {
-
+    public void confirmItem(String unitOfMeasure, String unitPrice) {
+        Log.i("saveItem", "in presenter");
+        Double newUnitPrice = Double.parseDouble(unitPrice);
+        mProductsRepository.saveProduct(new Product(newUnitPrice, unitOfMeasure, ""));
     }
 
     @Override

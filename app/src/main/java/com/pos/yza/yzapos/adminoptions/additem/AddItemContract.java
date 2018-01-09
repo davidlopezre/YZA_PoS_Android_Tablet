@@ -16,7 +16,7 @@ public interface AddItemContract {
     }
 
     interface Presenter extends BasePresenter {
-        void confirmItem();
+        void confirmItem(String unitOfMeasure, String unitPrice);
         void changeItemProperties();
     }
 }
