@@ -21,19 +21,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".createtransaction.NewTransactionActivity"
+            android:name=".newtransaction.NewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".createtransaction.CustomerDetailsActivity"
+            android:name=".newtransaction.CustomerDetailsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".createtransaction.PaymentActivity"
+            android:name=".newtransaction.PaymentActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".createtransaction.ProductCategoryActivity"
+            android:name=".newtransaction.ProductCategoryActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".createtransaction.ProductActivity"
+            android:name=".newtransaction.ProductActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".adminlogin.AdminLoginActivity"
