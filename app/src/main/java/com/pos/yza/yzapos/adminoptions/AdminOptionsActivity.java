@@ -39,6 +39,8 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+        toolbar.setTitle(R.string.admin_options);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
