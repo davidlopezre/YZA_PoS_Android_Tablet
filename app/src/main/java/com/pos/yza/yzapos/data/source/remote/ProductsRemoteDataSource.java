@@ -71,16 +71,8 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                                                @NonNull final LoadProductsCallback callback){
         checkNotNull(callback);
 
-
         List<Product> list = null;
         JSONArrayResponseListener responseListener = new JSONArrayResponseListener(callback);
-//        JSONObject parameters = new JSONObject();
-//        try {
-//            parameters.put("category", category.getId());
-//        } catch (JSONException e){
-//            Log.i("getProductsByCategory", "JsonException");
-//            return new ArrayList<Product>();
-//        }
 
         Uri builtUri = Uri.parse(ROOT + PRODUCTS)
                 .buildUpon()
@@ -137,6 +129,20 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
     @Override
     public void getProducts(@NonNull LoadProductsCallback callback) {
+        checkNotNull(callback);
+
+        List<Product> list = null;
+        JSONArrayResponseListener responseListener = new JSONArrayResponseListener(callback);
+
+        Uri builtUri = Uri.parse(ROOT + PRODUCTS)
+                .buildUpon()
+                .build();
+
+        Log.d("requestTest",builtUri.toString());
+
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest (Request.Method.GET,
+                builtUri.toString(), null, responseListener, new ErrorListener());
+        addToRequestQueue(jsObjRequest);
 
     }
 
@@ -153,7 +159,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                 .build();
 
         HashMap<String,String> params = new HashMap<String, String>();
-        params.put("name", "test3");
+        params.put("name", product.getName());
         params.put("unit_price", product.getUnitPrice().toString());
         params.put("unit_of_measure", product.getUnitMeasure());
         params.put("category", Integer.toString(1));

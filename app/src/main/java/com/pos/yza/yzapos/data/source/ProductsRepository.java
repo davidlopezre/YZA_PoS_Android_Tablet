@@ -53,40 +53,25 @@ public class ProductsRepository implements ProductsDataSource{
         INSTANCE = null;
     }
 
-//    private ProductsRepository(Context context) {
-//        mContext = context;
-//        mRequestQueue = getRequestQueue();
-//    }
-//
-//    public static synchronized ProductsRepository getInstance(Context context) {
-//        if (mInstance == null) {
-//            mInstance = new ProductsRepository(context);
-//        }
-//        return mInstance;
-//    }
-//
-//    public RequestQueue getRequestQueue() {
-//        if (mRequestQueue == null) {
-//            // getApplicationContext() is key, it keeps you from leaking the
-//            // Activity or BroadcastReceiver if someone passes one in.
-//            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
-//        }
-//        return mRequestQueue;
-//    }
-//
-//    public <T> void addToRequestQueue(Request<T> req) {
-//        Log.d("requestTest","added");
-//        getRequestQueue().add(req);
-//    }
-
-
     private static ProductsRepository mInstance;
     private RequestQueue mRequestQueue;
     private static Context mContext;
 
     @Override
-    public void getProducts(@NonNull LoadProductsCallback callback) {
+    public void getProducts(@NonNull final LoadProductsCallback callback) {
+        checkNotNull(callback);
 
+        mProductsRemoteDataSource.getProducts(new LoadProductsCallback() {
+            @Override
+            public void onProductsLoaded(List<Product> products) {
+                callback.onProductsLoaded(products);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override

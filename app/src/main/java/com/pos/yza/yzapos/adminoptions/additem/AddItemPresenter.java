@@ -32,7 +32,8 @@ public class AddItemPresenter implements AddItemContract.Presenter {
     @Override
     public void confirmItem(String unitOfMeasure, String unitPrice) {
         Log.i("saveItem", "in presenter");
-        mProductsRepository.saveProduct(new Product(42.0, "lt", ""));
+        Double newUnitPrice = Double.parseDouble(unitPrice);
+        mProductsRepository.saveProduct(new Product(newUnitPrice, unitOfMeasure, ""));
     }
 
     @Override

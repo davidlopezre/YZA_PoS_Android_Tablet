@@ -13,7 +13,7 @@ public class Staff implements Item {
     }
 
     @Override
-    public String getTitleForList() {
+    public String getName() {
         return null;
     }
 }

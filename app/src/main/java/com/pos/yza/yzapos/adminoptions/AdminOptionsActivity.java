@@ -63,7 +63,9 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 
         // Create the presenter
         mItemListPresenter = new ItemListPresenter(
-                Injection.provideProductsRepository(getApplicationContext()),itemListFragment);
+                Injection.provideProductsRepository(getApplicationContext()),
+                Injection.provideCategoriesRepository(getApplicationContext()),
+                itemListFragment);
 
         if (savedInstanceState != null){
 

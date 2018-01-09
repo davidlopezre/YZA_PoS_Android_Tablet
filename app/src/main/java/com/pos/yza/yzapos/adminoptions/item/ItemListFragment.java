@@ -10,25 +10,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.mocks.MockData;
 import com.pos.yza.yzapos.data.representations.Item;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class ItemListFragment extends Fragment implements ItemListContract.View {
     private ItemAdapter mListAdapter;
     private ItemListContract.Presenter mPresenter;
-
+    private ArrayAdapter<String> mSpinnerAdapter;
     private ItemListListener listener;
 
     @Override
@@ -53,6 +50,9 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mListAdapter = new ItemAdapter(new ArrayList<Item>(), mItemListener);
+        mSpinnerAdapter =
+                new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_list_item_1);
     }
 
     @Override
@@ -64,6 +64,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void setPresenter(@NonNull ItemListContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    public void setUpSpinnerAdapter(List<String> content){
+        mSpinnerAdapter.addAll(content);
     }
 
     @Nullable
@@ -89,6 +93,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         });
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(mSpinnerAdapter);
 
         return root;
     }
@@ -100,7 +106,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     ItemListener mItemListener = new ItemListener() {
         @Override
         public void onItemClick(Item clickedItem) {
-            Log.i("Item", "clicked" + clickedItem.getTitleForList());
+            Log.i("Item", "clicked" + clickedItem.getName());
         }
     };
 
@@ -170,7 +176,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             final Item item = getItem(i);
 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-            titleTV.setText(item.getTitleForList());
+            titleTV.setText(item.getName());
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
