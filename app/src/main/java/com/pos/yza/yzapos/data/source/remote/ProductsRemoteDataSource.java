@@ -11,8 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pos.yza.yzapos.DeleteJsonObjectRequest;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -212,19 +211,24 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                 .buildUpon()
                 .build();
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+        Log.i("deleteItem", builtUri.toString());
+
+
+        DeleteJsonObjectRequest jsObjRequest = new DeleteJsonObjectRequest(
                 Request.Method.DELETE, builtUri.toString(),
-                null,new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.i("success", "success");
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("ERROR", "Error occurred ", error);
-                }
-            });
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("deleteItem", "success");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("deleteItem", "Error occurred ", error);
+                    }
+                });
 
         addToRequestQueue(jsObjRequest);
     }
