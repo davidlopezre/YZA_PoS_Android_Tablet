@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.pos.yza.yzapos.DeleteJsonObjectRequest;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
@@ -130,7 +131,7 @@ public class StaffRemoteDataSource implements StaffDataSource {
                 .buildUpon()
                 .build();
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+        JsonObjectRequest jsObjRequest = new DeleteJsonObjectRequest(
                 Request.Method.DELETE, builtUri.toString(),
                 null,new Response.Listener<JSONObject>() {
             @Override
