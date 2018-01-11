@@ -1,5 +1,6 @@
 package com.pos.yza.yzapos.data.representations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,20 +13,24 @@ public final class Product implements Item {
     int id;
     Double unitPrice;
     String unitMeasure;
-    HashMap<String, String> propertyMap;
-    String category;
+    ArrayList<ProductProperty> properties;
+    ProductCategory category;
 
-    public Product(int id, Double unitPrice, String unitMeasure, String category){
+    public Product(int id, Double unitPrice, String unitMeasure, ProductCategory category,
+                   ArrayList<ProductProperty> properties){
         this.id = id;
         this.unitPrice = unitPrice;
         this.unitMeasure = unitMeasure;
         this.category = category;
+        this.properties = properties;
     }
 
-    public Product(Double unitPrice, String unitMeasure, String category){
+    public Product(Double unitPrice, String unitMeasure, ProductCategory category,
+                   ArrayList<ProductProperty> properties){
         this.unitPrice = unitPrice;
         this.unitMeasure = unitMeasure;
         this.category = category;
+        this.properties = properties;
     }
 
     public void setProperties(){}
@@ -36,7 +41,7 @@ public final class Product implements Item {
         return unitPrice;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
@@ -44,8 +49,8 @@ public final class Product implements Item {
         return unitMeasure;
     }
 
-    public HashMap<String, String> getPropertyMap() {
-        return propertyMap;
+    public ArrayList<ProductProperty> getProperties() {
+        return properties;
     }
 
     @Override
@@ -56,6 +61,17 @@ public final class Product implements Item {
     @Override
     public String getName() {
         return category + Double.toString(unitPrice) + unitMeasure;
+    }
+
+    @Override
+    public String toString(){
+        String toReturn = getName() + "\n properties: ";
+
+        for (ProductProperty property: properties) {
+            toReturn += property;
+        }
+
+        return toReturn;
     }
 }
 

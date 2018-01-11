@@ -9,6 +9,7 @@
         android:text="@string/add"
         android:textAlignment="center"/>
     <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="32dp">
@@ -18,7 +19,7 @@
         android:id="@+id/layout_category_properties"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
     </LinearLayout>
 
     <EditText
