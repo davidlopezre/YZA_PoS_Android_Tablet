@@ -81,8 +81,9 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     }
 
     @Override
-    public void deleteItem() {
-
+    public void deleteItem(Item item) {
+        int id = item.getId();
+        mProductsRepository.deleteProduct(Integer.toString(id));
     }
 
     @Override

@@ -9,10 +9,18 @@ import java.util.List;
  */
 
 public final class Product implements Item {
+    int id;
     Double unitPrice;
     String unitMeasure;
     HashMap<String, String> propertyMap;
     String category;
+
+    public Product(int id, Double unitPrice, String unitMeasure, String category){
+        this.id = id;
+        this.unitPrice = unitPrice;
+        this.unitMeasure = unitMeasure;
+        this.category = category;
+    }
 
     public Product(Double unitPrice, String unitMeasure, String category){
         this.unitPrice = unitPrice;
@@ -21,6 +29,8 @@ public final class Product implements Item {
     }
 
     public void setProperties(){}
+
+    public int getId() {return id;}
 
     public Double getUnitPrice() {
         return unitPrice;

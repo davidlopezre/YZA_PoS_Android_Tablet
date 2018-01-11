@@ -73,4 +73,9 @@ public final class Staff implements Item {
     public String getName() {
         return firstName + " " + lastName;
     }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
 }

@@ -45,8 +45,6 @@
             android:name=".ViewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewProductsActivity" />
-        <activity android:name=".CreateItemActivity" />
-        <activity android:name=".addproduct.AddProductActivity"></activity>
     </application>
 
 </manifest>
