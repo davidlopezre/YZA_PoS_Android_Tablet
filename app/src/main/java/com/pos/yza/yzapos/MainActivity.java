@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                                     "11@11.com", "Pixar");
 
         staffRepo.saveStaff(staffTest);
+
+        staffRepo.deleteStaff("2");
     }
 
     public void newTransaction(View view){
