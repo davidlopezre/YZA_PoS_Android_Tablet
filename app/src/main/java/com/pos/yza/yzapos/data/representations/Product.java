@@ -62,5 +62,16 @@ public final class Product implements Item {
     public String getName() {
         return category + Double.toString(unitPrice) + unitMeasure;
     }
+
+    @Override
+    public String toString(){
+        String toReturn = getName() + "\n properties: ";
+
+        for (ProductProperty property: properties) {
+            toReturn += property;
+        }
+
+        return toReturn;
+    }
 }
 

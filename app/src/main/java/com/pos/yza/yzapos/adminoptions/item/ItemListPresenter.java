@@ -63,7 +63,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     @Override
     public void loadItems() {
         ProductCategory category = new ProductCategory(1, "", new ArrayList<CategoryProperty>());
-        mProductsRepository.getProductsByCategory(category, new ProductsDataSource.LoadProductsCallback() {
+        mProductsRepository.getProducts(new ProductsDataSource.LoadProductsCallback() {
             @Override
             public void onProductsLoaded(List<Product> products) {
                 mItemListView.showItems(new ArrayList<Item>(products));

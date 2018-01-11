@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dlolpez on 27/12/17.
+ * Created by David Lopez on 27/12/17.
  */
 
 public class ProductCategory {
@@ -37,7 +37,7 @@ public class ProductCategory {
     public String detailString(){
         String properties = "";
         for (CategoryProperty p : propertyList){
-            properties = properties + p.getName() + " ";
+            properties = properties.toString() + p.getName() + " ";
         }
         return properties;
     }
