@@ -11,7 +11,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Product;
@@ -194,8 +193,12 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                 .buildUpon()
                 .build();
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+        Log.i("deleteItem", builtUri.toString());
+
+
+        DeleteJsonObjectRequest jsObjRequest = new DeleteJsonObjectRequest(
                 Request.Method.DELETE, builtUri.toString(),
+
                 null,new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
