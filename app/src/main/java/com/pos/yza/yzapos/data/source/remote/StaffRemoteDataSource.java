@@ -127,7 +127,7 @@ public class StaffRemoteDataSource implements StaffDataSource {
 
     public void deleteStaff(@NonNull String staffId) {
         Log.i("deleteStaff", "in remote data source");
-        Uri builtUri = Uri.parse(ROOT + STAFF + staffId+ "/")
+        Uri builtUri = Uri.parse(ROOT + STAFF + staffId + "/")
                 .buildUpon()
                 .build();
 
@@ -148,7 +148,28 @@ public class StaffRemoteDataSource implements StaffDataSource {
         addToRequestQueue(jsObjRequest);
     }
 
-    public void editStaff(@NonNull String staffId, @NonNull HashMap<String,String> edits) {}
+    public void editStaff(@NonNull String staffId, @NonNull HashMap<String,String> edits) {
+        Log.i("editStaff", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT + STAFF + staffId + "/")
+                .buildUpon()
+                .build();
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                Request.Method.PATCH, builtUri.toString(),
+                new JSONObject(edits), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("editStaff", "success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("editStaff", "Error occurred ", error);
+            }
+        });
+
+        addToRequestQueue(jsObjRequest);
+    }
 
     private class JSONArrayResponseListener implements Response.Listener<JSONArray> {
         StaffDataSource.LoadStaffCallback callback;
