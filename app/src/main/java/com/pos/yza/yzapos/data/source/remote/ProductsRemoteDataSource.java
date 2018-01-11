@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
@@ -87,10 +88,6 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
     }
 
-    public void addProduct(Product product){
-
-    }
-
     private class JSONArrayResponseListener implements Response.Listener<JSONArray> {
         LoadProductsCallback callback;
 
@@ -109,7 +106,10 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                    String name = object.getString("name");
                    Double unitPrice = object.getDouble("unit_price");
                    String unitOfMeasure = object.getString("unit_of_measure");
-                   products.add(new Product(id, unitPrice, unitOfMeasure, ""));
+                   int categoryId = object.getInt("category");
+                   products.add(new Product(id, unitPrice, unitOfMeasure,
+                           new ProductCategory(categoryId,"", new ArrayList<CategoryProperty>()),
+                           ));
                    Log.d("requestTest", name);
                }catch (JSONException e) {
                    e.printStackTrace();
@@ -163,7 +163,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
         params.put("name", product.getName());
         params.put("unit_price", product.getUnitPrice().toString());
         params.put("unit_of_measure", product.getUnitMeasure());
-        params.put("category", Integer.toString(1));
+        params.put("category", Integer.toString(product.getCategory().getId()));
 
         try {
             JSONObject paramsJson = new JSONObject(params);
@@ -188,11 +188,6 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
         catch (JSONException e){
             e.printStackTrace();
         }
-
-        HashMap<String, String> editMap = new HashMap<String, String>();
-        editMap.put("name", "FantasticEdit");
-        editProduct("4", editMap);
-
     }
 
     @Override

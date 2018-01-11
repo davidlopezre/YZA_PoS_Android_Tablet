@@ -15,26 +15,31 @@ public class ProductCategory {
     }
 
     private String name;
-    private List<String> propertyList;
+    private List<CategoryProperty> propertyList;
 
     public int getId() {
         return id;
     }
 
-    public List<String> getPropertyList() {return propertyList;}
+    public List<CategoryProperty> getPropertyList() {return propertyList;}
 
-    public ProductCategory(int id, String name, List<String> propertyList) {
+    public ProductCategory(int id, String name, List<CategoryProperty> propertyList) {
         this.id = id;
         this.name = name;
         this.propertyList = propertyList;
     }
 
-    public ArrayList<String> getNameList(List<ProductCategory> categories){
-        ArrayList<String> categoryNames = new ArrayList<String>();
-        for(ProductCategory c : categories){
-            categoryNames.add(c.name);
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    public String detailString(){
+        String properties = "";
+        for (CategoryProperty p : propertyList){
+            properties = properties + p.getName() + " ";
         }
-        return categoryNames;
+        return properties;
     }
 }
 

@@ -3,6 +3,7 @@ package com.pos.yza.yzapos.adminoptions.item;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
@@ -61,7 +62,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     @Override
     public void loadItems() {
-        ProductCategory category = new ProductCategory(1, "", new ArrayList<String>());
+        ProductCategory category = new ProductCategory(1, "", new ArrayList<CategoryProperty>());
         mProductsRepository.getProductsByCategory(category, new ProductsDataSource.LoadProductsCallback() {
             @Override
             public void onProductsLoaded(List<Product> products) {

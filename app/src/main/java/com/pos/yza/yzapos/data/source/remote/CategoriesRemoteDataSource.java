@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
@@ -90,23 +91,37 @@ public class CategoriesRemoteDataSource implements CategoriesDataSource {
 
         @Override
         public void onResponse(JSONArray response) {
-            Log.d("requestTest", "onResponse");
+            Log.d("categoriesResponse", "onResponse");
             ArrayList<ProductCategory> categories = new ArrayList<ProductCategory>();
-            ArrayList<String> properties = new ArrayList<String>();
 
             for (int i = 0; i < response.length(); i++){
                 try {
+
                     JSONObject object = response.getJSONObject(i);
                     String name = object.getString("name");
+                    Log.d("categoriesResponse", "Added category " + name);
                     int id = object.getInt("product_category_id");
+
                     JSONArray array = object.getJSONArray("properties");
+                    ArrayList<CategoryProperty> properties = new ArrayList<CategoryProperty>();
+                    Log.d("categoriesResponse", array.toString());
+
                     for (int j = 0; j < array.length(); j++) {
-                        JSONObject property = array.getJSONObject(i);
-                        properties.add(property.getString("name"));
+                        JSONObject propertyObject = array.getJSONObject(j);
+                        CategoryProperty categoryProperty =
+                                new CategoryProperty(propertyObject.getInt("category_property_id"),
+                                        propertyObject.getString("name"));
+
+                        properties.add(categoryProperty);
+                        Log.d("categoriesResponse", "Added property " + categoryProperty.getName() );
+
                     }
+
                     categories.add(new ProductCategory(id, name, properties));
-                    Log.d("requestTest", name);
-                }catch (JSONException e) {
+
+                }
+
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

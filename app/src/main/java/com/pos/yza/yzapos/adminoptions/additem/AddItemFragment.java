@@ -8,19 +8,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddItemFragment extends DialogFragment implements AddItemContract.View {
     private AddItemContract.Presenter mPresenter;
+
+    private CategoryAdapter mSpinnerAdapter;
+
+    private ProductCategory currentCategory;
+
+    private LinearLayout propertyLayout;
 
     public AddItemFragment(){
 
@@ -33,6 +42,8 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        mSpinnerAdapter = new CategoryAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                new ArrayList<ProductCategory>());
     }
 
     @Override
@@ -54,6 +65,31 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
                 false);
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
+        spinner.setAdapter(mSpinnerAdapter);
+
+        propertyLayout = (LinearLayout) root.findViewById(R.id.layout_category_properties);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                currentCategory = (ProductCategory)adapterView.getItemAtPosition(i);
+                Log.i("category_spinner", currentCategory.getName());
+                propertyLayout.removeAllViews();
+                for (int j = 0; j < currentCategory.getPropertyList().size(); j++) {
+                    CategoryProperty property = currentCategory.getPropertyList().get(j);
+                    EditText editText_property = new EditText(getContext());
+                    editText_property.setHint(property.getName());
+                    editText_property.setId(property.getId());
+                    propertyLayout.addView(editText_property);
+                    Log.i("category_spinner", "added " + property.getName());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         final EditText unitOfMeasure = (EditText) root.findViewById(R.id.unit_of_measure);
         final EditText unitPrice = (EditText) root.findViewById(R.id.unit_price);
@@ -63,81 +99,30 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("button", "button pressed");
-                mPresenter.confirmItem(unitOfMeasure.getText().toString(), unitPrice.getText().toString());
+
+                ArrayList<ProductProperty> properties = new ArrayList<ProductProperty>();
+                final int childCount = propertyLayout.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    EditText property = (EditText) propertyLayout.getChildAt(i);
+                    properties.add(new ProductProperty(property.getId(), property.getText().toString()));
+
+                }
+
+                mPresenter.confirmItem(currentCategory, unitOfMeasure.getText().toString(),
+                        unitPrice.getText().toString(), properties);
             }
         });
 
         return root;
     }
 
-    /**
-     * Listener for clicks on items in the ListView
-     */
-
-    ItemListener mItemListener = new ItemListener() {
-        @Override
-        public void onItemClick(Item clickedItem) {
-            Log.i("Item", "clicked" + clickedItem.getName());
-        }
-    };
-
     @Override
     public void showItemProperties() {
 
     }
 
-
-    private static class ItemAdapter extends BaseAdapter {
-
-        private List<Item> mItems;
-        private ItemListener mItemListener;
-
-        public ItemAdapter(List<Item> items, ItemListener itemListener) {
-            this.mItems = items;
-            this.mItemListener = itemListener;
-        }
-
-        @Override
-        public int getCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public Item getItem(int i) {
-            return mItems.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View rowView = view;
-            if (rowView == null) {
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                rowView = inflater.inflate(R.layout.list_item,
-                        viewGroup, false);
-            }
-            final Item item = getItem(i);
-
-            TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-            titleTV.setText(item.getName());
-
-            rowView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mItemListener.onItemClick(item);
-                }
-            });
-
-            return rowView;
-        }
-    }
-
-    public interface ItemListener {
-        void onItemClick(Item clickedItem);
+    @Override
+    public void showCategories(List<ProductCategory> categories) {
+        mSpinnerAdapter.replaceData(categories);
     }
 }
