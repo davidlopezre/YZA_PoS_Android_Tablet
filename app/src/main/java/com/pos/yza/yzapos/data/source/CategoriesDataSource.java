@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Dlolpez on 6/1/18.
+ * Created by David Lopez on 6/1/18.
  */
 
 public interface CategoriesDataSource {

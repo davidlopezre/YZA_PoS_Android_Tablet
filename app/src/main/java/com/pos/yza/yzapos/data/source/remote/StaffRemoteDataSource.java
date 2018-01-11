@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Staff;
@@ -27,7 +28,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Created by beyondinfinity on 9/1/18.
+ * Created by Dalzy Mendoza on 9/1/18.
  */
 
 public class StaffRemoteDataSource implements StaffDataSource {
@@ -86,13 +87,65 @@ public class StaffRemoteDataSource implements StaffDataSource {
         addToRequestQueue(jsObjRequest);
     }
 
-    public void saveStaff(@NonNull Staff staff) {}
+    public void saveStaff(@NonNull Staff staff) {
+        Log.i("saveStaff", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT + STAFF)
+                .buildUpon()
+                .build();
+
+        HashMap<String,String> params = new HashMap<String, String>();
+        params.put(FIRST_NAME, staff.getFirstName());
+        params.put(LAST_NAME, staff.getLastName());
+        params.put(PHONE_NUMBER, staff.getPhoneNumber());
+        params.put(EMAIL, staff.getEmail());
+        params.put(ADDRESS, staff.getHomeAddress());
+
+        JSONObject paramsJson = new JSONObject(params);
+
+        Log.i("saveStaff", paramsJson.toString());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
+                builtUri.toString(), paramsJson, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("saveStaff", "success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("saveStaff", "Error occurred ", error);
+            }
+        });
+
+        addToRequestQueue(jsObjRequest);
+    }
 
     public void refreshStaff() {}
 
     public void deleteAllStaff() {}
 
-    public void deleteStaff(@NonNull String staffId) {}
+    public void deleteStaff(@NonNull String staffId) {
+//        Log.i("deleteStaff", "in remote data source");
+//        Uri builtUri = Uri.parse(ROOT + STAFF + staffId+ "/")
+//                .buildUpon()
+//                .build();
+//
+//        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+//                Request.Method.DELETE, builtUri.toString(),
+//                null,new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.i("deleteStaff", "success");
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("deleteStaff", "Error occurred ", error);
+//            }
+//        });
+//
+//        addToRequestQueue(jsObjRequest);
+    }
 
     public void editStaff(@NonNull String staffId, @NonNull HashMap<String,String> edits) {}
 

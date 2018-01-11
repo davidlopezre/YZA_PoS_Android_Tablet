@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        Staff staffTest = new Staff("Minion", "Master", "1111",
+                                    "11@11.com", "Pixar");
+
+        staffRepo.saveStaff(staffTest);
     }
 
     public void newTransaction(View view){

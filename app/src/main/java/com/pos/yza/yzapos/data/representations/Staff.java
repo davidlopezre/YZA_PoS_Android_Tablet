@@ -27,6 +27,19 @@ public final class Staff implements Item {
         this.homeAddress = homeAddress;
     }
 
+    public Staff(String firstName,
+                 String lastName, String phoneNumber,
+                 String email, String homeAddress){
+
+        this.staffId = -1;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.homeAddress = homeAddress;
+    }
+
+
     public int getStaffId() {
         return staffId;
     }
