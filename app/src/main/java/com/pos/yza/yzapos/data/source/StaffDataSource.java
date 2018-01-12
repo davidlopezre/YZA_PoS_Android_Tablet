@@ -15,7 +15,7 @@ public interface StaffDataSource {
 
     interface LoadStaffCallback {
 
-        void onStaffLoaded(List<Staff> products);
+        void onStaffLoaded(List<Staff> staffList);
 
         void onDataNotAvailable();
     }
