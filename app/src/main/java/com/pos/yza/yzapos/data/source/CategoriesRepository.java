@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.data.source;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.pos.yza.yzapos.data.representations.Product;
@@ -71,7 +72,8 @@ public class CategoriesRepository implements CategoriesDataSource{
 
     @Override
     public void saveCategory(@NonNull ProductCategory category) {
-
+        Log.i("saveCategory", "in repo");
+        mCategoriesRemoteDataSource.saveCategory(category);
     }
 
     @Override
@@ -85,8 +87,9 @@ public class CategoriesRepository implements CategoriesDataSource{
     }
 
     @Override
-    public void deleteCategory(@NonNull String productId) {
-
+    public void deleteCategory(@NonNull String categoryId) {
+        Log.i("deleteCategory", "in repo");
+        mCategoriesRemoteDataSource.deleteCategory(categoryId);
     }
 
 }

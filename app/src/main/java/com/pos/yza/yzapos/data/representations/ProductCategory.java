@@ -8,25 +8,33 @@ import java.util.List;
  */
 
 public class ProductCategory {
+
     private int id;
-
-    public String getName() {
-        return name;
-    }
-
     private String name;
     private List<CategoryProperty> propertyList;
-
-    public int getId() {
-        return id;
-    }
-
-    public List<CategoryProperty> getPropertyList() {return propertyList;}
 
     public ProductCategory(int id, String name, List<CategoryProperty> propertyList) {
         this.id = id;
         this.name = name;
         this.propertyList = propertyList;
+    }
+
+    public ProductCategory(String name, List<CategoryProperty> propertyList) {
+        this.id = -1;
+        this.name = name;
+        this.propertyList = propertyList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<CategoryProperty> getPropertyList() {
+        return propertyList;
     }
 
     @Override
