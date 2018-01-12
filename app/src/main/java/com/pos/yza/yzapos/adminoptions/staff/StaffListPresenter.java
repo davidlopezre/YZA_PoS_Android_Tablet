@@ -48,7 +48,7 @@ public class StaffListPresenter implements StaffListContract.Presenter {
 
     @Override
     public void addStaffMember() {
-
+        mStaffListView.showAddStaffMember();
     }
 
     @Override

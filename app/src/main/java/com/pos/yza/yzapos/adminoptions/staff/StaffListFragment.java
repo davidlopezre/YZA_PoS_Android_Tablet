@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
+import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
 import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Staff;
 
@@ -27,10 +28,16 @@ import java.util.List;
 public class StaffListFragment extends Fragment implements StaffListContract.View {
     private StaffAdapter mListAdapter;
     private StaffListContract.Presenter mPresenter;
+    private StaffListListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            listener = (StaffListFragment.StaffListListener) context;
+        } catch (ClassCastException castException){
+
+        }
     }
 
     public StaffListFragment(){
@@ -45,9 +52,6 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mListAdapter = new StaffAdapter(new ArrayList<Staff>());
-//        mSpinnerAdapter =
-//                new ArrayAdapter<String>(getActivity(),
-//                        android.R.layout.simple_list_item_1);
     }
 
     @Override
@@ -98,7 +102,7 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
 
     @Override
     public void showAddStaffMember() {
-
+        listener.addStaff();
     }
 
     @Override
@@ -164,4 +168,7 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
         }
     }
 
+    public interface StaffListListener{
+        void addStaff();
+    }
 }
