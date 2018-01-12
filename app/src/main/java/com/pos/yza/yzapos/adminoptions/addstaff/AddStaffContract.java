@@ -1,6 +1,5 @@
-package com.pos.yza.yzapos.adminoptions.additem;
+package com.pos.yza.yzapos.adminoptions.addstaff;
 
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.util.BasePresenter;
@@ -13,15 +12,12 @@ import java.util.List;
  * Created by Dlolpez on 31/12/17.
  */
 
-public interface AddItemContract {
+public interface AddStaffContract {
     interface View extends BaseView<Presenter> {
-        void showItemProperties();
-        void showCategories(List<ProductCategory> categories);
     }
 
     interface Presenter extends BasePresenter {
-        void confirmItem(ProductCategory category, String unitOfMeasure, String unitPrice,
-                         ArrayList<ProductProperty> properties);
-        void changeItemProperties();
+        void confirmStaffMember(String name, String surname, String phone,
+                         String email, String address);
     }
 }

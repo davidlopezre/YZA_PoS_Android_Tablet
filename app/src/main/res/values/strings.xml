@@ -39,4 +39,8 @@
     <string name="confirm">confirm</string>
     <string name="quantity">Quantity</string>
     <string name="product_category">Product category</string>
+    <string name="surname">Surname</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="home_address">Home Address</string>
 </resources>

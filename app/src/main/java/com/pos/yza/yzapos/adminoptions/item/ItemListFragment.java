@@ -179,6 +179,6 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     public interface ItemListListener{
-        public void addItem();
+        void addItem();
     }
 }

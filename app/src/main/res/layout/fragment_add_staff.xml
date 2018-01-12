@@ -8,34 +8,39 @@
         android:layout_height="wrap_content"
         android:text="@string/add"
         android:textAlignment="center"/>
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp">
-    </Spinner>
-
-    <LinearLayout
-        android:id="@+id/layout_category_properties"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </LinearLayout>
 
     <EditText
-        android:id="@+id/unit_of_measure"
-        android:hint="@string/unit_of_measure"
+        android:id="@+id/name"
+        android:hint="@string/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/unit_price"
-        android:hint="@string/unit_price"
+        android:id="@+id/surname"
+        android:hint="@string/surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/phone_number"
+        android:hint="@string/phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/email"
+        android:hint="@string/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/home_address"
+        android:hint="@string/home_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/button_add_item"
+        android:id="@+id/button_add_staff"
         android:text="@string/add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

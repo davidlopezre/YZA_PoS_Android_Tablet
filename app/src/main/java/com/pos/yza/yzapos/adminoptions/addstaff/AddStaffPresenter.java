@@ -1,93 +1,46 @@
-package com.pos.yza.yzapos.adminoptions.additem;
+package com.pos.yza.yzapos.adminoptions.addstaff;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.adminoptions.additem.AddItemContract;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
-import com.pos.yza.yzapos.data.source.CategoriesDataSource;
-import com.pos.yza.yzapos.data.source.CategoriesRepository;
-import com.pos.yza.yzapos.data.source.ProductsRepository;
-import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
+import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.data.source.StaffRepository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dlolpez on 31/12/17.
  */
 
-public class AddItemPresenter implements AddItemContract.Presenter {
-    private final AddItemContract.View mAddItemView;
+public class AddStaffPresenter implements AddStaffContract.Presenter {
+    private final AddStaffContract.View mAddStaffView;
 
-    private final ProductsRepository mProductsRepository;
+    private final StaffRepository mStaffRepository;
 
-    private final CategoriesRepository mCategoriesRepository;
+    public AddStaffPresenter(@NonNull StaffRepository staffRepository,
+                             @NonNull AddStaffContract.View view){
+        mStaffRepository = staffRepository;
+        mAddStaffView = view;
 
-    public AddItemPresenter(@NonNull ProductsRepository productsRepository,
-                            @NonNull CategoriesRepository categoriesRepository,
-                            @NonNull AddItemContract.View view){
-        mProductsRepository = productsRepository;
-        mCategoriesRepository = categoriesRepository;
-        mAddItemView = view;
-
-        mAddItemView.setPresenter(this);
+        mAddStaffView.setPresenter(this);
     }
 
     @Override
     public void start() {
-        loadCategories();
+
     }
 
     @Override
-    public void confirmItem(ProductCategory category, String unitOfMeasure, String unitPrice,
-                            ArrayList<ProductProperty> properties) {
-        Log.i("saveItem", "in presenter");
-        Double newUnitPrice = Double.parseDouble(unitPrice);
-        Product product = new Product(newUnitPrice, unitOfMeasure, category, properties);
-        mProductsRepository.saveProduct(product);
-    }
-
-    @Override
-    public void changeItemProperties() {
-
-    }
-
-    public void loadCategories() {
-        mCategoriesRepository.getCategories(new CategoriesDataSource.LoadCategoriesCallback() {
-            @Override
-            public void onCategoriesLoaded(List<ProductCategory> categories) {
-                Log.d("categoriesResponse", "inside load categories");
-                for (ProductCategory c : categories) {
-                    Log.d("categoriesResponse", "Category: " + c.getName());
-                    Log.d("categoriesResponse", "Properties: " + c.detailString());
-                }
-
-                processCategories(categories);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
-    }
-
-    private void processCategories(List<ProductCategory> categories) {
-        if (categories.isEmpty()) {
-            // Show a message indicating there are no tasks for that filter type.
-            processEmptyCategories();
-        } else {
-            // Show the list of tasks
-            mAddItemView.showCategories(categories);
-            // Set the filter label's text.
-//            showFilterLabel();
-        }
-    }
-
-    private void processEmptyCategories() {
-
+    public void confirmStaffMember(String name, String surname, String phone, String email,
+                                   String address) {
+        Log.i("saveStaff", "in presenter");
+        Staff staffMember = new Staff(name, surname, phone, email, address);
+        Log.i("saveStaff", "name is " + name);
+        Log.i("saveStaff", staffMember.toString());
+        mStaffRepository.saveStaff(staffMember);
     }
 }
