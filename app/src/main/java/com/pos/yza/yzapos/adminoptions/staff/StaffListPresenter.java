@@ -53,7 +53,8 @@ public class StaffListPresenter implements StaffListContract.Presenter {
 
     @Override
     public void deleteStaffMember(Staff member) {
-
+        String staffId = Integer.toString(member.getStaffId());
+        mStaffRepository.deleteStaff(staffId);
     }
 
     @Override
