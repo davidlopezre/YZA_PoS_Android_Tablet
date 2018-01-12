@@ -14,15 +14,15 @@ import java.util.List;
 public interface StaffListContract {
     interface View extends BaseView<Presenter> {
         void showStaff(List<Staff> staffList);
-        void showAddStaff();
-        void showEditStaff();
-        void showDeleteStaff();
+        void showAddStaffMember();
+        void showEditStaffMember();
+        void showDeleteStaffMember();
     }
 
     interface Presenter extends BasePresenter {
         void loadStaff();
-        void addNewStaffMember();
-        void deleteStaff(Staff member);
-        void editStaff();
+        void addStaffMember();
+        void deleteStaffMember(Staff member);
+        void editStaffMember();
     }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Dlolpez on 31/12/17.
+ * Created by Dlolpez on 12/1/18.
  */
 
 public class StaffListPresenter implements StaffListContract.Presenter {
@@ -28,7 +28,7 @@ public class StaffListPresenter implements StaffListContract.Presenter {
 
     @Override
     public void start() {
-
+        loadStaff();
     }
 
     @Override
@@ -47,17 +47,17 @@ public class StaffListPresenter implements StaffListContract.Presenter {
     }
 
     @Override
-    public void addNewStaffMember() {
+    public void addStaffMember() {
 
     }
 
     @Override
-    public void deleteStaff(Staff member) {
+    public void deleteStaffMember(Staff member) {
 
     }
 
     @Override
-    public void editStaff() {
+    public void editStaffMember() {
 
     }
 
