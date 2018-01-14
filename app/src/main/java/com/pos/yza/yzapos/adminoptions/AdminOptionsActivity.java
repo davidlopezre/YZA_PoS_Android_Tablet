@@ -15,12 +15,17 @@ import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemFragment;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemPresenter;
+import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
+import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
 import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
 import com.pos.yza.yzapos.adminoptions.item.ItemListPresenter;
+import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
+import com.pos.yza.yzapos.adminoptions.staff.StaffListPresenter;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
-public class AdminOptionsActivity extends AppCompatActivity implements ItemListFragment.ItemListListener {
+public class AdminOptionsActivity extends AppCompatActivity
+        implements ItemListFragment.ItemListListener, StaffListFragment.StaffListListener {
 
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
 
@@ -29,6 +34,10 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
     private ItemListPresenter mItemListPresenter;
 
     private AddItemPresenter mAddItemPresenter;
+
+    private AddStaffPresenter mAddStaffPresenter;
+
+    private StaffListPresenter mStaffListPresenter;
 
     private ProductsRemoteDataSource mProductsRemoteDataSource;
 
@@ -113,7 +122,13 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
 //                                startActivity(intent);
                                 break;
                             case R.id.staff_navigation_menu_item:
-                                // Do nothing, we're already on that screen
+
+                                StaffListFragment staffListFragment = StaffListFragment.newInstance();
+                                    ActivityUtils.replaceFragmentInActivity(
+                                            getSupportFragmentManager(), staffListFragment, R.id.contentFrame);
+                                // Create the presenter
+                                mStaffListPresenter = new StaffListPresenter(
+                                        Injection.provideStaffRepository(getApplicationContext()), staffListFragment);
                                 break;
                             default:
                                 break;
@@ -133,16 +148,6 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
         AddItemFragment mAddItemFragment = AddItemFragment.newInstance();
         mAddItemFragment.show(getSupportFragmentManager(),"additem");
 
-
-//        AddItemFragment addItemFragment =
-//                (AddItemFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrameRight);
-//        if (addItemFragment == null) {
-//            // Create the fragment
-//            addItemFragment = AddItemFragment.newInstance();
-//            ActivityUtils.addFragmentToActivity(
-//                    getSupportFragmentManager(), addItemFragment, R.id.contentFrameRight);
-//        }
-
         // Create the presenter
         mAddItemPresenter = new AddItemPresenter(
                 Injection.provideProductsRepository(getApplicationContext()),
@@ -150,4 +155,16 @@ public class AdminOptionsActivity extends AppCompatActivity implements ItemListF
                 mAddItemFragment);
     }
 
+    @Override
+    public void addStaff() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        AddStaffFragment mAddStaffFragment = AddStaffFragment.newInstance();
+        mAddStaffFragment.show(getSupportFragmentManager(),"addstaff");
+
+        // Create the presenter
+        mAddStaffPresenter = new AddStaffPresenter(
+                Injection.provideStaffRepository(getApplicationContext()),
+                mAddStaffFragment);
+    }
 }

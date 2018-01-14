@@ -26,9 +26,6 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     private final ProductsRepository mProductsRepository;
     private final CategoriesRepository mCategoriesRepository;
 
-    private List mList;
-
-
     public ItemListPresenter(@NonNull ProductsRepository productsRepository,
                              @NonNull CategoriesRepository categoriesRepository,
                                  @NonNull ItemListContract.View view){

@@ -78,4 +78,10 @@ public final class Staff implements Item {
     public int getId() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return staffId +  " " + firstName + " " + lastName + " "
+                + phoneNumber + " " + email + " " + homeAddress;
+    }
 }

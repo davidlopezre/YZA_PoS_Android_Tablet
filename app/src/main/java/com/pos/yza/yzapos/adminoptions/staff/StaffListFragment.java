@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.adminoptions.item;
+package com.pos.yza.yzapos.adminoptions.staff;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,42 +17,41 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
+import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
 import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.Staff;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListFragment extends Fragment implements ItemListContract.View {
-    private ItemAdapter mListAdapter;
-    private ItemListContract.Presenter mPresenter;
-    private ArrayAdapter<String> mSpinnerAdapter;
-    private ItemListListener listener;
+public class StaffListFragment extends Fragment implements StaffListContract.View {
+    private StaffAdapter mListAdapter;
+    private StaffListContract.Presenter mPresenter;
+    private StaffListListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            listener = (ItemListListener) context;
-        } catch (ClassCastException castException) {
-            /** The activity does not implement the listener. */
+            listener = (StaffListFragment.StaffListListener) context;
+        } catch (ClassCastException castException){
+
         }
     }
 
-    public ItemListFragment(){
+    public StaffListFragment(){
 
     }
 
-    public static ItemListFragment newInstance(){
-        return new ItemListFragment();
+    public static StaffListFragment newInstance(){
+        return new StaffListFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<Item>());
-        mSpinnerAdapter =
-                new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_list_item_1);
+        mListAdapter = new StaffAdapter(new ArrayList<Staff>());
     }
 
     @Override
@@ -62,12 +61,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void setPresenter(@NonNull ItemListContract.Presenter presenter) {
+    public void setPresenter(@NonNull StaffListContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    public void setUpSpinnerAdapter(List<String> content){
-        mSpinnerAdapter.addAll(content);
     }
 
     @Nullable
@@ -88,63 +83,58 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             @Override
             public void onClick(View view) {
                 assert(mPresenter != null);
-                mPresenter.addNewItem();
+                mPresenter.addStaffMember();
             }
         });
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
         // Apply the adapter to the spinner
-        spinner.setAdapter(mSpinnerAdapter);
+//        spinner.setAdapter(mSpinnerAdapter);
 
         return root;
     }
 
     @Override
-    public void showItems(List<Item> items) {
-        mListAdapter.setList(items);
+    public void showStaff(List<Staff> staffList) {
+        mListAdapter.setList(staffList);
         mListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showItemDetailsUi(String itemId) {
+    public void showAddStaffMember() {
+        listener.addStaff();
+    }
+
+    @Override
+    public void showEditStaffMember() {
 
     }
 
     @Override
-    public void showFilteringPopUpMenu() {
+    public void showDeleteStaffMember() {
 
     }
 
-    @Override
-    public void showAddItem() {
-        listener.addItem();
-    }
+    private class StaffAdapter extends BaseAdapter {
 
-    @Override
-    public void showEditItem() {
+        private List<Staff> mStaffList;
 
-    }
-
-    private class ItemAdapter extends BaseAdapter {
-
-        private List<Item> mItems;
-
-        public ItemAdapter(List<Item> items) {
-            this.mItems = items;
+        public StaffAdapter(List<Staff> staffList) {
+            this.mStaffList = staffList;
         }
 
         @Override
         public int getCount() {
-            return mItems.size();
+            return mStaffList.size();
         }
 
-        public void setList(List<Item> items){
-            mItems = items;
+        public void setList(List<Staff> staffList){
+            mStaffList = staffList;
         }
 
         @Override
-        public Item getItem(int i) {
-            return mItems.get(i);
+        public Staff getItem(int i) {
+            return mStaffList.get(i);
         }
 
         @Override
@@ -160,16 +150,16 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
                 rowView = inflater.inflate(R.layout.list_item,
                         viewGroup, false);
             }
-            final Item item = getItem(i);
+            final Staff staffMember = getItem(i);
 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-            titleTV.setText(item.getName());
+            titleTV.setText(staffMember.getName());
 
             ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPresenter.deleteItem(item);
+                    mPresenter.deleteStaffMember(staffMember);
                 }
             });
 
@@ -178,7 +168,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         }
     }
 
-    public interface ItemListListener{
-        void addItem();
+    public interface StaffListListener{
+        void addStaff();
     }
 }
