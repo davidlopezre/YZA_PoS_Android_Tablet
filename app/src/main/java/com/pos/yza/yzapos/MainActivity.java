@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
 import com.pos.yza.yzapos.data.source.StaffRepository;
+import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
 import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,36 +32,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FOR DALZY
+////        FOR DALZY
+//        Log.i("saveCategory", "in main");
+//        CategoriesDataSource catsRepo = Injection.provideCategoriesRepository(getApplicationContext());
 
-//        StaffDataSource staffRepo = Injection.provideStaffRepository(getApplicationContext());
+//        ArrayList<CategoryProperty> properties = new ArrayList<CategoryProperty>();
+//        properties.add(new CategoryProperty("CatProp1"));
+//        ProductCategory catTest = new ProductCategory("MainTest", properties);
 //
-//        staffRepo.getAllStaff(new StaffDataSource.LoadStaffCallback() {
-//            @Override
-//            public void onStaffLoaded(List<Staff> staff) {
-//                for(Staff s: staff){
-//                    Log.i("staffRemoteRequest",s.getName());
-//                }
-//            }
-//
-//            @Override
-//            public void onDataNotAvailable() {
-//
-//            }
-//        });
-//
-//        Staff staffTest = new Staff("Minion", "Master", "1111",
-//                                    "11@11.com", "Pixar");
-//
-//        staffRepo.saveStaff(staffTest);
-//
-//        staffRepo.deleteStaff("2");
+//        catsRepo.saveCategory(catTest);
+
+//        catsRepo.deleteCategory("4");
 //
 //        HashMap<String,String> staffEdits = new HashMap<String,String>();
 //
 //        staffEdits.put("name", "Majestic Edit");
 //
 //        staffRepo.editStaff("3", staffEdits);
+
     }
 
     public void newTransaction(View view){

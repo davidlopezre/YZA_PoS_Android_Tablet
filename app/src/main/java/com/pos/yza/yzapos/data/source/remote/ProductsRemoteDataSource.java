@@ -140,9 +140,9 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
         JSONObject paramsJson = new JSONObject(params);
 
-        // Add product properties
-
         try {
+
+            // Add product properties
 
             JSONArray propertiesJson = new JSONArray();
             for(ProductProperty property: product.getProperties()){
@@ -152,29 +152,29 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
             }
 
             paramsJson.put("properties", propertiesJson);
-
             Log.i("saveItem", paramsJson.toString());
+
+            // Send product to server
+
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
+                    builtUri.toString(), paramsJson, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i("saveItem", "success");
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("saveItem", "Error occurred ", error);
+                }
+            });
+
+            addToRequestQueue(jsObjRequest);
         }
-        catch (JSONException e){
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Send product to server
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
-                builtUri.toString(), paramsJson, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("saveItem", "success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("saveItem", "Error occurred ", error);
-            }
-        });
-
-        addToRequestQueue(jsObjRequest);
     }
 
     @Override
