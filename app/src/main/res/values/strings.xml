@@ -43,4 +43,5 @@
     <string name="email">Email</string>
     <string name="phone_number">Phone Number</string>
     <string name="home_address">Home Address</string>
+    <string name="add_property">Add property</string>
 </resources>

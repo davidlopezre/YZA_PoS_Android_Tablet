@@ -13,10 +13,15 @@ import android.view.MenuItem;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryContract;
+import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryFragment;
+import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryPresenter;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemFragment;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemPresenter;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
+import com.pos.yza.yzapos.adminoptions.category.CategoryListFragment;
+import com.pos.yza.yzapos.adminoptions.category.CategoryListPresenter;
 import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
 import com.pos.yza.yzapos.adminoptions.item.ItemListPresenter;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
@@ -25,7 +30,8 @@ import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity
-        implements ItemListFragment.ItemListListener, StaffListFragment.StaffListListener {
+        implements ItemListFragment.ItemListListener, StaffListFragment.StaffListListener,
+        CategoryListFragment.CategoryListListener {
 
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
 
@@ -37,7 +43,12 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     private AddStaffPresenter mAddStaffPresenter;
 
+    private AddCategoryPresenter mAddCategoryPresenter;
+
+
     private StaffListPresenter mStaffListPresenter;
+
+    private CategoryListPresenter mCategoryListPresenter;
 
     private ProductsRemoteDataSource mProductsRemoteDataSource;
 
@@ -117,9 +128,12 @@ public class AdminOptionsActivity extends AppCompatActivity
                                 // Do nothing, we're already on that screen
                                 break;
                             case R.id.category_navigation_menu_item:
-//                                Intent intent =
-//                                        new Intent(TasksActivity.this, StatisticsActivity.class);
-//                                startActivity(intent);
+                                CategoryListFragment categoryListFragment = CategoryListFragment.newInstance();
+                                ActivityUtils.replaceFragmentInActivity(
+                                        getSupportFragmentManager(), categoryListFragment, R.id.contentFrame);
+                                // Create the presenter
+                                mCategoryListPresenter = new CategoryListPresenter(
+                                        Injection.provideCategoriesRepository(getApplicationContext()), categoryListFragment);
                                 break;
                             case R.id.staff_navigation_menu_item:
 
@@ -166,5 +180,18 @@ public class AdminOptionsActivity extends AppCompatActivity
         mAddStaffPresenter = new AddStaffPresenter(
                 Injection.provideStaffRepository(getApplicationContext()),
                 mAddStaffFragment);
+    }
+
+    @Override
+    public void addCategory() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        AddCategoryFragment mAddCategoryFragment = AddCategoryFragment.newInstance();
+        mAddCategoryFragment.show(getSupportFragmentManager(),"addcategory");
+
+        // Create the presenter
+        mAddCategoryPresenter = new AddCategoryPresenter(
+                Injection.provideCategoriesRepository(getApplicationContext()),
+                mAddCategoryFragment);
     }
 }
