@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".newtransaction.NewTransactionActivity"
+            android:name=".newtransaction.TransactionsActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".newtransaction.CustomerDetailsActivity"

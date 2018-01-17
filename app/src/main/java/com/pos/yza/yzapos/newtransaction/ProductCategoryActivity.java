@@ -12,4 +12,6 @@ public class ProductCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_product_category_selection);
     }
+
+
 }

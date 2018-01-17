@@ -3,25 +3,10 @@ package com.pos.yza.yzapos;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
-import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.Staff;
-import com.pos.yza.yzapos.data.source.CategoriesDataSource;
-import com.pos.yza.yzapos.data.source.StaffDataSource;
-import com.pos.yza.yzapos.data.source.StaffRepository;
-import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
-import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
-import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
-import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.source.ProductsRepository;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.pos.yza.yzapos.newtransaction.TransactionsActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newTransaction(View view){
-        Intent intent = new Intent(getApplicationContext(), NewTransactionActivity.class);
+        Intent intent = new Intent(getApplicationContext(), TransactionsActivity.class);
         startActivity(intent);
     }
 
