@@ -21,19 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".newtransaction.TransactionsActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".newtransaction.CustomerDetailsActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".newtransaction.PaymentActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".newtransaction.ProductCategoryActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".newtransaction.ProductActivity"
+            android:name=".newtransaction.NewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".adminlogin.AdminLoginActivity"

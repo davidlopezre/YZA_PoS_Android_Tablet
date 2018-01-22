@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.newtransaction.cart;
+package com.pos.yza.yzapos.newtransaction.customerdetails;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,23 +10,22 @@ import android.view.ViewGroup;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
-
-import java.util.ArrayList;
+import com.pos.yza.yzapos.newtransaction.cart.CartContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CartFragment extends Fragment implements CartContract.View {
+public class CustomerDetailsFragment extends Fragment implements CustomerDetailsContract.View {
 
-    CartContract.Presenter mPresenter;
+    CustomerDetailsContract.Presenter mPresenter;
 
     private OnFragmentInteractionListener mListener;
 
-    public CartFragment() {
+    public CustomerDetailsFragment() {
         // Required empty public constructor
     }
 
-    public static CartFragment newInstance() {
-        return new CartFragment();
+    public static CustomerDetailsFragment newInstance() {
+        return new CustomerDetailsFragment();
     }
 
     @Override
@@ -37,7 +36,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     }
 
     @Override
-    public void setPresenter(@NonNull CartContract.Presenter presenter) {
+    public void setPresenter(@NonNull CustomerDetailsContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 
@@ -51,7 +50,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_cart, container, false);
+        View root = inflater.inflate(R.layout.fragment_customer, container, false);
 
         return root;
     }
@@ -75,12 +74,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     }
 
     @Override
-    public void showProductsInCart() {
-
-    }
-
-    @Override
-    public void showProductSelection() {
+    public void showPayment() {
 
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
-import com.pos.yza.yzapos.newtransaction.TransactionsActivity;
+import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newTransaction(View view){
-        Intent intent = new Intent(getApplicationContext(), TransactionsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), NewTransactionActivity.class);
         startActivity(intent);
     }
 
