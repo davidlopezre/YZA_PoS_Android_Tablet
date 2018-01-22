@@ -40,6 +40,6 @@ public class CartPresenter implements CartContract.Presenter {
 
     @Override
     public void goToCustomerDetails() {
-
+        mCartView.showCustomerDetails();
     }
 }

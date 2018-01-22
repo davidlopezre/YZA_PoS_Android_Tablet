@@ -42,12 +42,31 @@ public class ActivityUtils {
         transaction.commit();
     }
 
+    public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
+                                              @NonNull Fragment fragment, int frameId, String tag) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment, tag);
+        transaction.commit();
+    }
+
+
     public static void replaceFragmentInActivity (@NonNull FragmentManager fragmentManager,
                                                   @NonNull Fragment fragment, int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(frameId, fragment);
+        transaction.replace(frameId, fragment).addToBackStack(null);
+        transaction.commit();
+    }
+
+    public static void replaceFragmentInActivity (@NonNull FragmentManager fragmentManager,
+                                                  @NonNull Fragment fragment, int frameId, String tag) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment, tag).addToBackStack(null);
         transaction.commit();
     }
 }
