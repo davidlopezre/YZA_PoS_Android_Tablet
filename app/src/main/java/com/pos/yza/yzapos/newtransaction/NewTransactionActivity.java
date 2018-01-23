@@ -13,6 +13,8 @@ import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsFragment;
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsPresenter;
+import com.pos.yza.yzapos.newtransaction.payment.PaymentFragment;
+import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class NewTransactionActivity extends AppCompatActivity
@@ -27,6 +29,7 @@ public class NewTransactionActivity extends AppCompatActivity
 
     private CartPresenter mCartPresenter;
     private CustomerDetailsPresenter mCustomerDetailsPresenter;
+    private PaymentPresenter mPaymentPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,16 @@ public class NewTransactionActivity extends AppCompatActivity
         }else if (TAG.equals(PAYMENT)){
 
         }else if (TAG.equals(CUSTOMER_DETAILS)){
+            PaymentFragment paymentFragment =
+                    (PaymentFragment) getSupportFragmentManager().findFragmentByTag(PAYMENT);
+            if (paymentFragment == null) {
+                // Create the fragment
+                paymentFragment = PaymentFragment.newInstance();
+                ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), paymentFragment, R.id.contentFrame, PAYMENT);
+            }
+
+            // Create the presenter
+            mPaymentPresenter = new PaymentPresenter(paymentFragment);
 
         }else{
 

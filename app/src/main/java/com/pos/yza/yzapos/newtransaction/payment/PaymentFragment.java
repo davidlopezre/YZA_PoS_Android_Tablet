@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.newtransaction.customerdetails;
+package com.pos.yza.yzapos.newtransaction.payment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,26 +7,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
-import com.pos.yza.yzapos.newtransaction.cart.CartContract;
+import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsContract;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CustomerDetailsFragment extends Fragment implements CustomerDetailsContract.View {
+public class PaymentFragment extends Fragment implements PaymentContract.View {
 
-    CustomerDetailsContract.Presenter mPresenter;
+    PaymentContract.Presenter mPresenter;
 
     private OnFragmentInteractionListener mListener;
 
-    public CustomerDetailsFragment() {
+    public PaymentFragment() {
         // Required empty public constructor
     }
 
-    public static CustomerDetailsFragment newInstance() {
-        return new CustomerDetailsFragment();
+    public static PaymentFragment newInstance() {
+        return new PaymentFragment();
     }
 
     @Override
@@ -37,7 +36,7 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
     }
 
     @Override
-    public void setPresenter(@NonNull CustomerDetailsContract.Presenter presenter) {
+    public void setPresenter(@NonNull PaymentContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 
@@ -51,15 +50,7 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_customer, container, false);
-
-        Button next = (Button) root.findViewById(R.id.button_next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.goToPayment();
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_payment, container, false);
 
         return root;
     }
@@ -82,8 +73,4 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
         mListener = null;
     }
 
-    @Override
-    public void showPayment() {
-        mListener.onFragmentMessage("CUSTOMER_DETAILS", null);
-    }
 }

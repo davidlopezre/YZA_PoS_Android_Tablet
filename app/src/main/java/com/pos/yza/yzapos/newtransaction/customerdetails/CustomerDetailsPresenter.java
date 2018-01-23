@@ -27,7 +27,7 @@ public class CustomerDetailsPresenter implements CustomerDetailsContract.Present
 
     @Override
     public void goToPayment() {
-
+        mCartView.showPayment();
     }
 
     @Override
