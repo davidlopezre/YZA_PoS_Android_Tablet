@@ -39,7 +39,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
     private static ProductsRemoteDataSource INSTANCE;
 
     public final static String PRODUCT_PROPERTY_ID = "product_property_id",
-                               PRODUCT_PROPERTY_VALUE = "value",
+    PRODUCT_PROPERTY_VALUE = "value",
                                CATEGORY_PROPERTY_ID = "category_property";
 
     private final String ROOT = "http://35.197.185.80:8000/";
