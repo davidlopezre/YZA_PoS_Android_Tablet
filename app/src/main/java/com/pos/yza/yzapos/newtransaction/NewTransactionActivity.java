@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsFragment;
@@ -16,6 +17,8 @@ import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsPresente
 import com.pos.yza.yzapos.newtransaction.payment.PaymentFragment;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
+
+import java.util.ArrayList;
 
 public class NewTransactionActivity extends AppCompatActivity
         implements OnFragmentInteractionListener{
@@ -30,6 +33,10 @@ public class NewTransactionActivity extends AppCompatActivity
     private CartPresenter mCartPresenter;
     private CustomerDetailsPresenter mCustomerDetailsPresenter;
     private PaymentPresenter mPaymentPresenter;
+
+//    private ArrayList<Product> products;
+//    private Customer customer;
+//    private Payment payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
