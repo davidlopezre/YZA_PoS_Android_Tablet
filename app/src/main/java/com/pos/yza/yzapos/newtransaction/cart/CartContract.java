@@ -13,13 +13,13 @@ import java.util.List;
 public interface CartContract {
     interface View extends BaseView<CartContract.Presenter> {
         void showProductsInCart();
-        void showProductSelection();
+        void showCategorySelection();
         void showCustomerDetails();
 
     }
 
     interface Presenter extends BasePresenter {
-        void goToProductSelection();
+        void goToCategorySelection();
         void removeProduct();
         void refreshProducts();
         void goToCustomerDetails();

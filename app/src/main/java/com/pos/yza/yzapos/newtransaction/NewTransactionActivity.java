@@ -1,24 +1,20 @@
 package com.pos.yza.yzapos.newtransaction;
 
-import android.icu.text.IDNA;
-import android.security.keystore.UserNotAuthenticatedException;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
-import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
+import com.pos.yza.yzapos.newtransaction.cart.CartActions;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
+import com.pos.yza.yzapos.newtransaction.categoryselection.CategorySelectionFragment;
+import com.pos.yza.yzapos.newtransaction.categoryselection.CategorySelectionPresenter;
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsFragment;
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsPresenter;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentFragment;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
-
-import java.util.ArrayList;
 
 public class NewTransactionActivity extends AppCompatActivity
         implements OnFragmentInteractionListener{
@@ -29,10 +25,10 @@ public class NewTransactionActivity extends AppCompatActivity
     private static final String CUSTOMER_DETAILS = "CUSTOMER_DETAILS";
     private static final String PAYMENT = "PAYMENT";
 
-
     private CartPresenter mCartPresenter;
     private CustomerDetailsPresenter mCustomerDetailsPresenter;
     private PaymentPresenter mPaymentPresenter;
+    private CategorySelectionPresenter mCategorySelectionPresenter;
 
 //    private ArrayList<Product> products;
 //    private Customer customer;
@@ -75,38 +71,76 @@ public class NewTransactionActivity extends AppCompatActivity
 
     @Override
     public void onFragmentMessage(String TAG, Object data) {
-        if (TAG.equals(CART)){
-            CustomerDetailsFragment customerDetailsFragment =
-                    (CustomerDetailsFragment) getSupportFragmentManager().findFragmentByTag(CUSTOMER_DETAILS);
-            if (customerDetailsFragment == null) {
-                // Create the fragment
-                customerDetailsFragment = CustomerDetailsFragment.newInstance();
-                ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), customerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS);
-            }
-
-            // Create the presenter
-            mCustomerDetailsPresenter = new CustomerDetailsPresenter(customerDetailsFragment);
-
-        }else if (TAG.equals(CATEGORY_SELECTION)) {
-
-        }else if (TAG.equals(PRODUCT_SELECTION)){
-
-        }else if (TAG.equals(PAYMENT)){
-
-        }else if (TAG.equals(CUSTOMER_DETAILS)){
-            PaymentFragment paymentFragment =
-                    (PaymentFragment) getSupportFragmentManager().findFragmentByTag(PAYMENT);
-            if (paymentFragment == null) {
-                // Create the fragment
-                paymentFragment = PaymentFragment.newInstance();
-                ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), paymentFragment, R.id.contentFrame, PAYMENT);
-            }
-
-            // Create the presenter
-            mPaymentPresenter = new PaymentPresenter(paymentFragment);
-
-        }else{
-
+        switch (TAG) {
+            case CART:
+                handleCartActions(mCartPresenter.getAction());
+                break;
+            case CATEGORY_SELECTION:
+                break;
+            case PRODUCT_SELECTION:
+                break;
+            case PAYMENT:
+                break;
+            case CUSTOMER_DETAILS:
+                handleCustomerDetailsActions();
+                break;
+            default:
+                break;
         }
+
+    }
+
+    private void handleCustomerDetailsActions(){
+        PaymentFragment paymentFragment =
+                (PaymentFragment) getSupportFragmentManager().findFragmentByTag(PAYMENT);
+        if (paymentFragment == null) {
+            // Create the fragment
+            paymentFragment = PaymentFragment.newInstance();
+            ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), paymentFragment,
+                    R.id.contentFrame, PAYMENT);
+        }
+
+        // Create the presenter
+        mPaymentPresenter = new PaymentPresenter(paymentFragment);
+    }
+
+    private void handleCartActions(CartActions action) {
+        switch (action) {
+            case ADD_PRODUCT:
+
+                CategorySelectionFragment categorySelectionFragment =
+                        (CategorySelectionFragment) getSupportFragmentManager().
+                                findFragmentByTag(CATEGORY_SELECTION);
+
+                if (categorySelectionFragment == null) {
+                    categorySelectionFragment = CategorySelectionFragment.newInstance();
+                    ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
+                            categorySelectionFragment, R.id.contentFrame, CATEGORY_SELECTION);
+                }
+
+                mCategorySelectionPresenter =
+                        new CategorySelectionPresenter(categorySelectionFragment);
+
+                break;
+            case GO_TO_CUSTOMER_DETAILS:
+
+                CustomerDetailsFragment customerDetailsFragment =
+                        (CustomerDetailsFragment) getSupportFragmentManager().
+                                findFragmentByTag(CUSTOMER_DETAILS);
+
+                if (customerDetailsFragment == null) {
+                    // Create the fragment
+                    customerDetailsFragment = CustomerDetailsFragment.newInstance();
+                    ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
+                            customerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS);
+                }
+                // Create the presenter
+                mCustomerDetailsPresenter = new CustomerDetailsPresenter(customerDetailsFragment);
+
+                break;
+            default:
+                break;
+        }
+
     }
 }

@@ -12,6 +12,7 @@ public class CartPresenter implements CartContract.Presenter {
 
     private final CartContract.View mCartView;
 
+    private CartActions mCurrentAction = CartActions.NO_ACTION;
 
     public CartPresenter(@NonNull CartContract.View mCartView) {
         this.mCartView = checkNotNull(mCartView);
@@ -24,8 +25,9 @@ public class CartPresenter implements CartContract.Presenter {
     }
 
     @Override
-    public void goToProductSelection() {
-
+    public void goToCategorySelection() {
+        mCurrentAction = CartActions.ADD_PRODUCT;
+        mCartView.showCategorySelection();
     }
 
     @Override
@@ -40,6 +42,11 @@ public class CartPresenter implements CartContract.Presenter {
 
     @Override
     public void goToCustomerDetails() {
+        mCurrentAction = CartActions.GO_TO_CUSTOMER_DETAILS;
         mCartView.showCustomerDetails();
+    }
+
+    public CartActions getAction() {
+        return mCurrentAction;
     }
 }

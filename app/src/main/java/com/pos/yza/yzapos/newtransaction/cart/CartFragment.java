@@ -12,8 +12,6 @@ import android.widget.Button;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 
-import java.util.ArrayList;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CartFragment extends Fragment implements CartContract.View {
@@ -54,6 +52,13 @@ public class CartFragment extends Fragment implements CartContract.View {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        Button add = (Button) root.findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.goToCategorySelection();
+            }
+        });
 
         Button next = (Button) root.findViewById(R.id.button_next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +94,8 @@ public class CartFragment extends Fragment implements CartContract.View {
     }
 
     @Override
-    public void showProductSelection() {
-
+    public void showCategorySelection() {
+        mListener.onFragmentMessage(getTag(), null);
     }
 
     @Override
