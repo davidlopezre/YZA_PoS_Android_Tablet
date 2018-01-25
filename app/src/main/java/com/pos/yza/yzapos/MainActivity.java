@@ -9,11 +9,14 @@ import android.view.View;
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
 import com.pos.yza.yzapos.data.source.StaffRepository;
+import com.pos.yza.yzapos.data.source.TransactionsDataSource;
 import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
 import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
+import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
@@ -33,8 +36,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 ////        FOR DALZY
-//        Log.i("saveCategory", "in main");
-//        CategoriesDataSource catsRepo = Injection.provideCategoriesRepository(getApplicationContext());
+        Log.i("transactionReponse", "in main");
+        TransactionsDataSource transRepo = Injection.provideTransactionsRepository(getApplicationContext());
+
+        transRepo.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
+            @Override
+            public void onTransactionsLoaded(List<Transaction> transactions) {
+                Log.i("transactionReponse", "back to main");
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                Log.i("transactionReponse", "error back in main");
+            }
+        });
 
 //        ArrayList<CategoryProperty> properties = new ArrayList<CategoryProperty>();
 //        properties.add(new CategoryProperty("CatProp1"));

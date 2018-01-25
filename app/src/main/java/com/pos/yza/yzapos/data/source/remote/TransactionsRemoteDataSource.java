@@ -12,6 +12,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.data.representations.LineItem;
+import com.pos.yza.yzapos.data.representations.Payment;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
@@ -23,6 +25,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,9 +43,17 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
     private static TransactionsRemoteDataSource INSTANCE;
 
     public final static String TRANSACTION_ID = "transaction_id", CLIENT_FIRST_NAME = "client_name",
-                               CLIENT_LAST_NAME = "client_surname", DATE_TIME = "date_time",
-                               STATE = "state", TRANSACTION_AMOUNT = "amount",
-                               BRANCH_ID = "branch_id";
+                               CLIENT_LAST_NAME = "client_surname", TRANSACTION_DATE_TIME = "date_time",
+                               TRANSACTION_STATE = "state", TRANSACTION_AMOUNT = "amount",
+                               TRANSACTION_BRANCH_ID = "branch_id", LINE_ITEMS = "items", PAYMENTS = "payments";
+
+    public final static String LINE_ITEM_ID = "line_item_id", LINE_ITEM_AMOUNT = "amount",
+                               LINE_ITEM_PRODUCT_ID = "product_id", LINE_ITEM_QUANTITY = "quantity";
+
+    public final static String PAYMENT_ID = "payment_id", PAYMENT_DATE_TIME = "date_time",
+                               PAYMENT_STATE = "state", PAYMENT_AMOUNT = "amount",
+                               PAYMENT_BRANCH_ID = "branch_id";
+
 
     private final String ROOT = "http://35.197.185.80:8000/";
     private final String TRANSACTIONS = "transaction/";
@@ -68,7 +81,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        Log.d("requestTest","added");
+        Log.d("transactionResponse","added");
         mRequestQueue.add(req);
     }
 
@@ -82,19 +95,22 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
     public void getTransactions(@NonNull final TransactionsDataSource.LoadTransactionsCallback callback){
         checkNotNull(callback);
 
-        List<Product> list = null;
-        ProductsRemoteDataSource.JSONArrayResponseListener responseListener = new ProductsRemoteDataSource.JSONArrayResponseListener(callback);
+        List<Transaction> list = null;
+        TransactionsRemoteDataSource.JSONArrayResponseListener responseListener =
+                new TransactionsRemoteDataSource.JSONArrayResponseListener(callback);
 
-        Uri builtUri = Uri.parse(ROOT + PRODUCTS)
+        Uri builtUri = Uri.parse(ROOT + TRANSACTIONS)
                 .buildUpon()
-                .appendQueryParameter("category", Integer.toString(category.getId()))
                 .build();
-
-        Log.d("requestTest",builtUri.toString());
+        Log.d("transactionResponse",builtUri.toString());
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest (Request.Method.GET,
-                builtUri.toString(), null, responseListener, new ProductsRemoteDataSource.ErrorListener());
+                builtUri.toString(), null, responseListener,
+                new TransactionsRemoteDataSource.ErrorListener());
         addToRequestQueue(jsObjRequest);
+    }
+
+    public void getTransactionById(@NonNull String transactionId, @NonNull GetTransactionCallback callback){
 
     }
 
@@ -145,46 +161,75 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                 try {
                     JSONObject object = response.getJSONObject(i);
 
-                    int id = object.getInt(TRANSACTION_ID);
-                    String firstName = object.getString(CLIENT_FIRST_NAME);
-                    String lastName = object.getString(CLIENT_FIRST_NAME);
+                    /** Create transaction with basic attributes **/
 
-//                    String string = "January 2, 2010";
-//                    DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-//                    Date date = format.parse(string);
-//                    https://stackoverflow.com/questions/4216745/java-string-to-date-conversion
-                    Date dateTime = new Date(Date.parse(object.getString(DATE_TIME)));
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSz");
+                    String dateTimeString = object.getString(TRANSACTION_DATE_TIME).replace("Z", "UTC");
+                    Date dateTime = format.parse(dateTimeString);
+                    Transaction.Status status = Transaction.getStatus(object.getString(TRANSACTION_STATE));
 
+                    Transaction transaction = new Transaction(object.getInt(TRANSACTION_ID),
+                                                              object.getString(CLIENT_FIRST_NAME),
+                                                              object.getString(CLIENT_LAST_NAME),
+                                                              dateTime,
+                                                              object.getInt(TRANSACTION_BRANCH_ID),
+                                                              status,
+                                                              object.getDouble(TRANSACTION_AMOUNT));
 
+                    /** Process line items **/
 
-                    int categoryId = object.getInt("category");
-                    ProductCategory category = new ProductCategory(categoryId,"", new ArrayList<CategoryProperty>());
+                    JSONArray itemsJson = object.getJSONArray(LINE_ITEMS);
+                    ArrayList<LineItem> items = new ArrayList<>();
 
-                    JSONArray propertiesJson = object.getJSONArray("properties");
-                    ArrayList<ProductProperty> properties = new ArrayList<ProductProperty>();
-
-                    for (int j = 0; j < propertiesJson.length(); j++) {
-                        JSONObject propertyObject = propertiesJson.getJSONObject(j);
-                        ProductProperty productProperty = new ProductProperty(propertyObject.getInt(PRODUCT_PROPERTY_ID),
-                                propertyObject.getInt(CATEGORY_PROPERTY_ID),
-                                propertyObject.getString(PRODUCT_PROPERTY_VALUE));
-                        properties.add(productProperty);
+                    for (int j = 0; j < itemsJson.length(); j++) {
+                        JSONObject itemObject = itemsJson.getJSONObject(j);
+                        LineItem lineItem = new LineItem(itemObject.getInt(LINE_ITEM_ID),
+                                                         itemObject.getDouble(LINE_ITEM_AMOUNT),
+                                                         transaction,
+                                                         itemObject.getInt(LINE_ITEM_PRODUCT_ID));
+                        items.add(lineItem);
                     }
 
-                    Product product = new Product(id, unitPrice, unitOfMeasure, category, properties);
-                    Log.d("productResponse", product.toString());
+                    transaction.setLineItems(items);
 
-                    products.add(product);
+                    /** Process payments **/
 
+                    JSONArray paymentsJson = object.getJSONArray(PAYMENTS);
+                    ArrayList<Payment> payments = new ArrayList<>();
 
+                    for (int j = 0; j < paymentsJson.length(); j++) {
+                        JSONObject paymentObject = paymentsJson.getJSONObject(j);
+
+                        String paymentDateTimeString = object.getString(PAYMENT_DATE_TIME).replace("Z", "UTC");
+                        Date paymentDateTime = format.parse(dateTimeString);
+
+                        Payment.State state = Payment.getState(object.getString(PAYMENT_STATE));
+
+                        Payment payment = new Payment(paymentObject.getInt(PAYMENT_ID),
+                                                      paymentDateTime,
+                                                      paymentObject.getDouble(PAYMENT_AMOUNT),
+                                                      paymentObject.getInt(PAYMENT_BRANCH_ID),
+                                                      transaction,
+                                                      state);
+                        payments.add(payment);
+                    }
+
+                    transaction.setPayments(payments);
+
+                    Log.d("transactionResponse", "Processed transaction:\n" + transaction.toString());
+
+                    transactions.add(transaction);
                 }
 
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
             }
 
-            callback.onProductsLoaded(products);
+            callback.onTransactionsLoaded(transactions);
         }
 
     }

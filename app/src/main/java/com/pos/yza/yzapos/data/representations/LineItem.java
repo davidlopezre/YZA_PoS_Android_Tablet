@@ -9,14 +9,47 @@ public class LineItem {
     int quantity;
     double amount;
     Transaction transaction;
-    Product product;
+//    Product product;
+    int productId;
+
+//    public LineItem(int quantity, double amount,
+//                    Transaction transaction, Product product){
+//        this.lineItemId = -1;
+//        this.quantity = quantity;
+//        this.amount = amount;
+//        this.transaction = transaction;
+//        this.product = product;
+//    }
+//
+//    public LineItem(int lineItemId, int quantity, double amount,
+//                    Transaction transaction, Product product){
+//        this.lineItemId = lineItemId;
+//        this.quantity = quantity;
+//        this.amount = amount;
+//        this.transaction = transaction;
+//        this.product = product;
+//    }
 
     public LineItem(int quantity, double amount,
-                    Transaction transaction, Product product){
+                    Transaction transaction, int productId){
         this.lineItemId = -1;
         this.quantity = quantity;
         this.amount = amount;
         this.transaction = transaction;
-        this.product = product;
+        this.productId = productId;
     }
+
+    public LineItem(int lineItemId, int quantity, double amount,
+                    Transaction transaction, int productId){
+        this.lineItemId = lineItemId;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.transaction = transaction;
+        this.productId = productId;
+    }
+
+    public String toString(){
+        return "Product: " + productId + " Qty: " + quantity + " Amt: " + amount;
+    }
+
 }
