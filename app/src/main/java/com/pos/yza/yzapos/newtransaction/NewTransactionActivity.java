@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartActions;
@@ -119,7 +120,8 @@ public class NewTransactionActivity extends AppCompatActivity
                 }
 
                 mCategorySelectionPresenter =
-                        new CategorySelectionPresenter(categorySelectionFragment);
+                        new CategorySelectionPresenter(categorySelectionFragment,
+                                Injection.provideCategoriesRepository(this));
 
                 break;
             case GO_TO_CUSTOMER_DETAILS:

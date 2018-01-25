@@ -4,19 +4,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.newtransaction.MyRecyclerViewAdapter;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentContract;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CategorySelectionFragment extends Fragment implements CategorySelectionContract.View {
 
     CategorySelectionContract.Presenter mPresenter;
+
+    MyRecyclerViewAdapter<ProductCategory> adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -31,7 +41,6 @@ public class CategorySelectionFragment extends Fragment implements CategorySelec
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
 
     }
 
@@ -51,6 +60,21 @@ public class CategorySelectionFragment extends Fragment implements CategorySelec
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product_category_selection, container, false);
+
+        // data to populate the RecyclerView with
+
+//        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
+//
+//        List<String> datalist = Arrays.asList(data);
+
+
+        // set up the RecyclerView
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        int numberOfColumns = 4;
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
+        adapter = new MyRecyclerViewAdapter<ProductCategory>(getContext(), new ArrayList<ProductCategory>());
+//        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
 
         return root;
     }
@@ -73,4 +97,8 @@ public class CategorySelectionFragment extends Fragment implements CategorySelec
         mListener = null;
     }
 
+    @Override
+    public void showCategories(List<ProductCategory> categories) {
+        adapter.replaceData(categories);
+    }
 }

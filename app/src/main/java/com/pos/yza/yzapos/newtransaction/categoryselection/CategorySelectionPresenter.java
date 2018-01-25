@@ -2,7 +2,11 @@ package com.pos.yza.yzapos.newtransaction.categoryselection;
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.newtransaction.payment.PaymentContract;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.source.CategoriesDataSource;
+import com.pos.yza.yzapos.data.source.CategoriesRepository;
+
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,17 +16,38 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CategorySelectionPresenter implements CategorySelectionContract.Presenter {
 
-    private final CategorySelectionContract.View mPaymentView;
+    private final CategorySelectionContract.View mCategorySelectionView;
+
+    private CategoriesRepository mCategoriesRepository;
 
 
-    public CategorySelectionPresenter(@NonNull CategorySelectionContract.View mPaymentView) {
-        this.mPaymentView = checkNotNull(mPaymentView);
-        mPaymentView.setPresenter(this);
+    public CategorySelectionPresenter(@NonNull CategorySelectionContract.View mCategorySelectionView,
+                                      @NonNull CategoriesRepository mCategoriesRepository) {
+        this.mCategorySelectionView = checkNotNull(mCategorySelectionView);
+        this.mCategoriesRepository = checkNotNull(mCategoriesRepository);
+        mCategorySelectionView.setPresenter(this);
     }
 
     @Override
     public void start() {
-
+        loadCategories();
     }
 
+    private void loadCategories(){
+        mCategoriesRepository.getCategories(new CategoriesDataSource.LoadCategoriesCallback() {
+            @Override
+            public void onCategoriesLoaded(List<ProductCategory> categories) {
+                processCategories(categories);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+    }
+
+    private void processCategories(List<ProductCategory> categories) {
+        mCategorySelectionView.showCategories(categories);
+    }
 }
