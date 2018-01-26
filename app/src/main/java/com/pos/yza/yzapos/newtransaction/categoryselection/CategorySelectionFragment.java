@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CategorySelectionFragment extends Fragment implements CategorySelectionContract.View {
+public class CategorySelectionFragment extends Fragment implements CategorySelectionContract.View,
+        MyRecyclerViewAdapter.ItemClickListener{
 
     CategorySelectionContract.Presenter mPresenter;
 
@@ -73,7 +75,7 @@ public class CategorySelectionFragment extends Fragment implements CategorySelec
         int numberOfColumns = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         adapter = new MyRecyclerViewAdapter<ProductCategory>(getContext(), new ArrayList<ProductCategory>());
-//        adapter.setClickListener(this);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
         return root;
@@ -100,5 +102,12 @@ public class CategorySelectionFragment extends Fragment implements CategorySelec
     @Override
     public void showCategories(List<ProductCategory> categories) {
         adapter.replaceData(categories);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.i("CATEGORY_SELECTION", "You clicked " + adapter.getItem(position) +
+                " at position " + position);
+        mListener.onFragmentMessage("CATEGORY_SELECTION", adapter.getItem(position));
     }
 }

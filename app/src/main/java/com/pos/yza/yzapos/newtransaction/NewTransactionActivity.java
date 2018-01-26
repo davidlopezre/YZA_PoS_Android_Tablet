@@ -3,9 +3,11 @@ package com.pos.yza.yzapos.newtransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartActions;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
@@ -15,6 +17,8 @@ import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsFragment
 import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsPresenter;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentFragment;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
+import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionFragment;
+import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class NewTransactionActivity extends AppCompatActivity
@@ -30,6 +34,7 @@ public class NewTransactionActivity extends AppCompatActivity
     private CustomerDetailsPresenter mCustomerDetailsPresenter;
     private PaymentPresenter mPaymentPresenter;
     private CategorySelectionPresenter mCategorySelectionPresenter;
+    private ProductSelectionPresenter mProductSelectionPresenter;
 
 //    private ArrayList<Product> products;
 //    private Customer customer;
@@ -77,6 +82,7 @@ public class NewTransactionActivity extends AppCompatActivity
                 handleCartActions(mCartPresenter.getAction());
                 break;
             case CATEGORY_SELECTION:
+                handleCategorySelectionActions((ProductCategory)data);
                 break;
             case PRODUCT_SELECTION:
                 break;
@@ -143,6 +149,24 @@ public class NewTransactionActivity extends AppCompatActivity
             default:
                 break;
         }
+
+    }
+
+    private void handleCategorySelectionActions(ProductCategory category) {
+        Log.i("CATEGORY_SELECTION", "In New Transactions Activity");
+        ProductSelectionFragment productSelectionFragment =
+                (ProductSelectionFragment) getSupportFragmentManager().
+                        findFragmentByTag(PRODUCT_SELECTION);
+
+        if (productSelectionFragment == null) {
+            // Create the fragment
+            productSelectionFragment = ProductSelectionFragment.newInstance();
+            ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
+                    productSelectionFragment, R.id.contentFrame, PRODUCT_SELECTION);
+        }
+        // Create the presenter
+        mProductSelectionPresenter = new ProductSelectionPresenter(productSelectionFragment,
+                Injection.provideProductsRepository(this), category);
 
     }
 }
