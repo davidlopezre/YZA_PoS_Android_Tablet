@@ -1,11 +1,23 @@
 package com.pos.yza.yzapos.data.source;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.data.representations.Transaction;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -66,23 +78,37 @@ public class TransactionsRepository implements TransactionsDataSource {
 
     }
 
-    public void getTransactionById(@NonNull String transactionId, @NonNull GetTransactionCallback callback){
+    public void getTransactionById(@NonNull String transactionId, @NonNull final GetTransactionCallback callback){
+        checkNotNull(callback);
 
+        mTransactionRemoteDataSource.getTransactionById(transactionId, new GetTransactionCallback(){
+            @Override
+            public void onTransactionLoaded(Transaction transaction) {
+                callback.onTransactionLoaded(transaction);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     // Functions for Generating Report
     // void getTransactionsByBranch(Branch branch, @NonNull LoadTransactionsCallback callback);
 
     public void saveTransaction(@NonNull Transaction transaction){
-
+        Log.i("saveTransaction", "in repo");
+        mTransactionRemoteDataSource.saveTransaction(transaction);
     }
 
     public void refreshTransactions(){
 
     }
 
-    public void deleteAllTransactions(){
-
+    public void deleteOldTransactions(){
+        Log.i("deleteOldTrans", "in repo");
+        mTransactionRemoteDataSource.deleteOldTransactions();
     }
 
     public void deleteAllTransactionsByBranch(){
@@ -90,11 +116,13 @@ public class TransactionsRepository implements TransactionsDataSource {
     }
 
     public void cancelTransaction(@NonNull String transactionId){
-
+        Log.i("cancelTrans", "in repo");
+        mTransactionRemoteDataSource.cancelTransaction(transactionId);
     }
 
     public void refundTransaction(@NonNull String transactionId){
-
+        Log.i("refundTrans", "in repo");
+        mTransactionRemoteDataSource.refundTransaction(transactionId);
     }
 
 

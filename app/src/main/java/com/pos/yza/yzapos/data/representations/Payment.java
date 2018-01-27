@@ -1,6 +1,11 @@
 package com.pos.yza.yzapos.data.representations;
 
+import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Dalzy Mendoza on 16/1/18.
@@ -47,5 +52,18 @@ public class Payment {
 
     public String toString(){
         return "Id: " + paymentId + " Amount: " + amount + " Branch: " + branchId;
+    }
+
+    public HashMap<String,String> toHashMap(){
+        HashMap<String, String> toReturn = new HashMap<>();
+//
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ");
+        toReturn.put(TransactionsRemoteDataSource.PAYMENT_DATE_TIME, df.format(dateTime));
+        toReturn.put(TransactionsRemoteDataSource.PAYMENT_AMOUNT, amount + "");
+        toReturn.put(TransactionsRemoteDataSource.PAYMENT_BRANCH_ID, branchId + "");
+
+        // default doesnt include state; assumes state is OK for this function
+
+        return toReturn;
     }
 }

@@ -22,6 +22,27 @@ public final class Transaction {
 
     public enum Status {OK, CANCEL, REFUND};
 
+    public Transaction(String clientFirstName, String clientSurname, int branchId){
+        this.transactionId = -1;
+        this.clientFirstName = clientFirstName;
+        this.clientSurname = clientSurname;
+        this.branchId = branchId;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+        this.amount = 0;
+    }
+
+    public Transaction(int transactionId, String clientFirstName,
+                       String clientSurname, int branchId){
+        this.transactionId = transactionId;
+        this.clientFirstName = clientFirstName;
+        this.clientSurname = clientSurname;
+        this.branchId = branchId;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+        this.amount = 0;
+    }
+
     public Transaction(int transactionId, String clientFirstName,
                        String clientSurname, int branchId, double amount){
         this.transactionId = transactionId;
@@ -72,6 +93,12 @@ public final class Transaction {
     }
 
     public void setLineItems(ArrayList<LineItem> lineItems){
+        this.amount = 0;
+
+        for(LineItem lineItem : lineItems){
+            this.amount += lineItem.getAmount();
+        }
+
         this.lineItems = lineItems;
     }
 
@@ -80,6 +107,7 @@ public final class Transaction {
     }
 
     public void addLineItem(LineItem lineItem){
+        this.amount += lineItem.getAmount();
         lineItems.add(lineItem);
     }
 
@@ -112,6 +140,12 @@ public final class Transaction {
     }
 
     public double getAmount() {
+        double amount = 0;
+
+        for(LineItem lineItem : lineItems){
+            amount += lineItem.getAmount();
+        }
+
         return amount;
     }
 

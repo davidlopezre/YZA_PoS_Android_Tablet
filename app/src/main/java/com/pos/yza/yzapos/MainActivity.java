@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.data.representations.LineItem;
+import com.pos.yza.yzapos.data.representations.Payment;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
@@ -23,6 +25,7 @@ import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.ProductsRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,19 +54,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        ArrayList<CategoryProperty> properties = new ArrayList<CategoryProperty>();
-//        properties.add(new CategoryProperty("CatProp1"));
-//        ProductCategory catTest = new ProductCategory("MainTest", properties);
-//
-//        catsRepo.saveCategory(catTest);
+        Transaction trans = new Transaction("Main", "Activity", 1);
+        ArrayList<LineItem> items = new ArrayList<>();
+        items.add(new LineItem(10, 20.0, trans, 11));
+        trans.setLineItems(items);
+        ArrayList<Payment> payments = new ArrayList<>();
+        payments.add(new Payment(new Date(), 20.0, 1, trans));
+        trans.setPayments(payments);
 
-//        catsRepo.deleteCategory("4");
-//
-//        HashMap<String,String> staffEdits = new HashMap<String,String>();
-//
-//        staffEdits.put("name", "Majestic Edit");
-//
-//        staffRepo.editStaff("3", staffEdits);
+        Log.i("saveTransaction", "to save this: " + trans.toString());
+        transRepo.saveTransaction(trans);
+
+        transRepo.deleteOldTransactions();
 
     }
 
