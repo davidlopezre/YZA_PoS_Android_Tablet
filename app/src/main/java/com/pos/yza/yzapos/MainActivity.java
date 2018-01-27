@@ -39,33 +39,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 ////        FOR DALZY
-        Log.i("transactionReponse", "in main");
-        TransactionsDataSource transRepo = Injection.provideTransactionsRepository(getApplicationContext());
-
-        transRepo.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
-            @Override
-            public void onTransactionsLoaded(List<Transaction> transactions) {
-                Log.i("transactionReponse", "back to main");
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                Log.i("transactionReponse", "error back in main");
-            }
-        });
-
-        Transaction trans = new Transaction("Main", "Activity", 1);
-        ArrayList<LineItem> items = new ArrayList<>();
-        items.add(new LineItem(10, 20.0, trans, 11));
-        trans.setLineItems(items);
-        ArrayList<Payment> payments = new ArrayList<>();
-        payments.add(new Payment(new Date(), 20.0, 1, trans));
-        trans.setPayments(payments);
-
-        Log.i("saveTransaction", "to save this: " + trans.toString());
-        transRepo.saveTransaction(trans);
-
-        transRepo.deleteOldTransactions();
+//        Log.i("transactionReponse", "in main");
+//        TransactionsDataSource transRepo = Injection.provideTransactionsRepository(getApplicationContext());
+//
+//        transRepo.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
+//            @Override
+//            public void onTransactionsLoaded(List<Transaction> transactions) {
+//                Log.i("transactionReponse", "back to main");
+//            }
+//
+//            @Override
+//            public void onDataNotAvailable() {
+//                Log.i("transactionReponse", "error back in main");
+//            }
+//        });
+//
+//        Transaction trans = new Transaction("Main", "Activity", 1);
+//        ArrayList<LineItem> items = new ArrayList<>();
+//        items.add(new LineItem(10, 20.0, trans, 11));
+//        trans.setLineItems(items);
+//        ArrayList<Payment> payments = new ArrayList<>();
+//        payments.add(new Payment(new Date(), 20.0, 1, trans));
+//        trans.setPayments(payments);
+//
+//        Log.i("saveTransaction", "to save this: " + trans.toString());
+//        transRepo.saveTransaction(trans);
+//
+//        transRepo.deleteOldTransactions();
 
     }
 
