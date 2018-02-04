@@ -33,7 +33,7 @@ public interface TransactionsDataSource {
 
     void refreshTransactions();
 
-    void deleteAllTransactions();
+    void deleteOldTransactions();
 
     void deleteAllTransactionsByBranch();
 

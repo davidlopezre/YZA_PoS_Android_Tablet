@@ -7,6 +7,27 @@ import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.data.representations.LineItem;
+import com.pos.yza.yzapos.data.representations.Payment;
+import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.data.representations.Transaction;
+import com.pos.yza.yzapos.data.source.CategoriesDataSource;
+import com.pos.yza.yzapos.data.source.StaffDataSource;
+import com.pos.yza.yzapos.data.source.StaffRepository;
+import com.pos.yza.yzapos.data.source.TransactionsDataSource;
+import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
+import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
+import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
+import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
+import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.source.ProductsRepository;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -18,22 +39,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 ////        FOR DALZY
-//        Log.i("saveCategory", "in main");
-//        CategoriesDataSource catsRepo = Injection.provideCategoriesRepository(getApplicationContext());
-
-//        ArrayList<CategoryProperty> properties = new ArrayList<CategoryProperty>();
-//        properties.add(new CategoryProperty("CatProp1"));
-//        ProductCategory catTest = new ProductCategory("MainTest", properties);
+//        Log.i("transactionReponse", "in main");
+//        TransactionsDataSource transRepo = Injection.provideTransactionsRepository(getApplicationContext());
 //
-//        catsRepo.saveCategory(catTest);
-
-//        catsRepo.deleteCategory("4");
+//        transRepo.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
+//            @Override
+//            public void onTransactionsLoaded(List<Transaction> transactions) {
+//                Log.i("transactionReponse", "back to main");
+//            }
 //
-//        HashMap<String,String> staffEdits = new HashMap<String,String>();
+//            @Override
+//            public void onDataNotAvailable() {
+//                Log.i("transactionReponse", "error back in main");
+//            }
+//        });
 //
-//        staffEdits.put("name", "Majestic Edit");
+//        Transaction trans = new Transaction("Main", "Activity", 1);
+//        ArrayList<LineItem> items = new ArrayList<>();
+//        items.add(new LineItem(10, 20.0, trans, 11));
+//        trans.setLineItems(items);
+//        ArrayList<Payment> payments = new ArrayList<>();
+//        payments.add(new Payment(new Date(), 20.0, 1, trans));
+//        trans.setPayments(payments);
 //
-//        staffRepo.editStaff("3", staffEdits);
+//        Log.i("saveTransaction", "to save this: " + trans.toString());
+//        transRepo.saveTransaction(trans);
+//
+//        transRepo.deleteOldTransactions();
 
     }
 
