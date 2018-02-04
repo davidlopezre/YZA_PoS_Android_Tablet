@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Dalzy Mendoza on 12/1/18.
  */
 
-public interface TransactionDataSource{
+public interface TransactionsDataSource {
 
     interface LoadTransactionsCallback {
         void onTransactionsLoaded(List<Transaction> transactions);
@@ -33,7 +33,7 @@ public interface TransactionDataSource{
 
     void refreshTransactions();
 
-    void deleteAllTransactions();
+    void deleteOldTransactions();
 
     void deleteAllTransactionsByBranch();
 
