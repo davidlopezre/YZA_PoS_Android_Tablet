@@ -1,6 +1,9 @@
 package com.pos.yza.yzapos.newtransaction.cart;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.pos.yza.yzapos.data.representations.Product;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,7 +49,14 @@ public class CartPresenter implements CartContract.Presenter {
         mCartView.showCustomerDetails();
     }
 
+    @Override
+    public void addProduct(Product product) {
+        Log.i("CART", "Adding Product in presenter");
+        mCartView.addProductToAdapter(product);
+    }
+
     public CartActions getAction() {
         return mCurrentAction;
     }
+
 }

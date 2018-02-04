@@ -6,45 +6,29 @@
     android:layout_height="match_parent"
     tools:context="com.pos.yza.yzapos.newtransaction.NewTransactionActivity">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/new_transaction"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="16dp"/>
-
-
     <ListView
-        android:id="@+id/recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorText"
-        app:layout_constraintTop_toBottomOf="@id/textView4"
-        app:layout_constraintLeft_toRightOf="@+id/guideline"
-        app:layout_constraintRight_toLeftOf="parent">
+        android:id="@+id/list_view"
+        android:layout_width="649dp"
+        android:layout_height="450dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
     </ListView>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5">
-    </android.support.constraint.Guideline>
 
     <LinearLayout
         android:id="@+id/add_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="@id/del_layout"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/list_view"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/add"
@@ -52,43 +36,39 @@
             android:layout_height="100dp"
             android:background="@drawable/ic_add">
         </Button>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:text="@string/add" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/del_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
-        <Button
-            android:id="@+id/del"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_del">
-        </Button>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/del"
-            android:layout_gravity="center"/>
-    </LinearLayout>
 
     <Button
         android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="253dp"
         android:text="@string/next"
-        app:layout_constraintLeft_toRightOf="@id/guideline"
+        android:textAllCaps="false"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/del_layout"/>
+        app:layout_constraintStart_toEndOf="@+id/list_view">
+    </Button>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="650dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view" />
 
 </android.support.constraint.ConstraintLayout>

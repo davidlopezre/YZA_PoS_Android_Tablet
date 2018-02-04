@@ -80,7 +80,8 @@ public class AdminOptionsActivity extends AppCompatActivity
             // Create the fragment
                 itemListFragment = ItemListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame, "",
+                    true);
         }
 
         // Create the presenter
@@ -130,7 +131,7 @@ public class AdminOptionsActivity extends AppCompatActivity
                             case R.id.category_navigation_menu_item:
                                 CategoryListFragment categoryListFragment = CategoryListFragment.newInstance();
                                 ActivityUtils.replaceFragmentInActivity(
-                                        getSupportFragmentManager(), categoryListFragment, R.id.contentFrame);
+                                        getSupportFragmentManager(), categoryListFragment, R.id.contentFrame, "", true);
                                 // Create the presenter
                                 mCategoryListPresenter = new CategoryListPresenter(
                                         Injection.provideCategoriesRepository(getApplicationContext()), categoryListFragment);
@@ -139,7 +140,7 @@ public class AdminOptionsActivity extends AppCompatActivity
 
                                 StaffListFragment staffListFragment = StaffListFragment.newInstance();
                                     ActivityUtils.replaceFragmentInActivity(
-                                            getSupportFragmentManager(), staffListFragment, R.id.contentFrame);
+                                            getSupportFragmentManager(), staffListFragment, R.id.contentFrame, "", true);
                                 // Create the presenter
                                 mStaffListPresenter = new StaffListPresenter(
                                         Injection.provideStaffRepository(getApplicationContext()), staffListFragment);

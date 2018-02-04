@@ -1,5 +1,6 @@
 package com.pos.yza.yzapos.newtransaction;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.util.Log;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartActions;
@@ -61,7 +63,8 @@ public class NewTransactionActivity extends AppCompatActivity
             // Create the fragment
             cartFragment = CartFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), cartFragment, R.id.contentFrame, CART);
+                    getSupportFragmentManager(), cartFragment, R.id.contentFrame, CART,
+                    false);
         }
 
         // Create the presenter
@@ -85,6 +88,7 @@ public class NewTransactionActivity extends AppCompatActivity
                 handleCategorySelectionActions((ProductCategory)data);
                 break;
             case PRODUCT_SELECTION:
+                handleProductSelectionActions((Product)data);
                 break;
             case PAYMENT:
                 break;
@@ -104,7 +108,7 @@ public class NewTransactionActivity extends AppCompatActivity
             // Create the fragment
             paymentFragment = PaymentFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(), paymentFragment,
-                    R.id.contentFrame, PAYMENT);
+                    R.id.contentFrame, PAYMENT, true);
         }
 
         // Create the presenter
@@ -122,7 +126,8 @@ public class NewTransactionActivity extends AppCompatActivity
                 if (categorySelectionFragment == null) {
                     categorySelectionFragment = CategorySelectionFragment.newInstance();
                     ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
-                            categorySelectionFragment, R.id.contentFrame, CATEGORY_SELECTION);
+                            categorySelectionFragment, R.id.contentFrame, CATEGORY_SELECTION,
+                            true);
                 }
 
                 mCategorySelectionPresenter =
@@ -140,7 +145,8 @@ public class NewTransactionActivity extends AppCompatActivity
                     // Create the fragment
                     customerDetailsFragment = CustomerDetailsFragment.newInstance();
                     ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
-                            customerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS);
+                            customerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS,
+                            true);
                 }
                 // Create the presenter
                 mCustomerDetailsPresenter = new CustomerDetailsPresenter(customerDetailsFragment);
@@ -162,11 +168,26 @@ public class NewTransactionActivity extends AppCompatActivity
             // Create the fragment
             productSelectionFragment = ProductSelectionFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
-                    productSelectionFragment, R.id.contentFrame, PRODUCT_SELECTION);
+                    productSelectionFragment, R.id.contentFrame, PRODUCT_SELECTION, true);
         }
         // Create the presenter
         mProductSelectionPresenter = new ProductSelectionPresenter(productSelectionFragment,
                 Injection.provideProductsRepository(this), category);
 
+    }
+
+    private void handleProductSelectionActions(Product product) {
+        Log.i("PRODUCT_SELECTION", "In New Transactions Activity");
+        mCartPresenter.addProduct(product);
+        // Remove the fragment from activity
+//        CartFragment cartFragment =
+//                (CartFragment) getSupportFragmentManager().
+//                        findFragmentByTag(CART);
+
+        FragmentManager fm = getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+        
     }
 }

@@ -34,39 +34,52 @@ public class ActivityUtils {
      *
      */
     public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                              @NonNull Fragment fragment, int frameId) {
+                                              @NonNull Fragment fragment, int frameId,
+                                              String tag,
+                                              boolean backStack) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(frameId, fragment);
-        transaction.commit();
-    }
 
-    public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                              @NonNull Fragment fragment, int frameId, String tag) {
-        checkNotNull(fragmentManager);
-        checkNotNull(fragment);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(frameId, fragment, tag);
-        transaction.commit();
-    }
+        if (tag.equals("")){
+            transaction.add(frameId, fragment);
+        }else {
+            transaction.add(frameId, fragment, tag);
+        }
 
-
-    public static void replaceFragmentInActivity (@NonNull FragmentManager fragmentManager,
-                                                  @NonNull Fragment fragment, int frameId) {
-        checkNotNull(fragmentManager);
-        checkNotNull(fragment);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(frameId, fragment).addToBackStack(null);
+        if (backStack){
+            transaction.addToBackStack(tag);
+        }
         transaction.commit();
     }
 
     public static void replaceFragmentInActivity (@NonNull FragmentManager fragmentManager,
-                                                  @NonNull Fragment fragment, int frameId, String tag) {
+                                                  @NonNull Fragment fragment, int frameId,
+                                                  String tag,
+                                                  boolean backStack) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(frameId, fragment, tag).addToBackStack(null);
+
+        if(tag.equals("")){
+            transaction.replace(frameId, fragment).addToBackStack(null);
+        }else {
+            transaction.replace(frameId, fragment, tag).addToBackStack(null);
+        }
+
+        if (backStack){
+            transaction.addToBackStack(tag);
+        }
+
+        transaction.commit();
+    }
+
+    public static void removeFragmentFromActivity(@NonNull FragmentManager fragmentManager,
+                                                  @NonNull Fragment fragment) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.remove(fragment);
         transaction.commit();
     }
 }

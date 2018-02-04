@@ -1,6 +1,7 @@
 package com.pos.yza.yzapos.newtransaction.cart;
 
 import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.util.BasePresenter;
 import com.pos.yza.yzapos.util.BaseView;
 
@@ -15,6 +16,7 @@ public interface CartContract {
         void showProductsInCart();
         void showCategorySelection();
         void showCustomerDetails();
+        void addProductToAdapter(Product product);
 
     }
 
@@ -23,5 +25,6 @@ public interface CartContract {
         void removeProduct();
         void refreshProducts();
         void goToCustomerDetails();
+        void addProduct(Product product);
     }
 }

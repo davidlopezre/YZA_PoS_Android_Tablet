@@ -135,6 +135,13 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
             TextView label = (TextView) rowView.findViewById(R.id.title);
             label.setText(product.getName());
 
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onFragmentMessage("PRODUCT_SELECTION", product);
+                }
+            });
+
             return rowView;
         }
     }
