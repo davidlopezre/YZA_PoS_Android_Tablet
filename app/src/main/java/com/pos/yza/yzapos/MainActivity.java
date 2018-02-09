@@ -3,10 +3,10 @@ package com.pos.yza.yzapos;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Payment;

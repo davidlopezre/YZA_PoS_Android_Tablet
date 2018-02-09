@@ -6,30 +6,18 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editText_name"
+        android:id="@+id/editText_firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/name"/>
 
     <EditText
-        android:id="@+id/editText_address"
+        android:id="@+id/editText_surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="@string/address" />
-
-    <EditText
-        android:id="@+id/edittext_contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="@string/contact" />
-
-    <Spinner
-        android:id="@+id/spinner_branch"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:text="@string/surname" />
 
     <Button
         android:id="@+id/button_next"
