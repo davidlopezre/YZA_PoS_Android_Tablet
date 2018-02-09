@@ -120,7 +120,7 @@ public class CartFragment extends Fragment implements CartContract.View {
 
     @Override
     public void showCustomerDetails() {
-        mListener.onFragmentMessage(getTag(), null);
+        mListener.onFragmentMessage(getTag(), adapter.products);
     }
 
     private class ProductAdapter extends BaseAdapter {

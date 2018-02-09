@@ -10,6 +10,7 @@ import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.source.TransactionsRepository;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartActions;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
@@ -38,9 +39,9 @@ public class NewTransactionActivity extends AppCompatActivity
     private CategorySelectionPresenter mCategorySelectionPresenter;
     private ProductSelectionPresenter mProductSelectionPresenter;
 
-//    private ArrayList<Product> products;
-//    private Customer customer;
-//    private Payment payment;
+    private NewTransaction transaction = new NewTransaction();
+
+    private TransactionsRepository mTransactionsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class NewTransactionActivity extends AppCompatActivity
 
         // Create the presenter
         mCartPresenter = new CartPresenter(cartFragment);
+        // Initialise the repo
+        mTransactionsRepository = Injection.provideTransactionsRepository(this);
 
     }
 
@@ -82,7 +85,7 @@ public class NewTransactionActivity extends AppCompatActivity
     public void onFragmentMessage(String TAG, Object data) {
         switch (TAG) {
             case CART:
-                handleCartActions(mCartPresenter.getAction());
+                handleCartActions(mCartPresenter.getAction(), data);
                 break;
             case CATEGORY_SELECTION:
                 handleCategorySelectionActions((ProductCategory)data);
@@ -91,9 +94,10 @@ public class NewTransactionActivity extends AppCompatActivity
                 handleProductSelectionActions((Product)data);
                 break;
             case PAYMENT:
+                completeTransaction(data);
                 break;
             case CUSTOMER_DETAILS:
-                handleCustomerDetailsActions();
+                handleCustomerDetailsActions(data);
                 break;
             default:
                 break;
@@ -101,7 +105,8 @@ public class NewTransactionActivity extends AppCompatActivity
 
     }
 
-    private void handleCustomerDetailsActions(){
+    private void handleCustomerDetailsActions(Object data){
+        transaction.setCustomerDetails(data);
         PaymentFragment paymentFragment =
                 (PaymentFragment) getSupportFragmentManager().findFragmentByTag(PAYMENT);
         if (paymentFragment == null) {
@@ -115,7 +120,7 @@ public class NewTransactionActivity extends AppCompatActivity
         mPaymentPresenter = new PaymentPresenter(paymentFragment);
     }
 
-    private void handleCartActions(CartActions action) {
+    private void handleCartActions(CartActions action, Object data) {
         switch (action) {
             case ADD_PRODUCT:
 
@@ -136,7 +141,7 @@ public class NewTransactionActivity extends AppCompatActivity
 
                 break;
             case GO_TO_CUSTOMER_DETAILS:
-
+                transaction.setProductsInCart(data);
                 CustomerDetailsFragment customerDetailsFragment =
                         (CustomerDetailsFragment) getSupportFragmentManager().
                                 findFragmentByTag(CUSTOMER_DETAILS);
@@ -189,5 +194,11 @@ public class NewTransactionActivity extends AppCompatActivity
             fm.popBackStack();
         }
         
+    }
+
+    private void completeTransaction(Object data) {
+        transaction.setPayment(data);
+        mTransactionsRepository.saveTransaction(transaction.createTransaction());
+
     }
 }

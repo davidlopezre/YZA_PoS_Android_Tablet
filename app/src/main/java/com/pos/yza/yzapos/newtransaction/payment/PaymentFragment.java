@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
@@ -19,6 +21,8 @@ public class PaymentFragment extends Fragment implements PaymentContract.View {
     PaymentContract.Presenter mPresenter;
 
     private OnFragmentInteractionListener mListener;
+
+    double amount = 0.0;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -52,6 +56,16 @@ public class PaymentFragment extends Fragment implements PaymentContract.View {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_payment, container, false);
 
+        final EditText editTextAmount = root.findViewById(R.id.edittext_amount);
+
+        Button next = root.findViewById(R.id.button_next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                amount = Double.parseDouble(editTextAmount.getText().toString());
+                mPresenter.confirmPayment();
+            }
+        });
         return root;
     }
 
@@ -73,4 +87,8 @@ public class PaymentFragment extends Fragment implements PaymentContract.View {
         mListener = null;
     }
 
+    @Override
+    public void showConfirmPayment() {
+        mListener.onFragmentMessage("PAYMENT", amount);
+    }
 }

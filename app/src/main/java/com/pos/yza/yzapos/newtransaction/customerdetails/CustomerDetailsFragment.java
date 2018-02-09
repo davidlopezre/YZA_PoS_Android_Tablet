@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 import com.pos.yza.yzapos.newtransaction.cart.CartContract;
+
+import java.util.HashMap;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -20,6 +23,8 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
     CustomerDetailsContract.Presenter mPresenter;
 
     private OnFragmentInteractionListener mListener;
+
+    private HashMap<String,String> customer = new HashMap<>();
 
     public CustomerDetailsFragment() {
         // Required empty public constructor
@@ -53,10 +58,16 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_customer, container, false);
 
+        final EditText editTextFirstName = root.findViewById(R.id.editText_firstname);
+
+        final EditText editTextSurname = root.findViewById(R.id.editText_surname);
+
         Button next = (Button) root.findViewById(R.id.button_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customer.put("firstname", editTextFirstName.getText().toString());
+                customer.put("surname", editTextSurname.getText().toString());
                 mPresenter.goToPayment();
             }
         });
@@ -84,6 +95,6 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
 
     @Override
     public void showPayment() {
-        mListener.onFragmentMessage("CUSTOMER_DETAILS", null);
+        mListener.onFragmentMessage("CUSTOMER_DETAILS", customer);
     }
 }

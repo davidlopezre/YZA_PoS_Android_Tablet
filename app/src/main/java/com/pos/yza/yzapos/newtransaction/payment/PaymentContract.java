@@ -9,12 +9,11 @@ import com.pos.yza.yzapos.util.BaseView;
 
 public interface PaymentContract {
     interface View extends BaseView<PaymentContract.Presenter> {
-
+        void showConfirmPayment();
 
     }
 
     interface Presenter extends BasePresenter {
-
-
+        void confirmPayment();
     }
 }

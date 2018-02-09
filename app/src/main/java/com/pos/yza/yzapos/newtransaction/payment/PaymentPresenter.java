@@ -25,4 +25,8 @@ public class PaymentPresenter implements PaymentContract.Presenter {
 
     }
 
+    @Override
+    public void confirmPayment() {
+        mPaymentView.showConfirmPayment();
+    }
 }
