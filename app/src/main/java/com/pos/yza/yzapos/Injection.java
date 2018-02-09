@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.pos.yza.yzapos.data.source.CategoriesRepository;
+import com.pos.yza.yzapos.data.source.PaymentsRepository;
 import com.pos.yza.yzapos.data.source.ProductsRepository;
 import com.pos.yza.yzapos.data.source.StaffRepository;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
 import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
+import com.pos.yza.yzapos.data.source.remote.PaymentsRemoteDataSource;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
 import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
@@ -38,6 +40,11 @@ public class Injection {
     public static TransactionsRepository provideTransactionsRepository(@NonNull Context context) {
         checkNotNull(context);
         return TransactionsRepository.getInstance(TransactionsRemoteDataSource.getInstance(context));
+    }
+
+    public static PaymentsRepository providePaymentsRepository(@NonNull Context context) {
+        checkNotNull(context);
+        return PaymentsRepository.getInstance(PaymentsRemoteDataSource.getInstance(context));
     }
 
 }

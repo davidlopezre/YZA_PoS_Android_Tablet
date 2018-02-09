@@ -22,6 +22,15 @@ public class Payment {
     private Transaction transaction;
     private State state;
 
+    public Payment(double amount, int branchId, Transaction transaction) {
+        this.paymentId = -1;
+        this.dateTime = new Date(0,0,0);
+        this.amount = amount;
+        this.branchId = branchId;
+        this.transaction = transaction;
+        this.state = State.OK;
+    }
+
 
     public Payment(Date dateTime, double amount, int branchId, Transaction transaction) {
         this.paymentId = -1;
@@ -29,6 +38,7 @@ public class Payment {
         this.amount = amount;
         this.branchId = branchId;
         this.transaction = transaction;
+        this.state = State.OK;
     }
 
     public Payment(int paymentId, Date dateTime, double amount, int branchId, Transaction transaction, State state) {
@@ -50,13 +60,60 @@ public class Payment {
         return null;
     }
 
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public String toString(){
         return "Id: " + paymentId + " Amount: " + amount + " Branch: " + branchId;
     }
 
     public HashMap<String,String> toHashMap(){
         HashMap<String, String> toReturn = new HashMap<>();
-//
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ");
         toReturn.put(TransactionsRemoteDataSource.PAYMENT_DATE_TIME, df.format(dateTime));
         toReturn.put(TransactionsRemoteDataSource.PAYMENT_AMOUNT, amount + "");

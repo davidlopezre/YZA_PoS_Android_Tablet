@@ -22,14 +22,40 @@ public final class Transaction {
 
     public enum Status {OK, CANCEL, REFUND};
 
+    public Transaction(int transactionId){
+        this.transactionId = transactionId;
+        this.clientFirstName = "";
+        this.clientSurname = "";
+        this.dateTime = new Date(0,0,0);
+        this.branchId = -1;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+        this.amount = 0;
+        this.status = Status.OK;
+    }
+
+    public Transaction(String state){
+        this.transactionId = -1;
+        this.clientFirstName = "";
+        this.clientSurname = "";
+        this.dateTime = new Date(0,0,0);
+        this.branchId = -1;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+        this.amount = 0;
+        this.status = Transaction.getStatus(state);
+    }
+
     public Transaction(String clientFirstName, String clientSurname, int branchId){
         this.transactionId = -1;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
+        this.dateTime = new Date(0,0,0);
         this.branchId = branchId;
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.status = Status.OK;
     }
 
     public Transaction(int transactionId, String clientFirstName,
@@ -37,10 +63,12 @@ public final class Transaction {
         this.transactionId = transactionId;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
+        this.dateTime = new Date(0,0,0);
         this.branchId = branchId;
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.status = Status.OK;
     }
 
     public Transaction(int transactionId, String clientFirstName,
@@ -48,10 +76,12 @@ public final class Transaction {
         this.transactionId = transactionId;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
+        this.dateTime = new Date(0,0,0);
         this.branchId = branchId;
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = amount;
+        this.status = Status.OK;
     }
 
     public Transaction(int transactionId, String clientFirstName,
@@ -60,11 +90,12 @@ public final class Transaction {
         this.transactionId = transactionId;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
+        this.dateTime = dateTime;
         this.branchId = branchId;
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
-        this.dateTime = dateTime;
         this.amount = amount;
+        this.status = Status.OK;
     }
 
     public Transaction(int transactionId, String clientFirstName,
@@ -74,6 +105,7 @@ public final class Transaction {
         this.transactionId = transactionId;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
+        this.dateTime = dateTime;
         this.branchId = branchId;
         this.lineItems = lineItems;
         this.payments = payments;
@@ -88,6 +120,8 @@ public final class Transaction {
         this.clientSurname = clientSurname;
         this.dateTime = dateTime;
         this.branchId = branchId;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
         this.status = status;
         this.amount = amount;
     }
