@@ -443,7 +443,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                     JSONObject paymentObject = paymentsJson.getJSONObject(j);
 
                     String paymentDateTimeString = response.getString(PAYMENT_DATE_TIME).replace("Z", "UTC");
-                    Date paymentDateTime = format.parse(dateTimeString);
+                    Date paymentDateTime = format.parse(paymentDateTimeString);
 
                     Payment.State state = Payment.getState(response.getString(PAYMENT_STATE));
 
