@@ -21,12 +21,14 @@ public class StaffRepository implements StaffDataSource {
     private static StaffRepository INSTANCE = null;
     private static Context mContext;
     private final StaffDataSource mStaffRemoteDataSource;
+    private final StaffDataSource mStaffLocalDataSource;
     private RequestQueue mRequestQueue;
 
     // Prevent direct instantiation.
-    private StaffRepository(@NonNull StaffDataSource staffRemoteDataSource) {
+    private StaffRepository(@NonNull StaffDataSource staffRemoteDataSource,
+                            @NonNull StaffDataSource staffLocalDataSource) {
         mStaffRemoteDataSource = checkNotNull(staffRemoteDataSource);
-    //  mTasksLocalDataSource = checkNotNull(tasksLocalDataSource);
+        mStaffLocalDataSource = checkNotNull(staffLocalDataSource);
     }
 
     /**
@@ -35,15 +37,16 @@ public class StaffRepository implements StaffDataSource {
      * @param staffRemoteDataSource the backend data source
      * @return the {@link ProductsDataSource} instance
      */
-    public static StaffRepository getInstance(StaffDataSource staffRemoteDataSource) {
+    public static StaffRepository getInstance(StaffDataSource staffRemoteDataSource,
+                                              StaffDataSource staffLocalDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new StaffRepository(staffRemoteDataSource);
+            INSTANCE = new StaffRepository(staffRemoteDataSource, staffLocalDataSource);
         }
         return INSTANCE;
     }
 
     /**
-     * Used to force {@link #getInstance(StaffDataSource)} (StaffDataSource, StaffDataSource)}
+     * Used to force {@link #getInstance(StaffDataSource, StaffDataSource)}
      * to create a new instance next time it's called.
      */
     public static void destroyInstance() {

@@ -20,7 +20,16 @@ public interface StaffDataSource {
         void onDataNotAvailable();
     }
 
+    interface GetStaffCallback {
+
+        void onStaffLoaded(Staff staff);
+
+        void onDataNotAvailable();
+    }
+
     void getAllStaff(@NonNull LoadStaffCallback callback);
+
+    void getStaffById(@NonNull String staffId, @NonNull GetStaffCallback callback);
 
     void saveStaff(@NonNull Staff staff);
 

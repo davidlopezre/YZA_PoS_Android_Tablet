@@ -13,9 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.DeleteJsonObjectRequest;
-import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Staff;
-import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
 
 import org.json.JSONArray;
@@ -82,6 +80,26 @@ public class StaffRemoteDataSource implements StaffDataSource {
         Log.d("staffRemoteRequest",builtUri.toString());
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest (Request.Method.GET,
+                builtUri.toString(), null, responseListener,
+                new StaffRemoteDataSource.ErrorListener());
+
+        addToRequestQueue(jsObjRequest);
+    }
+
+    public void getStaffById(@NonNull String staffId, @NonNull GetStaffCallback callback){
+        checkNotNull(callback);
+
+        Staff staff = null;
+        StaffRemoteDataSource.JSONObjectResponseListener responseListener =
+                new StaffRemoteDataSource.JSONObjectResponseListener(callback);
+
+        Uri builtUri = Uri.parse(ROOT + STAFF + staffId + "/")
+                .buildUpon()
+                .build();
+
+        Log.d("staffRemoteRequest",builtUri.toString());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest (Request.Method.GET,
                 builtUri.toString(), null, responseListener,
                 new StaffRemoteDataSource.ErrorListener());
 
@@ -202,6 +220,40 @@ public class StaffRemoteDataSource implements StaffDataSource {
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            callback.onStaffLoaded(staff);
+        }
+
+    }
+
+    private class JSONObjectResponseListener implements Response.Listener<JSONObject> {
+        StaffDataSource.GetStaffCallback callback;
+
+        public JSONObjectResponseListener(StaffDataSource.GetStaffCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        public void onResponse(JSONObject object) {
+            Log.d("staffRemoteRequest", "onResponse");
+
+            Staff staff = null;
+
+            try{
+                String staffId = object.getString(ID_STAFF);
+                String firstName = object.getString(FIRST_NAME);
+                String lastName = object.getString(LAST_NAME);
+                String phoneNumber = object.getString(PHONE_NUMBER);
+                String email = object.getString(EMAIL);
+                String homeAddress = object.getString(ADDRESS);
+
+                staff = new Staff(Integer.parseInt(staffId), firstName, lastName,
+                        phoneNumber, email, homeAddress);
+
+                Log.d("staffRemoteRequest", firstName + " " + lastName);
+            }catch (JSONException e) {
+                e.printStackTrace();
             }
 
             callback.onStaffLoaded(staff);
