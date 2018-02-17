@@ -25,6 +25,14 @@ public class LineItem {
         this.productId = productId;
     }
 
+    public LineItem(int quantity, double amount, int productId){
+        this.lineItemId = -1;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.productId = productId;
+    }
+
+
     public LineItem(int lineItemId, int quantity, double amount,
                     Transaction transaction, int productId){
         this.lineItemId = lineItemId;
@@ -48,6 +56,10 @@ public class LineItem {
 
     public Transaction getTransaction() {
         return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 
     public int getProductId() {

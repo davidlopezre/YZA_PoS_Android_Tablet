@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 
@@ -27,7 +28,7 @@ public class CartFragment extends Fragment implements CartContract.View {
 
     CartContract.Presenter mPresenter;
 
-    ProductAdapter adapter;
+    LineItemAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,7 +43,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ProductAdapter(new ArrayList<Product>(0));
+        adapter = new LineItemAdapter(new ArrayList<LineItem>(0));
 
     }
 
@@ -108,9 +109,9 @@ public class CartFragment extends Fragment implements CartContract.View {
     }
 
     @Override
-    public void addProductToAdapter(Product product) {
+    public void addLineItemToAdapter(LineItem lineItem) {
         Log.i("CART", "Adding product to adapter");
-        adapter.addProduct(product);
+        adapter.addLineItem(lineItem);
     }
 
     @Override
@@ -120,31 +121,31 @@ public class CartFragment extends Fragment implements CartContract.View {
 
     @Override
     public void showCustomerDetails() {
-        mListener.onFragmentMessage(getTag(), adapter.products);
+        mListener.onFragmentMessage(getTag(), adapter.lineItems);
     }
 
-    private class ProductAdapter extends BaseAdapter {
+    private class LineItemAdapter extends BaseAdapter {
 
-        private List<Product> products;
+        private List<LineItem> lineItems;
 
-        public ProductAdapter(List<Product> products) {
-            this.products = products;
+        public LineItemAdapter(List<LineItem> lineItems) {
+            this.lineItems = lineItems;
         }
 
         @Override
         public int getCount() {
-            return products.size();
+            return lineItems.size();
         }
 
-        public void addProduct(Product product){
-            products.add(product);
+        public void addLineItem(LineItem lineItem){
+            lineItems.add(lineItem);
             notifyDataSetChanged();
-            Log.i("CART","Product added. New list is " + product.toString());
+            Log.i("CART","Product added. New list is " + lineItem.toString());
         }
 
         @Override
-        public Item getItem(int i) {
-            return products.get(i);
+        public LineItem getItem(int i) {
+            return lineItems.get(i);
         }
 
         @Override
@@ -157,13 +158,17 @@ public class CartFragment extends Fragment implements CartContract.View {
             View rowView = view;
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                rowView = inflater.inflate(R.layout.list_item,
+                rowView = inflater.inflate(R.layout.lineitem,
                         viewGroup, false);
             }
-            final Product product = products.get(i);
+            final LineItem lineItem = lineItems.get(i);
 
             TextView label = (TextView) rowView.findViewById(R.id.title);
-            label.setText(product.getName());
+            label.setText(lineItem.toString());
+
+            TextView quantity = (TextView) rowView.findViewById(R.id.quantity);
+            quantity.setText(Integer.toString(lineItem.getQuantity()));
+
 
             return rowView;
         }

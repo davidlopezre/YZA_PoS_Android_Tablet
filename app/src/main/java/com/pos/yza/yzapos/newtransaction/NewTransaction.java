@@ -17,23 +17,23 @@ import java.util.List;
  */
 
 public class NewTransaction {
-    List<Product> productsInCart;
+    List<LineItem> cart;
     double paymentAmount;
     HashMap<String,String> customerDetails;
 
     public NewTransaction() {
-        productsInCart = new ArrayList<>();
+        cart = new ArrayList<>();
         paymentAmount = 0.0;
     }
 
-    public void setProductsInCart(Object data) {
+    public void setCart(Object data) {
 
-        ArrayList<Product> products = (ArrayList) data;
+        ArrayList<LineItem> lineItems = (ArrayList) data;
 
         Log.i("NewTransactionClass", "Adding to productsInCart!");
-        for (Product p : products) {
-            productsInCart.add(p);
-            Log.i("NewTransactionClass", p.getName());
+        for (LineItem l : lineItems) {
+            cart.add(l);
+            Log.i("NewTransactionClass", l.toString());
         }
     }
 
@@ -44,6 +44,7 @@ public class NewTransaction {
     }
 
     public void setCustomerDetails(Object data) {
+        
         this.customerDetails = (HashMap)data;
         Log.i("NewTransactionClass", "successfully set customer details!");
         Log.i("NewTransactionClass", customerDetails.get("firstname") + "");
@@ -59,7 +60,7 @@ public class NewTransaction {
 
             Payment payment = new Payment(new Date(),paymentAmount, 1, transaction);
 
-            transaction.setLineItems(processCart(transaction));
+            transaction.setLineItems(new ArrayList<LineItem>(processCart(transaction)));
             transaction.addPayment(payment);
 
             Log.i("NewTransactionClass", "successfully created transaction!");
@@ -70,21 +71,21 @@ public class NewTransaction {
         return null;
     }
 
-    public ArrayList<LineItem> processCart (Transaction transaction) {
-        ArrayList<LineItem> cart = new ArrayList<>();
+    public List<LineItem> processCart (Transaction transaction) {
+
         Log.i("NewTransactionClass", "Creating line item arraylist!");
 
-        for (Product p : productsInCart) {
-            LineItem lineItem = new LineItem(1, p.getUnitPrice(), transaction, p.getId());
-            cart.add(lineItem);
-            Log.i("NewTransactionClass", "Added " + lineItem.toString() );
+        for (LineItem i : cart) {
+           i.setTransaction(transaction);
+            Log.i("NewTransactionClass", "Processed " + i.toString() );
         }
 
         return cart;
     }
 
     public boolean isComplete(){
-//        return (productsInCart != null) && (paymentAmount <= 0.0) && (customerDetails != null);
+//      return (productsInCart != null) && (paymentAmount <= 0.0) && (customerDetails != null);
         return true;
     }
+
 }
