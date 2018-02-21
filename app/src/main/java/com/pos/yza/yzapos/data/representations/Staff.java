@@ -1,18 +1,34 @@
 package com.pos.yza.yzapos.data.representations;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.List;
 
 /**
  * Created by Dlolpez on 31/12/17.
  */
 
+@Entity(tableName = "staff")
 public final class Staff implements Item {
 
+    @PrimaryKey
     int staffId;
+
+    @ColumnInfo(name = "first_name")
     String firstName;
+
+    @ColumnInfo(name = "last_name")
     String lastName;
+
+    @ColumnInfo(name = "phone_number")
     String phoneNumber;
+
+    @ColumnInfo(name = "email")
     String email;
+
+    @ColumnInfo(name = "address")
     String homeAddress;
 
     public Staff(int staffId, String firstName,
