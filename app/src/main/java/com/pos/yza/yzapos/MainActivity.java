@@ -3,10 +3,15 @@ package com.pos.yza.yzapos;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+
 import com.pos.yza.yzapos.managetransactions.ManageTransactionsActivity;
+
+import com.pos.yza.yzapos.data.source.PaymentsDataSource;
+
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -18,34 +23,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-////        FOR DALZY
-//        Log.i("transactionReponse", "in main");
-//        TransactionsDataSource transRepo = Injection.provideTransactionsRepository(getApplicationContext());
+//        FOR DALZY
+//        Log.i("paymentResponse", "in main");
+//        PaymentsDataSource paymentsRepo = Injection.providePaymentsRepository(getApplicationContext());
 //
-//        transRepo.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
+//        paymentsRepo.getPaymentById("1", new PaymentsDataSource.GetPaymentCallback() {
 //            @Override
-//            public void onTransactionsLoaded(List<Transaction> transactions) {
-//                Log.i("transactionReponse", "back to main");
+//            public void onPaymentLoaded(Payment payment) {
+//                Log.i("paymentResponse", "back to main");
 //            }
 //
 //            @Override
 //            public void onDataNotAvailable() {
-//                Log.i("transactionReponse", "error back in main");
+//                Log.i("paymentResponse", "error back in main");
 //            }
 //        });
 //
-//        Transaction trans = new Transaction("Main", "Activity", 1);
-//        ArrayList<LineItem> items = new ArrayList<>();
-//        items.add(new LineItem(10, 20.0, trans, 11));
-//        trans.setLineItems(items);
-//        ArrayList<Payment> payments = new ArrayList<>();
-//        payments.add(new Payment(new Date(), 20.0, 1, trans));
-//        trans.setPayments(payments);
+//        Payment payment = new Payment(new Date(), 20.0, 1, new Transaction(1));
 //
-//        Log.i("saveTransaction", "to save this: " + trans.toString());
-//        transRepo.saveTransaction(trans);
-//
-//        transRepo.deleteOldTransactions();
+//        Log.i("savePayment", "to save this: " + payment.toString());
+//        paymentsRepo.savePayment(payment);
 
     }
 
