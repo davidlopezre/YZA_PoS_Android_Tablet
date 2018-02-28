@@ -42,7 +42,8 @@ public class CategoriesRemoteDataSource implements CategoriesDataSource {
                                CATEGORY_PROPERTIES = "properties",
                                CATEGORY_PROPERTY_NAME = "name";
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = "http://localhost:8000/";
     private final String CATEGORIES = "product_categories/";
 
     private RequestQueue mRequestQueue;

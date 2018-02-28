@@ -38,7 +38,8 @@ public class StaffRemoteDataSource implements StaffDataSource {
                   LAST_NAME = "surname", PHONE_NUMBER = "phone_number",
                   EMAIL = "email", ADDRESS = "home_address";
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = "http://localhost:8000/";
     private final String STAFF = "staff/";
 
     private static StaffRemoteDataSource INSTANCE;

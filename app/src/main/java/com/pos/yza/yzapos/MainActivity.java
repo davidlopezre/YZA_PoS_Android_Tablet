@@ -6,28 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.pos.yza.yzapos.adminoptions.AdminOptionsActivity;
+import com.pos.yza.yzapos.managetransactions.ManageTransactionsActivity;
 import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
-import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.LineItem;
-import com.pos.yza.yzapos.data.representations.Payment;
-import com.pos.yza.yzapos.data.representations.Staff;
-import com.pos.yza.yzapos.data.representations.Transaction;
-import com.pos.yza.yzapos.data.source.CategoriesDataSource;
-import com.pos.yza.yzapos.data.source.StaffDataSource;
-import com.pos.yza.yzapos.data.source.StaffRepository;
-import com.pos.yza.yzapos.data.source.TransactionsDataSource;
-import com.pos.yza.yzapos.data.source.remote.CategoriesRemoteDataSource;
-import com.pos.yza.yzapos.data.source.remote.StaffRemoteDataSource;
-import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
-import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
-import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.source.ProductsRepository;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -76,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void admin(View view){
         Intent intent = new Intent(getApplicationContext(), AdminOptionsActivity.class);
+        startActivity(intent);
+    }
+
+    public void manageTransactions (View view) {
+        Intent intent = new Intent(getApplicationContext(), ManageTransactionsActivity.class);
         startActivity(intent);
     }
 

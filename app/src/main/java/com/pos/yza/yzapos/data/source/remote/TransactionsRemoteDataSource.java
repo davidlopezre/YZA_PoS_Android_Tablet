@@ -59,7 +59,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                                PAYMENT_BRANCH_ID = "branch_id";
 
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = "http://localhost:8000/";
     private final String TRANSACTIONS = "transaction/";
     private final String DELETE_OLD_TRANSACTIONS = "delete-old-transactions/";
 
@@ -290,8 +291,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
 
         addToRequestQueue(jsObjRequest);
     }
-
-
+    
     /**********************************************************************************************/
     /************************************* LISTENER CLASSES ***************************************/
     /**********************************************************************************************/

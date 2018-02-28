@@ -52,11 +52,12 @@
             android:layout_height="250dp"
             android:background="@drawable/main_buttons"
             android:drawableTop="@drawable/ic_search_transaction"
-            android:paddingTop="40dp"/>
+            android:paddingTop="40dp"
+            android:onClick="manageTransactions"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/new_transaction"
+                android:text="@string/view_transaction"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center_horizontal" />

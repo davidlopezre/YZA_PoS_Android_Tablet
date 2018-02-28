@@ -42,7 +42,8 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
     PRODUCT_PROPERTY_VALUE = "value",
                                CATEGORY_PROPERTY_ID = "category_property";
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = "http://localhost:8000/";
     private final String PRODUCTS = "products/";
 
     private RequestQueue mRequestQueue;

@@ -33,6 +33,7 @@
             android:name=".ViewTransactionActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewProductsActivity" />
+        <activity android:name=".managetransactions.ManageTransactionsActivity"></activity>
     </application>
 
 </manifest>
