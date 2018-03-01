@@ -9,6 +9,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
+import com.pos.yza.yzapos.data.source.PaymentsRepository;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
@@ -24,10 +25,13 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
     private final ManageTransactionsContract.View mManageTransactionsView;
 
     private final TransactionsRepository mTransactionsRepository;
+    private final PaymentsRepository mPaymentsRepository;
 
     public ManageTransactionsPresenter(@NonNull TransactionsRepository transactionsRepository,
+                                       @NonNull PaymentsRepository paymentsRepository,
                                        @NonNull ManageTransactionsContract.View view){
         mTransactionsRepository = transactionsRepository;
+        mPaymentsRepository = paymentsRepository;
         mManageTransactionsView = view;
         mManageTransactionsView.setPresenter(this);
     }
