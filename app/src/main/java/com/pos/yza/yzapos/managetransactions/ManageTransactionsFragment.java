@@ -4,22 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Transaction;
 
 import java.util.ArrayList;
@@ -28,13 +22,13 @@ import java.util.List;
 public class ManageTransactionsFragment extends Fragment implements ManageTransactionsContract.View {
     private TransactionsAdapter mListAdapter;
     private ManageTransactionsContract.Presenter mPresenter;
-//    private ItemListListener listener;
+//    private ProductListListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 //        try {
-//            listener = (ItemListListener) context;
+//            listener = (ProductListListener) context;
 //        } catch (ClassCastException castException) {
 //            /** The activity does not implement the listener. */
 //        }

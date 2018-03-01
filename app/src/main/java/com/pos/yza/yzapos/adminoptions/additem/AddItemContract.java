@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions.additem;
 
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.util.BasePresenter;

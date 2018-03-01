@@ -1,16 +1,9 @@
 package com.pos.yza.yzapos.managetransactions;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.Item;
-import com.pos.yza.yzapos.data.representations.Product;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.Transaction;
-import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.PaymentsRepository;
-import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
 

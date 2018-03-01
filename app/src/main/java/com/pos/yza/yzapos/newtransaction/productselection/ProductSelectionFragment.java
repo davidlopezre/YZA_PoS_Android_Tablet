@@ -14,14 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 import com.pos.yza.yzapos.newtransaction.quantity.QuantityDialog;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -121,7 +119,7 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
         }
 
         @Override
-        public Item getItem(int i) {
+        public Product getItem(int i) {
             return products.get(i);
         }
 

@@ -218,7 +218,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
     @Override
     public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits){
-        Log.i("editItem", "in remote data source");
+        Log.i("editProduct", "in remote data source");
         Uri builtUri = Uri.parse(ROOT + PRODUCTS + productId + "/")
                 .buildUpon()
                 .build();
@@ -228,12 +228,12 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                 new JSONObject(edits),new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("editItem", "success");
+                Log.i("editProduct", "success");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("editItem", "Error occurred ", error);
+                Log.e("editProduct", "Error occurred ", error);
             }
         });
 

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Dlolpez on 26/12/17.
  */
 
-public final class Product implements Item {
+public final class Product {
     int id;
     Double unitPrice;
     String unitMeasure;
@@ -53,12 +53,6 @@ public final class Product implements Item {
         return properties;
     }
 
-    @Override
-    public List<String> showEditableFields() {
-        return null;
-    }
-
-    @Override
     public String getName() {
         return category + Double.toString(unitPrice) + unitMeasure;
     }

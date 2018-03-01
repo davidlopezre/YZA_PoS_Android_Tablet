@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.managetransactions;
 
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.util.BasePresenter;
 import com.pos.yza.yzapos.util.BaseView;

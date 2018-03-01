@@ -14,9 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.LineItem;
-import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
 
 import java.util.ArrayList;

@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryContract;
 import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryFragment;
 import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryPresenter;
 import com.pos.yza.yzapos.adminoptions.additem.AddItemFragment;
@@ -22,15 +21,15 @@ import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListFragment;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListPresenter;
-import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
-import com.pos.yza.yzapos.adminoptions.item.ItemListPresenter;
+import com.pos.yza.yzapos.adminoptions.product.ItemListFragment;
+import com.pos.yza.yzapos.adminoptions.product.ItemListPresenter;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListPresenter;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity
-        implements ItemListFragment.ItemListListener, StaffListFragment.StaffListListener,
+        implements ItemListFragment.ProductListListener, StaffListFragment.StaffListListener,
         CategoryListFragment.CategoryListListener {
 
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
@@ -157,7 +156,7 @@ public class AdminOptionsActivity extends AppCompatActivity
     }
 
     @Override
-    public void addItem () {
+    public void addProduct() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         AddItemFragment mAddItemFragment = AddItemFragment.newInstance();

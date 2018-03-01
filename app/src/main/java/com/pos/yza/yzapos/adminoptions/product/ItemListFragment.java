@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.adminoptions.item;
+package com.pos.yza.yzapos.adminoptions.product;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,22 +17,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListFragment extends Fragment implements ItemListContract.View {
-    private ItemAdapter mListAdapter;
-    private ItemListContract.Presenter mPresenter;
+public class ItemListFragment extends Fragment implements ProductListContract.View {
+    private ProductAdapter mListAdapter;
+    private ProductListContract.Presenter mPresenter;
     private ArrayAdapter<String> mSpinnerAdapter;
-    private ItemListListener listener;
+    private ProductListListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            listener = (ItemListListener) context;
+            listener = (ProductListListener) context;
         } catch (ClassCastException castException) {
             /** The activity does not implement the listener. */
         }
@@ -49,7 +49,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<Item>());
+        mListAdapter = new ProductAdapter(new ArrayList<Product>());
         mSpinnerAdapter =
                 new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_list_item_1);
@@ -62,7 +62,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void setPresenter(@NonNull ItemListContract.Presenter presenter) {
+    public void setPresenter(@NonNull ProductListContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -88,7 +88,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             @Override
             public void onClick(View view) {
                 assert(mPresenter != null);
-                mPresenter.addNewItem();
+                mPresenter.addNewProduct();
             }
         });
 
@@ -100,13 +100,13 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void showItems(List<Item> items) {
-        mListAdapter.setList(items);
+    public void showProducts(List<Product> products) {
+        mListAdapter.setList(products);
         mListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showItemDetailsUi(String itemId) {
+    public void showProductDetailsUi(String productId) {
 
     }
 
@@ -116,35 +116,35 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void showAddItem() {
-        listener.addItem();
+    public void showAddProduct() {
+        listener.addProduct();
     }
 
     @Override
-    public void showEditItem() {
+    public void showEditProduct() {
 
     }
 
-    private class ItemAdapter extends BaseAdapter {
+    private class ProductAdapter extends BaseAdapter {
 
-        private List<Item> mItems;
+        private List<Product> mProducts;
 
-        public ItemAdapter(List<Item> items) {
-            this.mItems = items;
+        public ProductAdapter(List<Product> products) {
+            this.mProducts = products;
         }
 
         @Override
         public int getCount() {
-            return mItems.size();
+            return mProducts.size();
         }
 
-        public void setList(List<Item> items){
-            mItems = items;
+        public void setList(List<Product> products){
+            mProducts = products;
         }
 
         @Override
-        public Item getItem(int i) {
-            return mItems.get(i);
+        public Product getItem(int i) {
+            return mProducts.get(i);
         }
 
         @Override
@@ -160,16 +160,16 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
                 rowView = inflater.inflate(R.layout.list_item,
                         viewGroup, false);
             }
-            final Item item = getItem(i);
+            final Product product = getItem(i);
 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-            titleTV.setText(item.getName());
+            titleTV.setText(product.getName());
 
             ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPresenter.deleteItem(item);
+                    mPresenter.deleteProduct(product);
                 }
             });
 
@@ -178,7 +178,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         }
     }
 
-    public interface ItemListListener{
-        void addItem();
+    public interface ProductListListener {
+        void addProduct();
     }
 }
