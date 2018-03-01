@@ -62,9 +62,9 @@ public class ActivityUtils {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         if(tag.equals("")){
-            transaction.replace(frameId, fragment).addToBackStack(null);
+            transaction.replace(frameId, fragment);
         }else {
-            transaction.replace(frameId, fragment, tag).addToBackStack(null);
+            transaction.replace(frameId, fragment, tag);
         }
 
         if (backStack){

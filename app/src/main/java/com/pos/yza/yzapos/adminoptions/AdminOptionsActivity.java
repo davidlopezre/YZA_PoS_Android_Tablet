@@ -81,7 +81,7 @@ public class AdminOptionsActivity extends AppCompatActivity
                 itemListFragment = ItemListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), itemListFragment, R.id.contentFrame, "",
-                    true);
+                    false);
         }
 
         // Create the presenter
@@ -131,7 +131,7 @@ public class AdminOptionsActivity extends AppCompatActivity
                             case R.id.category_navigation_menu_item:
                                 CategoryListFragment categoryListFragment = CategoryListFragment.newInstance();
                                 ActivityUtils.replaceFragmentInActivity(
-                                        getSupportFragmentManager(), categoryListFragment, R.id.contentFrame, "", true);
+                                        getSupportFragmentManager(), categoryListFragment, R.id.contentFrame, "", false);
                                 // Create the presenter
                                 mCategoryListPresenter = new CategoryListPresenter(
                                         Injection.provideCategoriesRepository(getApplicationContext()), categoryListFragment);
@@ -140,7 +140,7 @@ public class AdminOptionsActivity extends AppCompatActivity
 
                                 StaffListFragment staffListFragment = StaffListFragment.newInstance();
                                     ActivityUtils.replaceFragmentInActivity(
-                                            getSupportFragmentManager(), staffListFragment, R.id.contentFrame, "", true);
+                                            getSupportFragmentManager(), staffListFragment, R.id.contentFrame, "", false);
                                 // Create the presenter
                                 mStaffListPresenter = new StaffListPresenter(
                                         Injection.provideStaffRepository(getApplicationContext()), staffListFragment);
