@@ -7,4 +7,6 @@
     <color name="colorAdd">#75AA77</color>
     <color name="colorEdit">#3780C9</color>
     <color name="colorMainIc">#fff</color>
+    <color name="drawerNoShadow">#80ffffff</color>
+    <color name="buttonPink">#E28484</color>
 </resources>

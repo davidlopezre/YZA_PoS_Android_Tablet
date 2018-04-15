@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
@@ -44,6 +45,7 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     private AddCategoryPresenter mAddCategoryPresenter;
 
+    boolean isDrawerLocked;
 
     private StaffListPresenter mStaffListPresenter;
 
@@ -51,13 +53,15 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     private ProductsRemoteDataSource mProductsRemoteDataSource;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_options);
 
         // Set up the toolbar.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         toolbar.setTitle(R.string.admin_options);
         setSupportActionBar(toolbar);
@@ -67,6 +71,8 @@ public class AdminOptionsActivity extends AppCompatActivity
 
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -79,7 +85,7 @@ public class AdminOptionsActivity extends AppCompatActivity
             // Create the fragment
                 itemListFragment = ItemListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame, "",
+                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame, "product",
                     false);
         }
 
@@ -101,13 +107,6 @@ public class AdminOptionsActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_actions, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -119,15 +118,24 @@ public class AdminOptionsActivity extends AppCompatActivity
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+        // TODO (1) : Stop creating so many instances of the fragments, create one and try to find with tag
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.product_navigation_menu_item:
+                                toolbar.setTitle(R.string.products);
                                 // Do nothing, we're already on that screen
+                                ItemListFragment productFragment = ItemListFragment.newInstance();
+                                ActivityUtils.replaceFragmentInActivity(
+                                        getSupportFragmentManager(), productFragment, R.id.contentFrame, "", false);
+                                // Create the presenter
+                                mItemListPresenter = new ItemListPresenter(Injection.provideProductsRepository(getApplicationContext()),
+                                        Injection.provideCategoriesRepository(getApplicationContext()), productFragment);
                                 break;
                             case R.id.category_navigation_menu_item:
+                                toolbar.setTitle(R.string.product_categories);
                                 CategoryListFragment categoryListFragment = CategoryListFragment.newInstance();
                                 ActivityUtils.replaceFragmentInActivity(
                                         getSupportFragmentManager(), categoryListFragment, R.id.contentFrame, "", false);
@@ -136,7 +144,7 @@ public class AdminOptionsActivity extends AppCompatActivity
                                         Injection.provideCategoriesRepository(getApplicationContext()), categoryListFragment);
                                 break;
                             case R.id.staff_navigation_menu_item:
-
+                                toolbar.setTitle(R.string.staff);
                                 StaffListFragment staffListFragment = StaffListFragment.newInstance();
                                     ActivityUtils.replaceFragmentInActivity(
                                             getSupportFragmentManager(), staffListFragment, R.id.contentFrame, "", false);
