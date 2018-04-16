@@ -165,7 +165,6 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     @Override
     public void addProduct() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         AddItemFragment mAddItemFragment = AddItemFragment.newInstance();
         mAddItemFragment.show(getSupportFragmentManager(),"additem");
@@ -179,7 +178,6 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     @Override
     public void addStaff() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         AddStaffFragment mAddStaffFragment = AddStaffFragment.newInstance();
         mAddStaffFragment.show(getSupportFragmentManager(),"addstaff");
@@ -192,7 +190,6 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     @Override
     public void addCategory() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         AddCategoryFragment mAddCategoryFragment = AddCategoryFragment.newInstance();
         mAddCategoryFragment.show(getSupportFragmentManager(),"addcategory");

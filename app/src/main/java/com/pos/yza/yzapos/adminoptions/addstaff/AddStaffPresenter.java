@@ -42,5 +42,6 @@ public class AddStaffPresenter implements AddStaffContract.Presenter {
         Log.i("saveStaff", "name is " + name);
         Log.i("saveStaff", staffMember.toString());
         mStaffRepository.saveStaff(staffMember);
+        mAddStaffView.confirmStaffMemberFeedback();
     }
 }
