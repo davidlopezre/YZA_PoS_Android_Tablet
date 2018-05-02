@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
 import com.pos.yza.yzapos.data.source.StaffRepository;
+import com.pos.yza.yzapos.util.OnVolleyResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by Dlolpez on 12/1/18.
  */
 
-public class StaffListPresenter implements StaffListContract.Presenter {
+public class StaffListPresenter implements StaffListContract.Presenter, OnVolleyResponse {
     private final StaffListContract.View mStaffListView;
 
     private final StaffRepository mStaffRepository;
@@ -54,7 +55,19 @@ public class StaffListPresenter implements StaffListContract.Presenter {
     @Override
     public void deleteStaffMember(Staff member) {
         String staffId = Integer.toString(member.getStaffId());
-        mStaffRepository.deleteStaff(staffId);
+        mStaffRepository.deleteStaff(new StaffDataSource.ModifyStaffCallback() {
+            @Override
+            public void onStaffModified() {
+                mStaffListView.showDeleteStaffMember();
+                loadStaff();
+            }
+
+            @Override
+            public void onStaffNotModified() {
+                mStaffListView.showErrorDeleteStaffMember();
+            }
+        }, staffId);
+
     }
 
     @Override
@@ -62,4 +75,16 @@ public class StaffListPresenter implements StaffListContract.Presenter {
 
     }
 
+    // OnResponseVolley methods to handle network response
+
+    @Override
+    public void onCompleted() {
+        loadStaff();
+        mStaffListView.showDeleteStaffMember();
+    }
+
+    @Override
+    public void onError() {
+        mStaffListView.showErrorDeleteStaffMember();
+    }
 }

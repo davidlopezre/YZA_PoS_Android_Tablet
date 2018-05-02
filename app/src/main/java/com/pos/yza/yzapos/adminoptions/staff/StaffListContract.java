@@ -16,6 +16,7 @@ public interface StaffListContract {
         void showAddStaffMember();
         void showEditStaffMember();
         void showDeleteStaffMember();
+        void showErrorDeleteStaffMember();
     }
 
     interface Presenter extends BasePresenter {

@@ -44,4 +44,5 @@
     <string name="phone_number">Phone Number</string>
     <string name="home_address">Home Address</string>
     <string name="add_property">Add property</string>
+    <string name="something_created">successfully created!</string>
 </resources>

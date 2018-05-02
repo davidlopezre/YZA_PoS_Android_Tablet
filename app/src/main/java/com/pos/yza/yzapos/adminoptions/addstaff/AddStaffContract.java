@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface AddStaffContract {
     interface View extends BaseView<Presenter> {
-        void confirmStaffMemberFeedback();
+        void showFeedback();
     }
 
     interface Presenter extends BasePresenter {

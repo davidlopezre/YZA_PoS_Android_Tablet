@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Staff;
@@ -108,7 +109,12 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
 
     @Override
     public void showDeleteStaffMember() {
+        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void showErrorDeleteStaffMember() {
+        Toast.makeText(getContext(), "There was an error please try again!", Toast.LENGTH_LONG).show();
     }
 
     private class StaffAdapter extends BaseAdapter {

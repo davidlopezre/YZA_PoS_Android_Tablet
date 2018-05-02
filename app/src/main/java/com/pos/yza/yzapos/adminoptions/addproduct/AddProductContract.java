@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.adminoptions.additem;
+package com.pos.yza.yzapos.adminoptions.addproduct;
 
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
@@ -12,15 +12,15 @@ import java.util.List;
  * Created by Dlolpez on 31/12/17.
  */
 
-public interface AddItemContract {
+public interface AddProductContract {
     interface View extends BaseView<Presenter> {
-        void showItemProperties();
+        void showProductProperties();
         void showCategories(List<ProductCategory> categories);
+        void showFeedback();
     }
 
     interface Presenter extends BasePresenter {
-        void confirmItem(ProductCategory category, String unitOfMeasure, String unitPrice,
-                         ArrayList<ProductProperty> properties);
-        void changeItemProperties();
+        void confirmProduct(ProductCategory category, String unitOfMeasure, String unitPrice,
+                            ArrayList<ProductProperty> properties);
     }
 }

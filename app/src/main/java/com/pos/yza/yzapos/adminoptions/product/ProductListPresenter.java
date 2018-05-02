@@ -18,15 +18,15 @@ import java.util.List;
  * Created by Dlolpez on 31/12/17.
  */
 
-public class ItemListPresenter implements ProductListContract.Presenter {
+public class ProductListPresenter implements ProductListContract.Presenter {
     private final ProductListContract.View mItemListView;
 
     private final ProductsRepository mProductsRepository;
     private final CategoriesRepository mCategoriesRepository;
 
-    public ItemListPresenter(@NonNull ProductsRepository productsRepository,
-                             @NonNull CategoriesRepository categoriesRepository,
-                                 @NonNull ProductListContract.View view){
+    public ProductListPresenter(@NonNull ProductsRepository productsRepository,
+                                @NonNull CategoriesRepository categoriesRepository,
+                                @NonNull ProductListContract.View view){
         mProductsRepository = productsRepository;
         mCategoriesRepository = categoriesRepository;
         mItemListView = view;

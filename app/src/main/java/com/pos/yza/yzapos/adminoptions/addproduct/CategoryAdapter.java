@@ -1,8 +1,7 @@
-package com.pos.yza.yzapos.adminoptions.additem;
+package com.pos.yza.yzapos.adminoptions.addproduct;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -22,7 +22,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListFragment extends Fragment implements ProductListContract.View {
+public class ProductListFragment extends Fragment implements ProductListContract.View {
     private ProductAdapter mListAdapter;
     private ProductListContract.Presenter mPresenter;
     private ArrayAdapter<String> mSpinnerAdapter;
@@ -38,12 +38,12 @@ public class ItemListFragment extends Fragment implements ProductListContract.Vi
         }
     }
 
-    public ItemListFragment(){
+    public ProductListFragment(){
 
     }
 
-    public static ItemListFragment newInstance(){
-        return new ItemListFragment();
+    public static ProductListFragment newInstance(){
+        return new ProductListFragment();
     }
 
     @Override

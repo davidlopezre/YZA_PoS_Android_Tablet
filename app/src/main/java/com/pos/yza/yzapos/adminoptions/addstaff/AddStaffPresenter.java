@@ -3,14 +3,8 @@ package com.pos.yza.yzapos.adminoptions.addstaff;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.pos.yza.yzapos.adminoptions.additem.AddItemContract;
-import com.pos.yza.yzapos.data.representations.Product;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.StaffRepository;
-
-import java.util.ArrayList;
 
 /**
  * Created by Dlolpez on 31/12/17.
@@ -42,6 +36,6 @@ public class AddStaffPresenter implements AddStaffContract.Presenter {
         Log.i("saveStaff", "name is " + name);
         Log.i("saveStaff", staffMember.toString());
         mStaffRepository.saveStaff(staffMember);
-        mAddStaffView.confirmStaffMemberFeedback();
+        mAddStaffView.showFeedback();
     }
 }

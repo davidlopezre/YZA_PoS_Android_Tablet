@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions;
 
-import android.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,38 +7,36 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryFragment;
 import com.pos.yza.yzapos.adminoptions.addcategory.AddCategoryPresenter;
-import com.pos.yza.yzapos.adminoptions.additem.AddItemFragment;
-import com.pos.yza.yzapos.adminoptions.additem.AddItemPresenter;
+import com.pos.yza.yzapos.adminoptions.addproduct.AddProductFragment;
+import com.pos.yza.yzapos.adminoptions.addproduct.AddProductPresenter;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListFragment;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListPresenter;
-import com.pos.yza.yzapos.adminoptions.product.ItemListFragment;
-import com.pos.yza.yzapos.adminoptions.product.ItemListPresenter;
+import com.pos.yza.yzapos.adminoptions.product.ProductListFragment;
+import com.pos.yza.yzapos.adminoptions.product.ProductListPresenter;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListPresenter;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
 public class AdminOptionsActivity extends AppCompatActivity
-        implements ItemListFragment.ProductListListener, StaffListFragment.StaffListListener,
+        implements ProductListFragment.ProductListListener, StaffListFragment.StaffListListener,
         CategoryListFragment.CategoryListListener {
 
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
 
     private DrawerLayout mDrawerLayout;
 
-    private ItemListPresenter mItemListPresenter;
+    private ProductListPresenter mProductListPresenter;
 
-    private AddItemPresenter mAddItemPresenter;
+    private AddProductPresenter mAddProductPresenter;
 
     private AddStaffPresenter mAddStaffPresenter;
 
@@ -55,6 +52,8 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     private Toolbar toolbar;
 
+    private NavigationView mNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,7 @@ public class AdminOptionsActivity extends AppCompatActivity
         // Set up the toolbar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
-        toolbar.setTitle(R.string.admin_options);
+        toolbar.setTitle(R.string.products);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -74,26 +73,26 @@ public class AdminOptionsActivity extends AppCompatActivity
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (mNavigationView != null) {
+            setupDrawerContent(mNavigationView);
         }
 
-        ItemListFragment itemListFragment =
-                (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (itemListFragment == null) {
+        ProductListFragment productListFragment =
+                (ProductListFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (productListFragment == null) {
             // Create the fragment
-                itemListFragment = ItemListFragment.newInstance();
+                productListFragment = ProductListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), itemListFragment, R.id.contentFrame, "product",
+                    getSupportFragmentManager(), productListFragment, R.id.contentFrame, "product",
                     false);
         }
 
         // Create the presenter
-        mItemListPresenter = new ItemListPresenter(
+        mProductListPresenter = new ProductListPresenter(
                 Injection.provideProductsRepository(getApplicationContext()),
                 Injection.provideCategoriesRepository(getApplicationContext()),
-                itemListFragment);
+                productListFragment);
 
         if (savedInstanceState != null){
 
@@ -102,7 +101,7 @@ public class AdminOptionsActivity extends AppCompatActivity
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-//        outState.putSerializable(CURRENT_FILTERING_KEY, mItemListPresenter.getFiltering());
+//        outState.putSerializable(CURRENT_FILTERING_KEY, mProductListPresenter.getFiltering());
         super.onSaveInstanceState(outState);
     }
 
@@ -127,11 +126,11 @@ public class AdminOptionsActivity extends AppCompatActivity
                             case R.id.product_navigation_menu_item:
                                 toolbar.setTitle(R.string.products);
                                 // Do nothing, we're already on that screen
-                                ItemListFragment productFragment = ItemListFragment.newInstance();
+                                ProductListFragment productFragment = ProductListFragment.newInstance();
                                 ActivityUtils.replaceFragmentInActivity(
                                         getSupportFragmentManager(), productFragment, R.id.contentFrame, "", false);
                                 // Create the presenter
-                                mItemListPresenter = new ItemListPresenter(Injection.provideProductsRepository(getApplicationContext()),
+                                mProductListPresenter = new ProductListPresenter(Injection.provideProductsRepository(getApplicationContext()),
                                         Injection.provideCategoriesRepository(getApplicationContext()), productFragment);
                                 break;
                             case R.id.category_navigation_menu_item:
@@ -156,6 +155,10 @@ public class AdminOptionsActivity extends AppCompatActivity
                                 break;
                         }
                         // Close the navigation drawer when an item is selected.
+                        int size = mNavigationView.getMenu().size();
+                        for (int i = 0; i < size; i++) {
+                            mNavigationView.getMenu().getItem(i).setChecked(false);
+                        }
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;
@@ -166,14 +169,14 @@ public class AdminOptionsActivity extends AppCompatActivity
     @Override
     public void addProduct() {
 
-        AddItemFragment mAddItemFragment = AddItemFragment.newInstance();
-        mAddItemFragment.show(getSupportFragmentManager(),"additem");
+        AddProductFragment mAddProductFragment = AddProductFragment.newInstance();
+        mAddProductFragment.show(getSupportFragmentManager(),"additem");
 
         // Create the presenter
-        mAddItemPresenter = new AddItemPresenter(
+        mAddProductPresenter = new AddProductPresenter(
                 Injection.provideProductsRepository(getApplicationContext()),
                 Injection.provideCategoriesRepository(getApplicationContext()),
-                mAddItemFragment);
+                mAddProductFragment);
     }
 
     @Override
