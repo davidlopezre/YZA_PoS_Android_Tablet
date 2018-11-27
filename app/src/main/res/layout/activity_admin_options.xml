@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -39,7 +38,7 @@
                 android:src="@drawable/ic_add2"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:backgroundTint="@color/colorAdd"
+                app:backgroundTint="@color/buttonPink"
                 app:fabSize="normal"
                 app:layout_anchor="@id/contentFrame"
                 app:layout_anchorGravity="bottom|right|end" />
@@ -53,6 +52,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@color/buttonPink"
         app:menu="@menu/drawer_actions">
     </android.support.design.widget.NavigationView>
 

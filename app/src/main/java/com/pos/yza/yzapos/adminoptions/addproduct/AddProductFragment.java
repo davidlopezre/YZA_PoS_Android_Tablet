@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.adminoptions.additem;
+package com.pos.yza.yzapos.adminoptions.addproduct;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +18,13 @@ import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
+import com.pos.yza.yzapos.util.DialogFragmentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddItemFragment extends DialogFragment implements AddItemContract.View {
-    private AddItemContract.Presenter mPresenter;
+public class AddProductFragment extends DialogFragment implements AddProductContract.View {
+    private AddProductContract.Presenter mPresenter;
 
     private CategoryAdapter mSpinnerAdapter;
 
@@ -31,12 +32,12 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
 
     private LinearLayout propertyLayout;
 
-    public AddItemFragment(){
+    public AddProductFragment(){
 
     }
 
-    public static AddItemFragment newInstance(){
-        return new AddItemFragment();
+    public static AddProductFragment newInstance(){
+        return new AddProductFragment();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
     }
 
     @Override
-    public void setPresenter(@NonNull AddItemContract.Presenter presenter) {
+    public void setPresenter(@NonNull AddProductContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -108,7 +109,7 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
 
                 }
 
-                mPresenter.confirmItem(currentCategory, unitOfMeasure.getText().toString(),
+                mPresenter.confirmProduct(currentCategory, unitOfMeasure.getText().toString(),
                         unitPrice.getText().toString(), properties);
             }
         });
@@ -117,12 +118,17 @@ public class AddItemFragment extends DialogFragment implements AddItemContract.V
     }
 
     @Override
-    public void showItemProperties() {
+    public void showProductProperties() {
 
     }
 
     @Override
     public void showCategories(List<ProductCategory> categories) {
         mSpinnerAdapter.replaceData(categories);
+    }
+
+    @Override
+    public void showFeedback() {
+        DialogFragmentUtils.giveFeedback(this, getContext(), "Product");
     }
 }

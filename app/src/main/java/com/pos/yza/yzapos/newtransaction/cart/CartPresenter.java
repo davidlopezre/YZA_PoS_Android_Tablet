@@ -3,7 +3,7 @@ package com.pos.yza.yzapos.newtransaction.cart;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.LineItem;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -50,9 +50,9 @@ public class CartPresenter implements CartContract.Presenter {
     }
 
     @Override
-    public void addProduct(Product product) {
+    public void addLineItem(LineItem lineItem) {
         Log.i("CART", "Adding Product in presenter");
-        mCartView.addProductToAdapter(product);
+        mCartView.addLineItemToAdapter(lineItem);
     }
 
     public CartActions getAction() {

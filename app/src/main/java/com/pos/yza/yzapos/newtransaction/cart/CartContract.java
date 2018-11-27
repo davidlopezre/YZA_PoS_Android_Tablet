@@ -1,11 +1,8 @@
 package com.pos.yza.yzapos.newtransaction.cart;
 
-import com.pos.yza.yzapos.data.representations.Item;
-import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.util.BasePresenter;
 import com.pos.yza.yzapos.util.BaseView;
-
-import java.util.List;
 
 /**
  * Created by Dlolpez on 18/1/18.
@@ -16,7 +13,7 @@ public interface CartContract {
         void showProductsInCart();
         void showCategorySelection();
         void showCustomerDetails();
-        void addProductToAdapter(Product product);
+        void addLineItemToAdapter(LineItem lineItem);
 
     }
 
@@ -25,6 +22,6 @@ public interface CartContract {
         void removeProduct();
         void refreshProducts();
         void goToCustomerDetails();
-        void addProduct(Product product);
+        void addLineItem(LineItem lineItem);
     }
 }

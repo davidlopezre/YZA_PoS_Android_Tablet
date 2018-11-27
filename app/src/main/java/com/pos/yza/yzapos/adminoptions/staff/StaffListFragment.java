@@ -9,17 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.item.ItemListContract;
-import com.pos.yza.yzapos.adminoptions.item.ItemListFragment;
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Staff;
 
 import java.util.ArrayList;
@@ -112,7 +109,12 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
 
     @Override
     public void showDeleteStaffMember() {
+        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void showErrorDeleteStaffMember() {
+        Toast.makeText(getContext(), "There was an error please try again!", Toast.LENGTH_LONG).show();
     }
 
     private class StaffAdapter extends BaseAdapter {

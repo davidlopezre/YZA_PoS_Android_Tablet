@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Dlolpez on 31/12/17.
  */
 
-public final class Staff implements Item {
+public final class Staff  {
 
     int staffId;
     String firstName;
@@ -64,19 +64,8 @@ public final class Staff implements Item {
         return homeAddress;
     }
 
-    @Override
-    public List<String> showEditableFields() {
-        return null;
-    }
-
-    @Override
     public String getName() {
         return firstName + " " + lastName;
-    }
-
-    @Override
-    public int getId() {
-        return 0;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.pos.yza.yzapos.data.source;
 import android.support.annotation.NonNull;
 
 import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.util.OnVolleyResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,13 @@ public interface StaffDataSource {
         void onDataNotAvailable();
     }
 
+    interface ModifyStaffCallback {
+
+        void onStaffModified();
+
+        void onStaffNotModified();
+    }
+
     void getAllStaff(@NonNull LoadStaffCallback callback);
 
     void saveStaff(@NonNull Staff staff);
@@ -28,7 +36,7 @@ public interface StaffDataSource {
 
     void deleteAllStaff();
 
-    void deleteStaff(@NonNull String staffId);
+    void deleteStaff(@NonNull ModifyStaffCallback callback, @NonNull String staffId);
 
     void editStaff(@NonNull String staffId, @NonNull HashMap<String,String> edits);
 }

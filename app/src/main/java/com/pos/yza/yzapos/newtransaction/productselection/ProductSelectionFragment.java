@@ -3,27 +3,33 @@ package com.pos.yza.yzapos.newtransaction.productselection;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Item;
+import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
+import com.pos.yza.yzapos.newtransaction.quantity.QuantityDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ProductSelectionFragment extends Fragment implements ProductSelectionContract.View {
+public class ProductSelectionFragment extends Fragment implements ProductSelectionContract.View,
+        QuantityDialog.DialogClickListener {
+
+    public static final String TAG = "ProductSelectionFrag";
+
+    private Product chosenProduct;
 
     ProductSelectionContract.Presenter mPresenter;
 
@@ -113,7 +119,7 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
         }
 
         @Override
-        public Item getItem(int i) {
+        public Product getItem(int i) {
             return products.get(i);
         }
 
@@ -138,11 +144,31 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onFragmentMessage("PRODUCT_SELECTION", product);
+                    chosenProduct = product;
+                    Log.i(TAG, "product chosen is: " + product);
+                    DialogFragment dialog = new QuantityDialog();
+                    dialog.setTargetFragment(ProductSelectionFragment.this, 0);
+                    dialog.show(getFragmentManager(), "dialog");
+
                 }
             });
 
             return rowView;
         }
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(int value) {
+        Log.i(TAG, "clicked done on: " + Integer.toString(value));
+        // Create the LineItem
+        LineItem lineItem = new LineItem(value, 0, chosenProduct.getId());
+        Log.i(TAG, "new LineItem: " + lineItem.toString());
+        mListener.onFragmentMessage("PRODUCT_SELECTION", lineItem);
+    }
+
+    @Override
+    public void onDialogNegativeClick() {
+        chosenProduct = null;
     }
 }

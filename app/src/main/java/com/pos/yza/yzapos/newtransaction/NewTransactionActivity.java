@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
@@ -91,7 +91,7 @@ public class NewTransactionActivity extends AppCompatActivity
                 handleCategorySelectionActions((ProductCategory)data);
                 break;
             case PRODUCT_SELECTION:
-                handleProductSelectionActions((Product)data);
+                handleProductSelectionActions((LineItem)data);
                 break;
             case PAYMENT:
                 completeTransaction(data);
@@ -141,7 +141,7 @@ public class NewTransactionActivity extends AppCompatActivity
 
                 break;
             case GO_TO_CUSTOMER_DETAILS:
-                transaction.setProductsInCart(data);
+                transaction.setCart(data);
                 CustomerDetailsFragment customerDetailsFragment =
                         (CustomerDetailsFragment) getSupportFragmentManager().
                                 findFragmentByTag(CUSTOMER_DETAILS);
@@ -181,9 +181,9 @@ public class NewTransactionActivity extends AppCompatActivity
 
     }
 
-    private void handleProductSelectionActions(Product product) {
+    private void handleProductSelectionActions(LineItem data) {
         Log.i("PRODUCT_SELECTION", "In New Transactions Activity");
-        mCartPresenter.addProduct(product);
+        mCartPresenter.addLineItem(data);
         // Remove the fragment from activity
 //        CartFragment cartFragment =
 //                (CartFragment) getSupportFragmentManager().

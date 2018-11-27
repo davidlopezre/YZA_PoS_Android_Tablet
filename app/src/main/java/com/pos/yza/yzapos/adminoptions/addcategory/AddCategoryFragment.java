@@ -4,25 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.additem.AddItemContract;
-import com.pos.yza.yzapos.adminoptions.additem.CategoryAdapter;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
+import com.pos.yza.yzapos.util.DialogFragmentUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddCategoryFragment extends DialogFragment implements AddCategoryContract.View {
     private AddCategoryContract.Presenter mPresenter;
@@ -94,4 +87,8 @@ public class AddCategoryFragment extends DialogFragment implements AddCategoryCo
         return root;
     }
 
+    @Override
+    public void showFeedback() {
+        DialogFragmentUtils.giveFeedback((DialogFragment) this, getContext(), "Category");
+    }
 }

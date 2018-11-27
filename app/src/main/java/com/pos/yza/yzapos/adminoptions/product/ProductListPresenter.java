@@ -1,17 +1,15 @@
-package com.pos.yza.yzapos.adminoptions.item;
+package com.pos.yza.yzapos.adminoptions.product;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.CategoriesRepository;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.ProductsRepository;
-import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +18,15 @@ import java.util.List;
  * Created by Dlolpez on 31/12/17.
  */
 
-public class ItemListPresenter implements ItemListContract.Presenter {
-    private final ItemListContract.View mItemListView;
+public class ProductListPresenter implements ProductListContract.Presenter {
+    private final ProductListContract.View mItemListView;
 
     private final ProductsRepository mProductsRepository;
     private final CategoriesRepository mCategoriesRepository;
 
-    public ItemListPresenter(@NonNull ProductsRepository productsRepository,
-                             @NonNull CategoriesRepository categoriesRepository,
-                                 @NonNull ItemListContract.View view){
+    public ProductListPresenter(@NonNull ProductsRepository productsRepository,
+                                @NonNull CategoriesRepository categoriesRepository,
+                                @NonNull ProductListContract.View view){
         mProductsRepository = productsRepository;
         mCategoriesRepository = categoriesRepository;
         mItemListView = view;
@@ -54,16 +52,16 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
             }
         });
-        loadItems();
+        loadProducts();
     }
 
     @Override
-    public void loadItems() {
+    public void loadProducts() {
         ProductCategory category = new ProductCategory(1, "", new ArrayList<CategoryProperty>());
         mProductsRepository.getProducts(new ProductsDataSource.LoadProductsCallback() {
             @Override
             public void onProductsLoaded(List<Product> products) {
-                mItemListView.showItems(new ArrayList<Item>(products));
+                mItemListView.showProducts(new ArrayList<Product>(products));
             }
 
             @Override
@@ -74,23 +72,23 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     }
 
     @Override
-    public void addNewItem() {
-        mItemListView.showAddItem();
+    public void addNewProduct() {
+        mItemListView.showAddProduct();
     }
 
     @Override
-    public void deleteItem(Item item) {
-        int id = item.getId();
+    public void deleteProduct(Product product) {
+        int id = product.getId();
         mProductsRepository.deleteProduct(Integer.toString(id));
     }
 
     @Override
-    public void editItem() {
+    public void editProduct() {
 
     }
 
     @Override
-    public void openItemDetails() {
+    public void openProductDetails() {
 
     }
 

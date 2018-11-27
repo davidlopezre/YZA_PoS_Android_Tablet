@@ -1,6 +1,5 @@
 package com.pos.yza.yzapos.adminoptions.staff;
 
-import com.pos.yza.yzapos.data.representations.Item;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.util.BasePresenter;
 import com.pos.yza.yzapos.util.BaseView;
@@ -17,6 +16,7 @@ public interface StaffListContract {
         void showAddStaffMember();
         void showEditStaffMember();
         void showDeleteStaffMember();
+        void showErrorDeleteStaffMember();
     }
 
     interface Presenter extends BasePresenter {

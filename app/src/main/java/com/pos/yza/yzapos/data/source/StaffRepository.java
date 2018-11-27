@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.util.OnVolleyResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,9 +87,21 @@ public class StaffRepository implements StaffDataSource {
     }
 
     @Override
-    public void deleteStaff(@NonNull String staffId) {
+    public void deleteStaff(@NonNull final ModifyStaffCallback callback, @NonNull String staffId) {
         Log.i("deleteStaff", "in repo");
-        mStaffRemoteDataSource.deleteStaff(staffId);
+        checkNotNull(callback);
+
+        mStaffRemoteDataSource.deleteStaff(new ModifyStaffCallback() {
+            @Override
+            public void onStaffModified() {
+                callback.onStaffModified();
+            }
+
+            @Override
+            public void onStaffNotModified() {
+                callback.onStaffNotModified();
+            }
+        }, staffId);
     }
 
     @Override

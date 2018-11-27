@@ -17,6 +17,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
+import com.pos.yza.yzapos.util.OnVolleyResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,8 @@ public class StaffRemoteDataSource implements StaffDataSource {
                   LAST_NAME = "surname", PHONE_NUMBER = "phone_number",
                   EMAIL = "email", ADDRESS = "home_address";
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = "http://localhost:8000/";
     private final String STAFF = "staff/";
 
     private static StaffRemoteDataSource INSTANCE;
@@ -125,25 +127,19 @@ public class StaffRemoteDataSource implements StaffDataSource {
 
     public void deleteAllStaff() {}
 
-    public void deleteStaff(@NonNull String staffId) {
+    public void deleteStaff(@NonNull ModifyStaffCallback callback, @NonNull String staffId) {
         Log.i("deleteStaff", "in remote data source");
         Uri builtUri = Uri.parse(ROOT + STAFF + staffId + "/")
                 .buildUpon()
                 .build();
 
+        StaffRemoteDataSource.ModificationResponseListener responseListener =
+                new StaffRemoteDataSource.ModificationResponseListener(callback);
+
+
         JsonObjectRequest jsObjRequest = new DeleteJsonObjectRequest(
                 Request.Method.DELETE, builtUri.toString(),
-                null,new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("deleteStaff", "success");
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("deleteStaff", "Error occurred ", error);
-            }
-        });
+                null, responseListener, new ErrorListener());
 
         addToRequestQueue(jsObjRequest);
     }
@@ -216,4 +212,18 @@ public class StaffRemoteDataSource implements StaffDataSource {
             Log.e("STAFF_ERROR", "Error occurred ", error);
         }
     }
+
+    private class ModificationResponseListener implements Response.Listener<JSONObject> {
+        StaffDataSource.ModifyStaffCallback callback;
+
+        public ModificationResponseListener(StaffDataSource.ModifyStaffCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+            callback.onStaffModified();
+        }
+    }
+
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface AddCategoryContract {
     interface View extends BaseView<Presenter> {
-//        void showCategoryProperties();
+        void showFeedback();
     }
 
     interface Presenter extends BasePresenter {

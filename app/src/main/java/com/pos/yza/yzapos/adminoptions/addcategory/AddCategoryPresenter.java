@@ -3,23 +3,19 @@ package com.pos.yza.yzapos.adminoptions.addcategory;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.pos.yza.yzapos.adminoptions.additem.AddItemContract;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
-import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.CategoriesRepository;
-import com.pos.yza.yzapos.data.source.ProductsRepository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dlolpez on 31/12/17.
  */
 
 public class AddCategoryPresenter implements AddCategoryContract.Presenter {
+
+    // TODO (2) : refresh after adding something
 
     private final AddCategoryContract.View mAddCategoryView;
 
@@ -42,6 +38,7 @@ public class AddCategoryPresenter implements AddCategoryContract.Presenter {
         Log.i("saveCategory", "in presenter");
         ProductCategory category = new ProductCategory(name, properties);
         mCategoriesRepository.saveCategory(category);
+        mAddCategoryView.showFeedback();
     }
 
 }

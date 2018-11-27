@@ -1,28 +1,19 @@
 package com.pos.yza.yzapos.adminoptions.addstaff;
 
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.additem.AddItemContract;
-import com.pos.yza.yzapos.adminoptions.additem.CategoryAdapter;
-import com.pos.yza.yzapos.data.representations.CategoryProperty;
-import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.pos.yza.yzapos.util.DialogFragmentUtils;
 
 public class AddStaffFragment extends DialogFragment implements AddStaffContract.View {
     private AddStaffContract.Presenter mPresenter;
@@ -80,4 +71,8 @@ public class AddStaffFragment extends DialogFragment implements AddStaffContract
         return root;
     }
 
+    @Override
+    public void showFeedback() {
+        DialogFragmentUtils.giveFeedback(this, getContext(), "Staff");
+    }
 }
