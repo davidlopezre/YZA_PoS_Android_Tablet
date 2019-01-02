@@ -4,9 +4,12 @@
     <color name="colorAccent">#ffffff</color>
     <color name="colorPrimaryDark">#AC5B5B</color>
     <color name="colorText">#6D7072</color>
-    <color name="colorAdd">#75AA77</color>
+    <color name="buttonGreen">#75AA77</color>
     <color name="colorEdit">#3780C9</color>
     <color name="colorMainIc">#fff</color>
     <color name="drawerNoShadow">#80ffffff</color>
     <color name="buttonPink">#E28484</color>
+    <color name="mustard">#FFC857</color>
+    <color name="eagleGreen">#084C61</color>
+    <color name="rosywhite">#fcf0ef</color>
 </resources>

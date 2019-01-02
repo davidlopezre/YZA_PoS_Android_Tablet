@@ -18,6 +18,7 @@ import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.PaymentsDataSource;
 import com.pos.yza.yzapos.data.source.PaymentsRepository;
 import com.pos.yza.yzapos.data.source.TransactionsDataSource;
+import com.pos.yza.yzapos.util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +55,8 @@ public class PaymentsRemoteDataSource implements PaymentsDataSource {
             PAYMENT_REFUND = "REFUND";
 
 
-    private final String ROOT = "http://35.197.185.80:8000/";
+//    private final String ROOT = "http://35.197.185.80:8000/";
+    private final String ROOT = Constants.APIADDRESS;
     private final String PAYMENTS = "payment/";
     private final String ADD_PAYMENT = "add-payment/";
 

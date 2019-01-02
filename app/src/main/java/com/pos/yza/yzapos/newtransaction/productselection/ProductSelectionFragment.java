@@ -133,12 +133,13 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
             View rowView = view;
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                rowView = inflater.inflate(R.layout.list_item,
+                rowView = inflater.inflate(R.layout.list_product,
                         viewGroup, false);
             }
             final Product product = products.get(i);
 
             TextView label = (TextView) rowView.findViewById(R.id.title);
+            Log.i(TAG, "name of prod to display " + product.getName());
             label.setText(product.getName());
 
             rowView.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +148,10 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
                     chosenProduct = product;
                     Log.i(TAG, "product chosen is: " + product);
                     DialogFragment dialog = new QuantityDialog();
+                    // Create a new bundle to pass the product name to the QuantityDialog fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CLICKED", product.getName());
+                    dialog.setArguments(bundle);
                     dialog.setTargetFragment(ProductSelectionFragment.this, 0);
                     dialog.show(getFragmentManager(), "dialog");
 
@@ -162,7 +167,7 @@ public class ProductSelectionFragment extends Fragment implements ProductSelecti
     public void onDialogPositiveClick(int value) {
         Log.i(TAG, "clicked done on: " + Integer.toString(value));
         // Create the LineItem
-        LineItem lineItem = new LineItem(value, 0, chosenProduct.getId());
+        LineItem lineItem = new LineItem(value, value * chosenProduct.getUnitPrice(), chosenProduct.getId());
         Log.i(TAG, "new LineItem: " + lineItem.toString());
         mListener.onFragmentMessage("PRODUCT_SELECTION", lineItem);
     }

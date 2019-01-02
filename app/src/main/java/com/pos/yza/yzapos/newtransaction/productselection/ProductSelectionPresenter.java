@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.newtransaction.productselection;
 
 import android.support.annotation.NonNull;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
@@ -37,16 +38,6 @@ public class ProductSelectionPresenter implements ProductSelectionContract.Prese
     }
 
     private void loadProducts() {
-        mProductRepository.getProductsByCategory(mCategory, new ProductsDataSource.LoadProductsCallback() {
-            @Override
-            public void onProductsLoaded(List<Product> products) {
-                mProductSelectionView.showProducts(products);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
+        mProductSelectionView.showProducts(SessionStorage.getProductsByCategory(mCategory.getId()));
     }
 }

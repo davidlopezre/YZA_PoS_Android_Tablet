@@ -1,5 +1,7 @@
 package com.pos.yza.yzapos.data.representations;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -53,8 +55,16 @@ public final class Product {
         return properties;
     }
 
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
     public String getName() {
-        return category + Double.toString(unitPrice) + unitMeasure;
+        String name = category.getName();
+        for (ProductProperty property : properties){
+            name += " " + property.getValue();
+        }
+        return name;
     }
 
     @Override

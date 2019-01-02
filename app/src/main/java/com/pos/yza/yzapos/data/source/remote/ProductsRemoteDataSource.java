@@ -18,6 +18,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
+import com.pos.yza.yzapos.util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +44,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                                CATEGORY_PROPERTY_ID = "category_property";
 
 //    private final String ROOT = "http://35.197.185.80:8000/";
-    private final String ROOT = "http://localhost:8000/";
+    private final String ROOT = Constants.APIADDRESS;
     private final String PRODUCTS = "products/";
 
     private RequestQueue mRequestQueue;

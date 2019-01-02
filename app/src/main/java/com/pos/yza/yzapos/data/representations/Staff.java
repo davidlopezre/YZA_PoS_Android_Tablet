@@ -70,7 +70,6 @@ public final class Staff  {
 
     @Override
     public String toString() {
-        return staffId +  " " + firstName + " " + lastName + " "
-                + phoneNumber + " " + email + " " + homeAddress;
+        return firstName + " " + lastName;
     }
 }

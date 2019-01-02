@@ -1,10 +1,18 @@
 package com.pos.yza.yzapos.newtransaction;
 
+import android.content.Context;
+import android.graphics.Rect;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
@@ -16,13 +24,15 @@ import com.pos.yza.yzapos.newtransaction.cart.CartActions;
 import com.pos.yza.yzapos.newtransaction.cart.CartPresenter;
 import com.pos.yza.yzapos.newtransaction.categoryselection.CategorySelectionFragment;
 import com.pos.yza.yzapos.newtransaction.categoryselection.CategorySelectionPresenter;
-import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsFragment;
-import com.pos.yza.yzapos.newtransaction.customerdetails.CustomerDetailsPresenter;
+import com.pos.yza.yzapos.newtransaction.staffandcustomerdetails.StaffAndCustomerDetailsFragment;
+import com.pos.yza.yzapos.newtransaction.staffandcustomerdetails.StaffAndCustomerDetailsPresenter;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentFragment;
 import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
 import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionFragment;
 import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
+
+import java.util.HashMap;
 
 public class NewTransactionActivity extends AppCompatActivity
         implements OnFragmentInteractionListener{
@@ -34,19 +44,21 @@ public class NewTransactionActivity extends AppCompatActivity
     private static final String PAYMENT = "PAYMENT";
 
     private CartPresenter mCartPresenter;
-    private CustomerDetailsPresenter mCustomerDetailsPresenter;
+    private StaffAndCustomerDetailsPresenter mStaffAndCustomerDetailsPresenter;
     private PaymentPresenter mPaymentPresenter;
     private CategorySelectionPresenter mCategorySelectionPresenter;
     private ProductSelectionPresenter mProductSelectionPresenter;
 
     private NewTransaction transaction = new NewTransaction();
-
     private TransactionsRepository mTransactionsRepository;
+
+    private View parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
+        this.parentLayout = findViewById(android.R.id.content);
 
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,6 +119,8 @@ public class NewTransactionActivity extends AppCompatActivity
 
     private void handleCustomerDetailsActions(Object data){
         transaction.setCustomerDetails(data);
+        HashMap<String, String> dataMap = (HashMap) data;
+        transaction.setStaff(Integer.parseInt(dataMap.get("staff_id")));
         PaymentFragment paymentFragment =
                 (PaymentFragment) getSupportFragmentManager().findFragmentByTag(PAYMENT);
         if (paymentFragment == null) {
@@ -117,7 +131,7 @@ public class NewTransactionActivity extends AppCompatActivity
         }
 
         // Create the presenter
-        mPaymentPresenter = new PaymentPresenter(paymentFragment);
+        mPaymentPresenter = new PaymentPresenter(paymentFragment, transaction);
     }
 
     private void handleCartActions(CartActions action, Object data) {
@@ -142,19 +156,19 @@ public class NewTransactionActivity extends AppCompatActivity
                 break;
             case GO_TO_CUSTOMER_DETAILS:
                 transaction.setCart(data);
-                CustomerDetailsFragment customerDetailsFragment =
-                        (CustomerDetailsFragment) getSupportFragmentManager().
+                StaffAndCustomerDetailsFragment staffAndCustomerDetailsFragment =
+                        (StaffAndCustomerDetailsFragment) getSupportFragmentManager().
                                 findFragmentByTag(CUSTOMER_DETAILS);
 
-                if (customerDetailsFragment == null) {
+                if (staffAndCustomerDetailsFragment == null) {
                     // Create the fragment
-                    customerDetailsFragment = CustomerDetailsFragment.newInstance();
+                    staffAndCustomerDetailsFragment = StaffAndCustomerDetailsFragment.newInstance();
                     ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
-                            customerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS,
+                            staffAndCustomerDetailsFragment, R.id.contentFrame, CUSTOMER_DETAILS,
                             true);
                 }
                 // Create the presenter
-                mCustomerDetailsPresenter = new CustomerDetailsPresenter(customerDetailsFragment);
+                mStaffAndCustomerDetailsPresenter = new StaffAndCustomerDetailsPresenter(staffAndCustomerDetailsFragment);
 
                 break;
             default:
@@ -175,6 +189,7 @@ public class NewTransactionActivity extends AppCompatActivity
             ActivityUtils.replaceFragmentInActivity(getSupportFragmentManager(),
                     productSelectionFragment, R.id.contentFrame, PRODUCT_SELECTION, true);
         }
+
         // Create the presenter
         mProductSelectionPresenter = new ProductSelectionPresenter(productSelectionFragment,
                 Injection.provideProductsRepository(this), category);
@@ -184,11 +199,6 @@ public class NewTransactionActivity extends AppCompatActivity
     private void handleProductSelectionActions(LineItem data) {
         Log.i("PRODUCT_SELECTION", "In New Transactions Activity");
         mCartPresenter.addLineItem(data);
-        // Remove the fragment from activity
-//        CartFragment cartFragment =
-//                (CartFragment) getSupportFragmentManager().
-//                        findFragmentByTag(CART);
-
         FragmentManager fm = getSupportFragmentManager();
         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
@@ -199,6 +209,33 @@ public class NewTransactionActivity extends AppCompatActivity
     private void completeTransaction(Object data) {
         transaction.setPayment(data);
         mTransactionsRepository.saveTransaction(transaction.createTransaction());
+        Snackbar mySnackbar = Snackbar.make(parentLayout, R.string.something_created, Snackbar.LENGTH_LONG);
+        mySnackbar.show();
+        int finishTime = 2;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                finish();
+            }
+        }, finishTime * 1000);
+    }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    Log.d("focus", "touchevent");
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+
+        return super.dispatchTouchEvent(event);
     }
 }

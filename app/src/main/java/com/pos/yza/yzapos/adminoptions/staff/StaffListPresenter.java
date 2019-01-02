@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.adminoptions.staff;
 
 import android.support.annotation.NonNull;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
 import com.pos.yza.yzapos.data.source.StaffRepository;
@@ -37,14 +38,14 @@ public class StaffListPresenter implements StaffListContract.Presenter, OnVolley
         mStaffRepository.getAllStaff(new StaffDataSource.LoadStaffCallback() {
             @Override
             public void onStaffLoaded(List<Staff> staffList) {
-                mStaffListView.showStaff(new ArrayList<Staff>(staffList));
+                mStaffListView.showStaff(staffList);
             }
 
             @Override
             public void onDataNotAvailable() {
-
             }
         });
+
     }
 
     @Override
@@ -71,7 +72,7 @@ public class StaffListPresenter implements StaffListContract.Presenter, OnVolley
     }
 
     @Override
-    public void editStaffMember() {
+    public void editStaffMember(Staff member) {
 
     }
 

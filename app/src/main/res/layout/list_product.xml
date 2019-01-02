@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/title"
         android:text="hi"
-        android:textSize="16sp"
+        android:textSize="@dimen/font_size_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
@@ -15,19 +15,4 @@
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
         android:layout_centerVertical="true"/>
-
-    <TextView
-        android:id="@+id/amount"
-        android:text="hi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:src="@drawable/ic_edit"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"/>
-
 </RelativeLayout>

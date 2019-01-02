@@ -3,6 +3,7 @@ package com.pos.yza.yzapos.newtransaction.cart;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,19 +17,27 @@ import android.widget.TextView;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
+import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionFragment;
+import com.pos.yza.yzapos.newtransaction.quantity.QuantityDialog;
+import com.pos.yza.yzapos.util.Formatters;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CartFragment extends Fragment implements CartContract.View {
+public class CartFragment extends Fragment implements CartContract.View,
+        RemoveLineItemDialog.DialogClickListener {
+
+    public static final String TAG = "CartFrag";
 
     CartContract.Presenter mPresenter;
-
     LineItemAdapter adapter;
-
     private OnFragmentInteractionListener mListener;
+    private int chosenLineItemIndex;
+    private TextView totalDueView;
 
     public CartFragment() {
         // Required empty public constructor
@@ -80,6 +89,11 @@ public class CartFragment extends Fragment implements CartContract.View {
                 mPresenter.goToCustomerDetails();
             }
         });
+
+        TextView totalAmount = (TextView) root.findViewById(R.id.totalAmt);
+        totalAmount.setText("Total: " + Formatters.amountFormat.format(adapter.getTotalAmt()));
+        this.totalDueView = totalAmount;
+
         return root;
     }
 
@@ -135,10 +149,26 @@ public class CartFragment extends Fragment implements CartContract.View {
             return lineItems.size();
         }
 
-        public void addLineItem(LineItem lineItem){
+        public double getTotalAmt() {
+            double amount = 0;
+            for(LineItem lineItem: lineItems) {
+                amount += lineItem.getAmount();
+            }
+            return amount;
+        }
+
+        public void addLineItem(LineItem lineItem) {
             lineItems.add(lineItem);
             notifyDataSetChanged();
             Log.i("CART","Product added. New list is " + lineItem.toString());
+
+        }
+
+        public void removeLineItem(int i) {
+            lineItems.remove(i);
+            notifyDataSetChanged();
+            Log.i("CART","Product removed");
+            updateTotalDueView();
         }
 
         @Override
@@ -163,12 +193,45 @@ public class CartFragment extends Fragment implements CartContract.View {
 
             TextView label = (TextView) rowView.findViewById(R.id.title);
             label.setText(lineItem.toString());
+            label.setTextSize(20);
 
-            TextView quantity = (TextView) rowView.findViewById(R.id.quantity);
-            quantity.setText(Integer.toString(lineItem.getQuantity()));
+            TextView amount = (TextView) rowView.findViewById(R.id.amount);
 
+            amount.setText(Formatters.amountFormat.format(lineItem.getAmount()));
+            amount.setTextSize(20);
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    chosenLineItemIndex = i;
+                    Log.i(TAG, "lineitem chosen is: " + adapter.getItem(chosenLineItemIndex));
+                    DialogFragment dialog = new RemoveLineItemDialog();
+                    // Create a new bundle to pass the product name to the QuantityDialog fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CLICKED", adapter.getItem(chosenLineItemIndex).toString());
+                    dialog.setArguments(bundle);
+                    dialog.setTargetFragment(CartFragment.this, 0);
+                    dialog.show(getFragmentManager(), "dialog");
+
+                }
+            });
 
             return rowView;
         }
+    }
+
+    @Override
+    public void onDialogPositiveClick(int value) {
+        Log.i(TAG, "clicked removed on: " + Integer.toString(value));
+        Log.i(TAG, "chosen LineItem: " + adapter.getItem(chosenLineItemIndex).toString());
+        adapter.removeLineItem(chosenLineItemIndex);
+    }
+
+    @Override
+    public void onDialogNegativeClick() {
+    }
+
+    private void updateTotalDueView() {
+        totalDueView.setText("Total: " + Formatters.amountFormat.format(adapter.getTotalAmt()));
     }
 }

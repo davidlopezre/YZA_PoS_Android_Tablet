@@ -16,23 +16,29 @@
     <string name="view_products">View Products</string>
     <string name="print">Print</string>
     <string name="choose_category">Choose Category</string>
+    <string name="choose_staff">Choose Staff Name</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="apirootlocal">http://localhost:8000</string>
+    <string name="apirootpdlocal">http://localhost:8000</string>
     <string name="apirootcloud">http://35.197.185.80:8000</string>
+    <string name="apingrok">http://c5cfc75e.ngrok.io</string>
+    <string name="apiaddress">http://c5cfc75e.ngrok.io</string>
 
     <string-array name="spinner_example">
         <item>Paper</item>
         <item>Sticker</item>
         <item>Tarpaulin</item>
     </string-array>
+
     <string name="unit_of_measure">Unit of measure</string>
     <string name="unit_price">Unit price</string>
     <string name="name">Name</string>
     <string name="address">Address</string>
     <string name="contact">Contact</string>
     <string name="total_due">Total due</string>
+    <string name="num_of_items">Number of Items</string>
+    <string name="change_to_give">Change</string>
     <string name="mode_of_payment">Mode of payment</string>
     <string name="payment_details">Payment details</string>
     <string name="amount_paid">Amount paid</string>
@@ -45,4 +51,6 @@
     <string name="home_address">Home Address</string>
     <string name="add_property">Add property</string>
     <string name="something_created">successfully created!</string>
+    <string name="select_quantity">Select quantity</string>
+    <string name="quantity_dialog_default_clicked">None</string>
 </resources>

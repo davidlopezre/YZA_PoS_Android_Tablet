@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Staff Name"
+        android:textSize="@dimen/font_size_h4"
+        android:textColor="@color/eagleGreen"
+        />
+
+    <Spinner
+        android:id="@+id/staff_selection"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:prompt="@string/choose_staff"
+        android:entries="@array/spinner_example"
+        >
+    </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Customer Name"
+        android:textSize="@dimen/font_size_h4"
+        android:textColor="@color/eagleGreen"
+        />
+
+    <EditText
+        android:id="@+id/editText_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/name"
+        android:textSize="@dimen/font_size_h4"
+        android:selectAllOnFocus="true"/>
+
+    <EditText
+        android:id="@+id/editText_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/surname"
+        android:textSize="@dimen/font_size_h4"
+        android:selectAllOnFocus="true"/>
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:background="@color/eagleGreen"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_size_h4"
+        android:layout_margin="@dimen/margin_linear_elements"/>
+
+</LinearLayout>
+

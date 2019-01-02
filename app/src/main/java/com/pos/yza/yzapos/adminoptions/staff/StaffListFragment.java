@@ -66,7 +66,7 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_item, container,
+        View root = inflater.inflate(R.layout.fragment_view_staff, container,
                 false);
 
         // Set up the items view
@@ -83,10 +83,6 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
                 mPresenter.addStaffMember();
             }
         });
-
-        Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
-        // Apply the adapter to the spinner
-//        spinner.setAdapter(mSpinnerAdapter);
 
         return root;
     }
@@ -156,6 +152,14 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(staffMember.getName());
+
+            ImageButton editButton = (ImageButton) rowView.findViewById(R.id.button_edit_item);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPresenter.editStaffMember(staffMember);
+                }
+            });
 
             ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
             deleteButton.setOnClickListener(new View.OnClickListener() {

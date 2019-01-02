@@ -17,6 +17,7 @@ public final class Transaction {
     private int branchId;
     private ArrayList<LineItem> lineItems;
     private ArrayList<Payment> payments;
+    private int staffId;
     private Status status;
     private double amount;
 
@@ -31,6 +32,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.staffId = -1;
         this.status = Status.OK;
     }
 
@@ -43,6 +45,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.staffId = -1;
         this.status = Transaction.getStatus(state);
     }
 
@@ -55,6 +58,20 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.staffId = -1;
+        this.status = Status.OK;
+    }
+
+    public Transaction(String clientFirstName, String clientSurname, int branchId, int staffId){
+        this.transactionId = -1;
+        this.clientFirstName = clientFirstName;
+        this.clientSurname = clientSurname;
+        this.dateTime = new Date(0,0,0);
+        this.branchId = branchId;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+        this.amount = 0;
+        this.staffId = staffId;
         this.status = Status.OK;
     }
 
@@ -68,6 +85,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = 0;
+        this.staffId = -1;
         this.status = Status.OK;
     }
 
@@ -81,6 +99,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = amount;
+        this.staffId = -1;
         this.status = Status.OK;
     }
 
@@ -95,6 +114,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.amount = amount;
+        this.staffId = -1;
         this.status = Status.OK;
     }
 
@@ -109,6 +129,7 @@ public final class Transaction {
         this.branchId = branchId;
         this.lineItems = lineItems;
         this.payments = payments;
+        this.staffId = -1;
         this.amount = amount;
     }
 
@@ -123,6 +144,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.status = status;
+        this.staffId = -1;
         this.amount = amount;
     }
 
@@ -163,6 +185,10 @@ public final class Transaction {
 
     public int getBranchId() {
         return branchId;
+    }
+
+    public int getStaffId() {
+        return staffId;
     }
 
     public ArrayList<LineItem> getLineItems() {

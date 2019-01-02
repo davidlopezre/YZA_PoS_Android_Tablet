@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.DeleteJsonObjectRequest;
+import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Payment;
@@ -22,6 +23,7 @@ import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsDataSource;
+import com.pos.yza.yzapos.util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +51,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                                CLIENT_LAST_NAME = "client_surname", TRANSACTION_DATE_TIME = "date_time",
                                TRANSACTION_STATE = "state", TRANSACTION_AMOUNT = "amount",
                                TRANSACTION_BRANCH_ID = "branch_id", LINE_ITEMS = "items", PAYMENTS = "payments",
-                               TRANSACTION_CANCEL = "CANCEL", TRANSACTION_REFUND = "REFUND";
+                               TRANSACTION_CANCEL = "CANCEL", TRANSACTION_REFUND = "REFUND",
+                               STAFF_ID="staff_id";
 
     public final static String LINE_ITEM_ID = "line_item_id", LINE_ITEM_AMOUNT = "amount",
                                LINE_ITEM_PRODUCT_ID = "product_id", LINE_ITEM_QUANTITY = "quantity";
@@ -58,9 +61,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                                PAYMENT_STATE = "state", PAYMENT_AMOUNT = "amount",
                                PAYMENT_BRANCH_ID = "branch_id";
 
-
-//    private final String ROOT = "http://35.197.185.80:8000/";
-    private final String ROOT = "http://localhost:8000/";
+    private final String ROOT = Constants.APIADDRESS;
     private final String TRANSACTIONS = "transaction/";
     private final String DELETE_OLD_TRANSACTIONS = "delete-old-transactions/";
 
@@ -148,6 +149,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
         params.put(CLIENT_LAST_NAME, transaction.getClientSurname());
         params.put(TRANSACTION_BRANCH_ID, transaction.getBranchId() + "");
         params.put(TRANSACTION_AMOUNT, transaction.getAmount() + "" );
+        params.put(STAFF_ID, transaction.getStaffId() + "");
 
         JSONObject paramsJson = new JSONObject(params);
 

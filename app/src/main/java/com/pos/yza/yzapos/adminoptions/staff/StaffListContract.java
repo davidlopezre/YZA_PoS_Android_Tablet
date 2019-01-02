@@ -23,6 +23,6 @@ public interface StaffListContract {
         void loadStaff();
         void addStaffMember();
         void deleteStaffMember(Staff member);
-        void editStaffMember();
+        void editStaffMember(Staff member);
     }
 }

@@ -17,6 +17,7 @@ import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.StaffDataSource;
+import com.pos.yza.yzapos.util.Constants;
 import com.pos.yza.yzapos.util.OnVolleyResponse;
 
 import org.json.JSONArray;
@@ -39,8 +40,7 @@ public class StaffRemoteDataSource implements StaffDataSource {
                   LAST_NAME = "surname", PHONE_NUMBER = "phone_number",
                   EMAIL = "email", ADDRESS = "home_address";
 
-//    private final String ROOT = "http://35.197.185.80:8000/";
-    private final String ROOT = "http://localhost:8000/";
+    private final String ROOT = Constants.APIADDRESS;
     private final String STAFF = "staff/";
 
     private static StaffRemoteDataSource INSTANCE;

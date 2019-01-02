@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Payment;
-import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.Transaction;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class NewTransaction {
     List<LineItem> cart;
     double paymentAmount;
     HashMap<String,String> customerDetails;
+    int staffId;
 
     public NewTransaction() {
         cart = new ArrayList<>();
@@ -51,14 +51,24 @@ public class NewTransaction {
         Log.i("NewTransactionClass", customerDetails.get("surname") + "");
     }
 
+    public void setStaff(int data){
+        this.staffId =  data;
+        Log.i("NewTransactionClass", "successfully set staff!");
+        Log.i("NewTransactionClass", Integer.toString(staffId));
+    }
+
     public Transaction createTransaction (){
         if (isComplete()) {
             String firstName = customerDetails.get("firstname");
             String surname = customerDetails.get("surname");
 
-            Transaction transaction = new Transaction(firstName, surname, 1);
+            Transaction transaction = new Transaction(firstName, surname, 1, staffId);
 
-            Payment payment = new Payment(new Date(),paymentAmount, 1, transaction);
+            if (paymentAmount > getTotalDue()) {
+                paymentAmount = getTotalDue();
+            }
+
+            Payment payment = new Payment(new Date(), paymentAmount, 1, transaction);
 
             transaction.setLineItems(new ArrayList<LineItem>(processCart(transaction)));
             transaction.addPayment(payment);
@@ -88,4 +98,27 @@ public class NewTransaction {
         return true;
     }
 
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public int getNumberOfItems() {
+        int numberOfItems = 0;
+        for (LineItem i: cart) {
+            numberOfItems += i.getQuantity();
+        }
+        return numberOfItems;
+    }
+
+    public double getTotalDue() {
+        double totalDue = 0;
+        for (LineItem i: cart) {
+            totalDue += i.getAmount();
+        }
+        return totalDue;
+    }
+
+    public double getChange() {
+        return paymentAmount - getTotalDue();
+    }
 }

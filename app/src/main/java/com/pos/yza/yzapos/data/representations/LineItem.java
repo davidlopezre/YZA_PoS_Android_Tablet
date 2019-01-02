@@ -1,5 +1,6 @@
 package com.pos.yza.yzapos.data.representations;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.source.remote.TransactionsRemoteDataSource;
 
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class LineItem {
     }
 
     public String toString(){
-        return "Product: " + productId + " Qty: " + quantity + " Amt: " + amount;
+        return SessionStorage.getProduct(productId).getName() + " * " + quantity;
     }
 
     public HashMap<String, String> toHashMap(){

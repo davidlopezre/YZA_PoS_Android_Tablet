@@ -10,10 +10,13 @@ import com.pos.yza.yzapos.util.BaseView;
 public interface PaymentContract {
     interface View extends BaseView<PaymentContract.Presenter> {
         void showConfirmPayment();
-
+        void setNumOfItems(int numOfItems);
+        void setTotalDue(double totalDue);
+        void setChange(double change);
     }
 
     interface Presenter extends BasePresenter {
-        void confirmPayment();
+        void confirmPayment(Double amount);
+        void setPaymentAmount(Double amount);
     }
 }

@@ -14,7 +14,6 @@ public interface CartContract {
         void showCategorySelection();
         void showCustomerDetails();
         void addLineItemToAdapter(LineItem lineItem);
-
     }
 
     interface Presenter extends BasePresenter {

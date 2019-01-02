@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.newtransaction.quantity;
+package com.pos.yza.yzapos.newtransaction.cart;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,20 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.NumberPicker;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.data.representations.Product;
 
 /**
- * Created by Dlolpez on 14/2/18.
+ * Created by beyondinfinity on 3/1/19.
  */
 
-public class QuantityDialog extends DialogFragment {
-    private static final String TAG = "Quantity Dialog";
-    private static int MAX_QUANTITY = 10000;
+public class RemoveLineItemDialog extends DialogFragment {
+    private static final String TAG = "RemoveLineItem Dialog";
 
     public interface DialogClickListener {
         public void onDialogPositiveClick(int value);
@@ -54,36 +49,16 @@ public class QuantityDialog extends DialogFragment {
         }
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.number_picker_layout, null);
-
         builder.setTitle(clickedProduct);
-        builder.setMessage(getString(R.string.select_quantity));
-        builder.setView(dialogView);
-
-        final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
-        numberPicker.setMaxValue(MAX_QUANTITY);
-        numberPicker.setMinValue(1);
-        numberPicker.setWrapSelectorWheel(false);
-
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                Log.i(TAG, "onValueChange: from " + Integer.toString(i) +
-                        "to " +  Integer.toString(i1));
-            }
-        });
-        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i(TAG, "onClick: " + numberPicker.getValue());
-                mListener.onDialogPositiveClick(numberPicker.getValue());
+                mListener.onDialogPositiveClick(i);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i(TAG, "onClick: " + numberPicker.getValue());
                 mListener.onDialogNegativeClick();
             }
         });
@@ -99,3 +74,4 @@ public class QuantityDialog extends DialogFragment {
         return dialog;
     }
 }
+

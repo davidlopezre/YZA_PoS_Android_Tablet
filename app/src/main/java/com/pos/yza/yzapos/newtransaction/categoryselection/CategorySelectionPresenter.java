@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.newtransaction.categoryselection;
 
 import android.support.annotation.NonNull;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.CategoriesDataSource;
 import com.pos.yza.yzapos.data.source.CategoriesRepository;
@@ -34,17 +35,7 @@ public class CategorySelectionPresenter implements CategorySelectionContract.Pre
     }
 
     private void loadCategories(){
-        mCategoriesRepository.getCategories(new CategoriesDataSource.LoadCategoriesCallback() {
-            @Override
-            public void onCategoriesLoaded(List<ProductCategory> categories) {
-                processCategories(categories);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
+        processCategories(SessionStorage.getAllCategories());
     }
 
     private void processCategories(List<ProductCategory> categories) {

@@ -1,48 +1,53 @@
-package com.pos.yza.yzapos.newtransaction.customerdetails;
+package com.pos.yza.yzapos.newtransaction.staffandcustomerdetails;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.representations.Staff;
 import com.pos.yza.yzapos.newtransaction.OnFragmentInteractionListener;
-import com.pos.yza.yzapos.newtransaction.cart.CartContract;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CustomerDetailsFragment extends Fragment implements CustomerDetailsContract.View {
+public class StaffAndCustomerDetailsFragment extends Fragment implements StaffAndCustomerDetailsContract.View {
 
-    CustomerDetailsContract.Presenter mPresenter;
-
+    StaffAndCustomerDetailsContract.Presenter mPresenter;
     private OnFragmentInteractionListener mListener;
+    private HashMap<String,String> staffAndCustomer = new HashMap<>();
+    private ArrayAdapter<Staff> mSpinnerAdapter;
 
-    private HashMap<String,String> customer = new HashMap<>();
-
-    public CustomerDetailsFragment() {
+    public StaffAndCustomerDetailsFragment() {
         // Required empty public constructor
     }
 
-    public static CustomerDetailsFragment newInstance() {
-        return new CustomerDetailsFragment();
+    public static StaffAndCustomerDetailsFragment newInstance() {
+        return new StaffAndCustomerDetailsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
-
+        mSpinnerAdapter =
+                new ArrayAdapter<Staff>(getActivity(),
+                        R.layout.spinner_item);
     }
 
     @Override
-    public void setPresenter(@NonNull CustomerDetailsContract.Presenter presenter) {
+    public void setPresenter(@NonNull StaffAndCustomerDetailsContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
     }
 
@@ -52,11 +57,19 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
         mPresenter.start();
     }
 
+    public void setUpSpinnerAdapter(List<Staff> content){
+        if (mSpinnerAdapter.getCount() == 0) {
+            mSpinnerAdapter.addAll(content);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_customer, container, false);
+        View root = inflater.inflate(R.layout.fragment_staff_and_customer, container, false);
+
+        Spinner spinner = (Spinner) root.findViewById(R.id.staff_selection);
+        spinner.setAdapter(mSpinnerAdapter);
 
         final EditText editTextFirstName = root.findViewById(R.id.editText_firstname);
 
@@ -66,8 +79,11 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customer.put("firstname", editTextFirstName.getText().toString());
-                customer.put("surname", editTextSurname.getText().toString());
+                staffAndCustomer.put("firstname", editTextFirstName.getText().toString());
+                staffAndCustomer.put("surname", editTextSurname.getText().toString());
+                Staff staff = (Staff) spinner.getSelectedItem();
+                staffAndCustomer.put("staff_id", staff.getStaffId() + "");
+                Log.i("staff selected", staffAndCustomer.get("staff_id"));
                 mPresenter.goToPayment();
             }
         });
@@ -95,6 +111,6 @@ public class CustomerDetailsFragment extends Fragment implements CustomerDetails
 
     @Override
     public void showPayment() {
-        mListener.onFragmentMessage("CUSTOMER_DETAILS", customer);
+        mListener.onFragmentMessage("CUSTOMER_DETAILS", staffAndCustomer);
     }
 }

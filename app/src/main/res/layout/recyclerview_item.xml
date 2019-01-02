@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/mustard"
+        android:textSize="@dimen/font_size_h4"/>
 
 </LinearLayout>
