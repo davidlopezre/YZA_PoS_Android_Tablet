@@ -31,7 +31,7 @@
             android:name=".adminoptions.AdminOptionsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ViewTransactionActivity"
+            android:name=".managetransactions.viewtransaction.ViewTransactionPresenter"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewProductsActivity" />
         <activity android:name=".managetransactions.ManageTransactionsActivity"

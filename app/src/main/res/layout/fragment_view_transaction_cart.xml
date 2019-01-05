@@ -18,25 +18,10 @@
     </ListView>
 
     <Button
-        android:id="@+id/add"
+        android:id="@+id/button_view_payments"
         android:layout_width="0dp"
         android:layout_height="253dp"
-        android:text="Add"
-        android:textColor="@color/rosywhite"
-        android:textAllCaps="false"
-        android:textSize="48sp"
-        android:background="@color/mustard"
-        app:layout_constraintBottom_toTopOf="@+id/button_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/list_view"
-        app:layout_constraintTop_toTopOf="parent">
-    </Button>
-
-    <Button
-        android:id="@+id/button_next"
-        android:layout_width="0dp"
-        android:layout_height="253dp"
-        android:text="@string/next"
+        android:text="@string/view_payments"
         android:textAllCaps="false"
         android:textColor="@color/rosywhite"
         android:textSize="48sp"

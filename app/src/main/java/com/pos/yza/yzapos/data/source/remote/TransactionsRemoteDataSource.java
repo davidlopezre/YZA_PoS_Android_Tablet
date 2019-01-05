@@ -329,7 +329,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                                                               dateTime,
                                                               object.getInt(TRANSACTION_BRANCH_ID),
                                                               status,
-                                                              object.getDouble(TRANSACTION_AMOUNT));
+                                                              object.getDouble(TRANSACTION_AMOUNT),
+                                                              object.getInt(STAFF_ID));
 
                     /** Process line items **/
 
@@ -418,7 +419,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                                               dateTime,
                                               response.getInt(TRANSACTION_BRANCH_ID),
                                               status,
-                                              response.getDouble(TRANSACTION_AMOUNT));
+                                              response.getDouble(TRANSACTION_AMOUNT),
+                                              response.getInt(STAFF_ID));
 
                 /** Process line items **/
 

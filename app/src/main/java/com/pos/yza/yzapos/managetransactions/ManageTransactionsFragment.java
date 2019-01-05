@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Transaction;
+import com.pos.yza.yzapos.managetransactions.viewtransaction.ViewTransactionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +25,18 @@ import java.util.List;
 public class ManageTransactionsFragment extends Fragment implements ManageTransactionsContract.View {
     private TransactionsAdapter mListAdapter;
     private ManageTransactionsContract.Presenter mPresenter;
+    private OnFragmentInteractionListener mListener;
 //    private ProductListListener listener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        try {
-//            listener = (ProductListListener) context;
-//        } catch (ClassCastException castException) {
-//            /** The activity does not implement the listener. */
-//        }
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     public ManageTransactionsFragment(){
@@ -52,6 +57,8 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
     public void onResume() {
         super.onResume();
         mPresenter.start();
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.manage_transactions);
     }
 
     @Override
@@ -73,6 +80,8 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
 
         return root;
     }
+
+
 
     @Override
     public void showTransactions(List<Transaction> items) {
@@ -160,6 +169,14 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
                     mPresenter.addPaymentToTransaction();
                 }
             });
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onFragmentMessage(ManageTransactionsActivity.VIEW_TRANSACTION_CLICK,
+                                                transaction);
+                }
+            });
             return rowView;
         }
     }
@@ -167,4 +184,8 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
     public interface ItemListListener{
         void addItem();
     }
+
+
+
+
 }

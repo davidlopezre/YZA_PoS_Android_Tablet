@@ -115,5 +115,9 @@ public class SessionStorage extends Application {
         return new ArrayList<Staff>(staffMap.values());
     }
 
+    public static Staff getStaffById(int id) {
+        return staffMap.get(id);
+    }
+
 
 }

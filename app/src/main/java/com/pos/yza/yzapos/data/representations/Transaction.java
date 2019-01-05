@@ -1,5 +1,7 @@
 package com.pos.yza.yzapos.data.representations;
 
+import com.pos.yza.yzapos.SessionStorage;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -135,7 +137,7 @@ public final class Transaction {
 
     public Transaction(int transactionId, String clientFirstName,
                        String clientSurname, Date dateTime,
-                       int branchId, Status status, double amount) {
+                       int branchId, Status status, double amount, int staffId) {
         this.transactionId = transactionId;
         this.clientFirstName = clientFirstName;
         this.clientSurname = clientSurname;
@@ -144,7 +146,7 @@ public final class Transaction {
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
         this.status = status;
-        this.staffId = -1;
+        this.staffId = staffId;
         this.amount = amount;
     }
 
@@ -223,7 +225,7 @@ public final class Transaction {
             return null;
     }
 
-    public String toString(){
+    public String toString() {
         String toReturn = "Id: " + transactionId + " Client: " + clientFirstName +
                           " " + clientSurname + "\n";
 
@@ -238,5 +240,12 @@ public final class Transaction {
         }
 
         return toReturn;
+    }
+
+    public String getToolbarTitle() {
+        String title = transactionId + ": " + clientFirstName +
+                       " " + clientSurname + " | ";
+        title += SessionStorage.getStaffById(staffId).getName();
+        return title;
     }
 }
