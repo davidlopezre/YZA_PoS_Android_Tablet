@@ -1,6 +1,7 @@
 package com.pos.yza.yzapos.data.representations;
 
 import com.pos.yza.yzapos.SessionStorage;
+import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -247,5 +248,25 @@ public final class Transaction {
                        " " + clientSurname + " | ";
         title += SessionStorage.getStaffById(staffId).getName();
         return title;
+    }
+
+    public String getSummary() {
+        String toReturn = "Id: " + transactionId + " Client: " + clientFirstName +
+                " " + clientSurname + "\n";
+
+        toReturn += "Balance: " + Formatters.amountFormat.format(getBalance());
+        return toReturn;
+    }
+
+    public double getTotalPaid() {
+        double totalPaid = 0;
+        for (Payment p: payments) {
+            totalPaid += p.getAmount();
+        }
+        return totalPaid;
+    }
+
+    public double getBalance() {
+        return Math.max(getAmount() - getTotalPaid(), 0);
     }
 }

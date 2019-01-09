@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Transaction;
-import com.pos.yza.yzapos.managetransactions.viewtransaction.ViewTransactionFragment;
+import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,38 +143,17 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
 
             final String transactionId = Integer.toString(transaction.getTransactionId());
 
-            TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-            titleTV.setText(transaction.toString());
+            TextView titleTV = rowView.findViewById(R.id.title);
+            titleTV.setText(transaction.getToolbarTitle());
 
-            Button refundButton = (Button) rowView.findViewById(R.id.button_refund);
-            refundButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.refundTransaction(transactionId);
-                }
-            });
-
-            Button cancelButton = (Button) rowView.findViewById(R.id.button_cancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.cancelTransaction(transactionId);
-                }
-            });
-
-            Button addPaymentButton = (Button) rowView.findViewById(R.id.button_add_payment);
-            addPaymentButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.addPaymentToTransaction();
-                }
-            });
+            TextView balanceView = rowView.findViewById(R.id.balance);
+            balanceView.setText(getString(R.string.balance) + ": " +
+                    Formatters.amountFormat.format(transaction.getBalance()));
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onFragmentMessage(ManageTransactionsActivity.VIEW_TRANSACTION_CLICK,
-                                                transaction);
+                    mListener.onFragmentMessage(getTag(), transaction);
                 }
             });
             return rowView;

@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
+    android:layout_gravity="center"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="@dimen/padding_horizontal">
 
     <TextView
-        android:id="@+id/num_of_items"
+        android:id="@+id/balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -17,15 +17,6 @@
         android:textSize="@dimen/font_size_h4"
         android:layout_margin="@dimen/margin_linear_elements"
         />
-
-    <TextView
-        android:id="@+id/total_due"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="@string/total_due"
-        android:textSize="@dimen/font_size_h4"
-        android:layout_margin="@dimen/margin_linear_elements"/>
 
     <TextView
         android:id="@+id/amount_paid"
@@ -60,15 +51,4 @@
         android:textSize="@dimen/font_size_h4"
         android:layout_margin="@dimen/margin_linear_elements"/>
 
-    <Button
-        android:id="@+id/button_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/confirm"
-        android:layout_margin="@dimen/margin_linear_elements"
-        android:background="@color/eagleGreen"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_size_h4"/>
-
 </LinearLayout>
-

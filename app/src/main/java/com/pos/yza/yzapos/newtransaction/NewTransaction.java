@@ -119,6 +119,6 @@ public class NewTransaction {
     }
 
     public double getChange() {
-        return paymentAmount - getTotalDue();
+        return Math.max(paymentAmount - getTotalDue(), 0);
     }
 }

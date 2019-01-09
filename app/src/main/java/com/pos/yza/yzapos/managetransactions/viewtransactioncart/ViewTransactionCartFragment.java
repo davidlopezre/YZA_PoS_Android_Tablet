@@ -1,9 +1,9 @@
-package com.pos.yza.yzapos.managetransactions.viewtransaction;
+package com.pos.yza.yzapos.managetransactions.viewtransactioncart;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.LineItem;
+import com.pos.yza.yzapos.managetransactions.OnFragmentInteractionListener;
 import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
@@ -22,21 +23,22 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ViewTransactionFragment extends Fragment
-                                     implements ViewTransactionContract.View {
+public class ViewTransactionCartFragment extends Fragment
+                                     implements ViewTransactionCartContract.View {
 
-    ViewTransactionContract.Presenter mPresenter;
+    ViewTransactionCartContract.Presenter mPresenter;
     LineItemAdapter adapter;
+    private OnFragmentInteractionListener mListener;
     private static final String TAG = "VIEW_TRANS_FRAG";
 
     TextView totalView;
 
-    public ViewTransactionFragment() {
+    public ViewTransactionCartFragment() {
         // Required empty public constructor
     }
 
-    public static ViewTransactionFragment newInstance() {
-        return new ViewTransactionFragment();
+    public static ViewTransactionCartFragment newInstance() {
+        return new ViewTransactionCartFragment();
     }
 
     @Override
@@ -52,8 +54,19 @@ public class ViewTransactionFragment extends Fragment
         mPresenter.start();
     }
 
-    public void setPresenter(@NonNull ViewTransactionContract.Presenter presenter) {
+    public void setPresenter(@NonNull ViewTransactionCartContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -70,7 +83,7 @@ public class ViewTransactionFragment extends Fragment
         viewPayments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mPresenter.goToCustomerDetails();
+                mListener.onFragmentMessage(getTag(), null);
             }
         });
 

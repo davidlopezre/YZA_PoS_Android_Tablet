@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="60dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,19 +16,16 @@
         android:paddingTop="16dp"
         android:layout_centerVertical="true"/>
 
-    <TextView
-        android:id="@+id/balance"
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/date"
         android:text="hi"
-        android:layout_width="@dimen/balance_view_width"
+        android:textSize="@dimen/font_size_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:src="@drawable/ic_edit"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/font_size_content"
-        android:textColor="@color/eagleGreen"/>
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>

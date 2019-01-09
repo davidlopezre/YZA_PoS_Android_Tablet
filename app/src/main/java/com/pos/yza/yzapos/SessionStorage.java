@@ -3,6 +3,7 @@ package com.pos.yza.yzapos;
 import android.app.Application;
 
 import com.google.common.collect.Maps;
+import com.pos.yza.yzapos.data.representations.Branch;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.Staff;
@@ -27,6 +28,7 @@ public class SessionStorage extends Application {
     private static Map<Integer,ProductCategory> categoryMap;
     private static Map<Integer,Product> productMap;
     private static Map<Integer,Staff> staffMap;
+    private static Branch branch;
 
     public static SessionStorage getInstance()
     {
@@ -44,6 +46,7 @@ public class SessionStorage extends Application {
         super.onCreate();
         this.getCategories();
         this.getStaff();
+        this.getInitBranch();
     }
 
     private void getCategories() {
@@ -99,6 +102,14 @@ public class SessionStorage extends Application {
         });
     }
 
+    public void getInitBranch() {
+        branch = new Branch(1, "TESTBRANCH", "TESTADD");
+    }
+
+    public static Branch getBranch() {
+        return branch;
+    }
+
     public static Product getProduct(int id) {
         return productMap.get(id);
     }
@@ -118,6 +129,8 @@ public class SessionStorage extends Application {
     public static Staff getStaffById(int id) {
         return staffMap.get(id);
     }
+
+
 
 
 }

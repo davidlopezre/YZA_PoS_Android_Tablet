@@ -1,24 +1,23 @@
-package com.pos.yza.yzapos.managetransactions.viewtransaction;
+package com.pos.yza.yzapos.managetransactions.viewtransactioncart;
 
 
 import android.support.annotation.NonNull;
 
-import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.PaymentsRepository;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
 
-public class ViewTransactionPresenter implements ViewTransactionContract.Presenter {
+public class ViewTransactionCartPresenter implements ViewTransactionCartContract.Presenter {
 
-    private final ViewTransactionContract.View mViewTransactionView;
+    private final ViewTransactionCartContract.View mViewTransactionView;
     private final TransactionsRepository mTransactionsRepository;
     private final PaymentsRepository mPaymentsRepository;
     private final Transaction transaction;
 
-    public ViewTransactionPresenter(@NonNull TransactionsRepository transactionsRepository,
-                                    @NonNull PaymentsRepository paymentsRepository,
-                                    @NonNull ViewTransactionContract.View view,
-                                    @NonNull Transaction transaction){
+    public ViewTransactionCartPresenter(@NonNull TransactionsRepository transactionsRepository,
+                                        @NonNull PaymentsRepository paymentsRepository,
+                                        @NonNull ViewTransactionCartContract.View view,
+                                        @NonNull Transaction transaction){
         mTransactionsRepository = transactionsRepository;
         mPaymentsRepository = paymentsRepository;
         mViewTransactionView = view;
@@ -30,4 +29,5 @@ public class ViewTransactionPresenter implements ViewTransactionContract.Present
     public void start() {
         mViewTransactionView.setLineItems(transaction.getLineItems());
     }
+
 }

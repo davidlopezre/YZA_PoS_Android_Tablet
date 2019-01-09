@@ -19,8 +19,8 @@ public class RemoveLineItemDialog extends DialogFragment {
     private static final String TAG = "RemoveLineItem Dialog";
 
     public interface DialogClickListener {
-        public void onDialogPositiveClick(int value);
-        public void onDialogNegativeClick();
+        void onDialogPositiveClick(int value);
+        void onDialogNegativeClick();
     }
 
     // Use this instance of the interface to deliver action events

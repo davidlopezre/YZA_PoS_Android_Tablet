@@ -24,6 +24,7 @@ import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.ProductsDataSource;
 import com.pos.yza.yzapos.data.source.TransactionsDataSource;
 import com.pos.yza.yzapos.util.Constants;
+import com.pos.yza.yzapos.util.Parsers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +33,10 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -318,9 +323,11 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
 
                     /** Create transaction with basic attributes **/
 
-                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSz");
-                    String dateTimeString = object.getString(TRANSACTION_DATE_TIME).replace("Z", "UTC");
-                    Date dateTime = format.parse(dateTimeString);
+                    Date dateTime = Parsers.parseDjangoDateTime(object.getString(TRANSACTION_DATE_TIME));
+
+//                    DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+//                    Date dateTime = df.parse(object.getString(TRANSACTION_DATE_TIME));
+
                     Transaction.Status status = Transaction.getStatus(object.getString(TRANSACTION_STATE));
 
                     Transaction transaction = new Transaction(object.getInt(TRANSACTION_ID),
@@ -357,10 +364,10 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                     for (int j = 0; j < paymentsJson.length(); j++) {
                         JSONObject paymentObject = paymentsJson.getJSONObject(j);
 
-                        String paymentDateTimeString = object.getString(PAYMENT_DATE_TIME).replace("Z", "UTC");
-                        Date paymentDateTime = format.parse(dateTimeString);
 
-                        Payment.State state = Payment.getState(object.getString(PAYMENT_STATE));
+                        Date paymentDateTime = Parsers.parseDjangoDateTime(paymentObject.getString(PAYMENT_DATE_TIME));
+
+                        Payment.State state = Payment.getState(paymentObject.getString(PAYMENT_STATE));
 
                         Payment payment = new Payment(paymentObject.getInt(PAYMENT_ID),
                                                       paymentDateTime,
@@ -379,9 +386,6 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                 }
 
                 catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                catch (ParseException e){
                     e.printStackTrace();
                 }
             }
@@ -408,9 +412,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
 
                 /** Create transaction with basic attributes **/
 
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSz");
-                String dateTimeString = response.getString(TRANSACTION_DATE_TIME).replace("Z", "UTC");
-                Date dateTime = format.parse(dateTimeString);
+                Date dateTime = Parsers.parseDjangoDateTime(response.getString(TRANSACTION_DATE_TIME));
+
                 Transaction.Status status = Transaction.getStatus(response.getString(TRANSACTION_STATE));
 
                 transaction = new Transaction(response.getInt(TRANSACTION_ID),
@@ -446,10 +449,8 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                 for (int j = 0; j < paymentsJson.length(); j++) {
                     JSONObject paymentObject = paymentsJson.getJSONObject(j);
 
-                    String paymentDateTimeString = response.getString(PAYMENT_DATE_TIME).replace("Z", "UTC");
-                    Date paymentDateTime = format.parse(paymentDateTimeString);
-
-                    Payment.State state = Payment.getState(response.getString(PAYMENT_STATE));
+                    Date paymentDateTime = Parsers.parseDjangoDateTime(paymentObject.getString(PAYMENT_DATE_TIME));
+                    Payment.State state = Payment.getState(paymentObject.getString(PAYMENT_STATE));
 
                     Payment payment = new Payment(paymentObject.getInt(PAYMENT_ID),
                             paymentDateTime,
@@ -470,9 +471,6 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
             catch (JSONException e) {
                 e.printStackTrace();
             }
-            catch (ParseException e){
-                e.printStackTrace();
-            }
 
         }
 
@@ -485,6 +483,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
             Log.e("ERROR", "Error occurred ", error);
         }
     }
+
 }
 
 

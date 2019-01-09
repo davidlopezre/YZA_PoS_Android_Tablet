@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".managetransactions.viewtransaction.ViewTransactionPresenter">
+    tools:context=".managetransactions.viewtransactioncart.ViewTransactionCartPresenter">
 
 </android.support.constraint.ConstraintLayout>
