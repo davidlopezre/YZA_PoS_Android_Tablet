@@ -141,7 +141,39 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
 
     }
 
-    public void saveTransaction(@NonNull Transaction transaction){
+//    @Override
+//    public void getTransactionsByClientName(ProductCategory category,
+//                                      @NonNull final LoadProductsCallback callback){
+//        checkNotNull(callback);
+//
+//        List<Product> list = null;
+//        JSONArrayResponseListener responseListener = new JSONArrayResponseListener(callback);
+//
+//        Uri builtUri = Uri.parse(ROOT + PRODUCTS)
+//                .buildUpon()
+//                .appendQueryParameter("category", Integer.toString(category.getId()))
+//                .build();
+//
+//        Log.d("requestTest",builtUri.toString());
+//
+//        JsonArrayRequest jsObjRequest = new JsonArrayRequest (Request.Method.GET,
+//                builtUri.toString(), null, responseListener, new ErrorListener());
+//        addToRequestQueue(jsObjRequest);
+//
+//    }
+    public void saveTransaction(@NonNull Transaction transaction) {
+        saveTransaction(transaction, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("saveTransaction", "success");
+                Log.i("saveTransaction", response.toString());
+            }
+        });
+    }
+
+
+    public void saveTransaction(@NonNull Transaction transaction,
+                                Response.Listener<JSONObject> responseListener){
         Log.i("saveTransaction", "in remote data source");
         Uri builtUri = Uri.parse(ROOT + TRANSACTIONS)
                 .buildUpon()
@@ -185,17 +217,13 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
             Log.i("saveTransaction", paramsJson.toString());
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
-                    builtUri.toString(), paramsJson, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.i("saveTransaction", "success");
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("saveTransaction", "Error occurred ", error);
-                }
-            });
+                    builtUri.toString(), paramsJson, responseListener,
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("saveTransaction", "Error occurred ", error);
+                        }
+                    });
 
             addToRequestQueue(jsObjRequest);
         }
@@ -324,9 +352,6 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                     /** Create transaction with basic attributes **/
 
                     Date dateTime = Parsers.parseDjangoDateTime(object.getString(TRANSACTION_DATE_TIME));
-
-//                    DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-//                    Date dateTime = df.parse(object.getString(TRANSACTION_DATE_TIME));
 
                     Transaction.Status status = Transaction.getStatus(object.getString(TRANSACTION_STATE));
 

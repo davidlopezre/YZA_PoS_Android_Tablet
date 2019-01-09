@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.android.volley.Response;
 import com.pos.yza.yzapos.Injection;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.LineItem;
@@ -31,6 +32,9 @@ import com.pos.yza.yzapos.newtransaction.payment.PaymentPresenter;
 import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionFragment;
 import com.pos.yza.yzapos.newtransaction.productselection.ProductSelectionPresenter;
 import com.pos.yza.yzapos.util.ActivityUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -208,16 +212,36 @@ public class NewTransactionActivity extends AppCompatActivity
 
     private void completeTransaction(Object data) {
         transaction.setPayment(data);
-        mTransactionsRepository.saveTransaction(transaction.createTransaction());
-        Snackbar mySnackbar = Snackbar.make(parentLayout, R.string.something_created, Snackbar.LENGTH_LONG);
-        mySnackbar.show();
-        int finishTime = 2;
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                finish();
-            }
-        }, finishTime * 1000);
+        mTransactionsRepository.saveTransaction(transaction.createTransaction(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("saveTransaction", "success");
+                        Log.i("saveTransaction", response.toString());
+                        Snackbar mySnackbar;
+                        try {
+                            mySnackbar = Snackbar.make(parentLayout,
+                                    getString(R.string.transaction_created) + " #"
+                                            + response.getInt("transaction_id"),
+                                    Snackbar.LENGTH_LONG);
+                        }
+                        catch (JSONException e) {
+                            mySnackbar = Snackbar.make(parentLayout,
+                                    getString(R.string.transaction_created),
+                                    Snackbar.LENGTH_LONG);
+                            e.printStackTrace();
+                        }
+                        mySnackbar.show();
+                        int finishTime = 2;
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                finish();
+                            }
+                        }, finishTime * 1000);
+                    }
+                });
+
     }
 
     @Override

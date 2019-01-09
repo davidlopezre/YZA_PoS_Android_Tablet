@@ -102,6 +102,11 @@ public class TransactionsRepository implements TransactionsDataSource {
         mTransactionRemoteDataSource.saveTransaction(transaction);
     }
 
+    public void saveTransaction(@NonNull Transaction transaction, Response.Listener<JSONObject> listener){
+        Log.i("saveTransaction", "in repo");
+        mTransactionRemoteDataSource.saveTransaction(transaction, listener);
+    }
+
     public void refreshTransactions(){
 
     }

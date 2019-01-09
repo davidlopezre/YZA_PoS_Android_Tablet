@@ -2,7 +2,10 @@ package com.pos.yza.yzapos.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.android.volley.Response;
 import com.pos.yza.yzapos.data.representations.Transaction;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -30,6 +33,7 @@ public interface TransactionsDataSource {
     // void getTransactionsByBranch(Branch branch, @NonNull LoadTransactionsCallback callback);
 
     void saveTransaction(@NonNull Transaction transaction);
+    void saveTransaction(@NonNull Transaction transaction, Response.Listener<JSONObject> responseListener);
 
     void refreshTransactions();
 
