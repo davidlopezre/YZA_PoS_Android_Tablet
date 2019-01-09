@@ -156,6 +156,7 @@ public class ViewTransactionPaymentFragment extends Fragment
 
     @Override
     public void setPayments(List<Payment> payments) {
+        Log.i(TAG, "setting payments and updating views");
         mPaymentAdapter.initLineItems(payments);
         updateBalanceAndTotalPaid();
     }
@@ -168,7 +169,14 @@ public class ViewTransactionPaymentFragment extends Fragment
     @Override
     public void onDialogPositiveClick(double payment) {
         mPresenter.makePayment(payment);
-        mPresenter.reloadTransaction();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.reloadTransaction();
+            }
+        }, 2000);
+
     }
 
     @Override

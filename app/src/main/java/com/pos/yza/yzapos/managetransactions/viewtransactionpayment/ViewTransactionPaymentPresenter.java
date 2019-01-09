@@ -1,6 +1,7 @@
 package com.pos.yza.yzapos.managetransactions.viewtransactionpayment;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Payment;
@@ -15,6 +16,8 @@ public class ViewTransactionPaymentPresenter implements ViewTransactionPaymentCo
     private final TransactionsRepository mTransactionsRepository;
     private final PaymentsRepository mPaymentsRepository;
     private Transaction transaction;
+
+    private final String TAG = "VIEW_TRANS_PAY_PRES";
 
     public ViewTransactionPaymentPresenter(@NonNull TransactionsRepository transactionsRepository,
                                         @NonNull PaymentsRepository paymentsRepository,
@@ -81,6 +84,7 @@ public class ViewTransactionPaymentPresenter implements ViewTransactionPaymentCo
 
     private void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+        Log.i(TAG, "setting new transaction and payments");
         mViewTransactionPaymentView.setPayments(transaction.getPayments());
     }
 }
