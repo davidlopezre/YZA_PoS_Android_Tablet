@@ -64,14 +64,15 @@ public class NewTransaction {
 
             Transaction transaction = new Transaction(firstName, surname, 1, staffId);
 
+            transaction.setLineItems(new ArrayList<LineItem>(processCart(transaction)));
+
             if (paymentAmount > getTotalDue()) {
                 paymentAmount = getTotalDue();
             }
-
-            Payment payment = new Payment(new Date(), paymentAmount, 1, transaction);
-
-            transaction.setLineItems(new ArrayList<LineItem>(processCart(transaction)));
-            transaction.addPayment(payment);
+            if (paymentAmount > 0) {
+                Payment payment = new Payment(new Date(), paymentAmount, 1, transaction);
+                transaction.addPayment(payment);
+            }
 
             Log.i("NewTransactionClass", "successfully created transaction!");
             Log.i("NewTransactionClass", transaction.toString());
