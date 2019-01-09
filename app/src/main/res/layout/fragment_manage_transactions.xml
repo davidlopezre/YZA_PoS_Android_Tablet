@@ -11,7 +11,7 @@
         android:padding="@dimen/padding_horizontal">
 
         <EditText
-            android:id="@+id/edittext_search"
+            android:id="@+id/search_transaction_id"
             android:hint="@string/transaction_id"
             android:layout_width="@dimen/search_blank_width"
             android:layout_height="@dimen/search_blank_height"

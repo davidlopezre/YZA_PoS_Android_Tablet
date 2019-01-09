@@ -1,6 +1,7 @@
 package com.pos.yza.yzapos.managetransactions;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.PaymentsRepository;
@@ -19,6 +20,7 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
 
     private final TransactionsRepository mTransactionsRepository;
     private final PaymentsRepository mPaymentsRepository;
+    private final String TAG = "MNG_TRANS_PRES";
 
     public ManageTransactionsPresenter(@NonNull TransactionsRepository transactionsRepository,
                                        @NonNull PaymentsRepository paymentsRepository,
@@ -49,6 +51,7 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
         });
     }
 
+
     @Override
     public void cancelTransaction(String transactionId) {
         mTransactionsRepository.refundTransaction(transactionId);
@@ -63,5 +66,22 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
     @Override
     public void addPaymentToTransaction() {
 
+    }
+
+    @Override
+    public void searchTransactionById(int id) {
+        Log.i(TAG, "search for transaction #" + id);
+        mTransactionsRepository.getTransactionById(id + "", new TransactionsDataSource.GetTransactionCallback() {
+            @Override
+            public void onTransactionLoaded(Transaction transaction) {
+                ArrayList<Transaction> transactions = new ArrayList<>();
+                transactions.add(transaction);
+                mManageTransactionsView.setTransactions(transactions);
+            }
+            @Override
+            public void onDataNotAvailable() {
+                mManageTransactionsView.showSnackBar("Transaction ID not found");
+            }
+        });
     }
 }

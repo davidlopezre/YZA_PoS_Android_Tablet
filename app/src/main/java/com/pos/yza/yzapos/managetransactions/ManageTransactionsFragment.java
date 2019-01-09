@@ -4,13 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +31,8 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
     private TransactionsAdapter mListAdapter;
     private ManageTransactionsContract.Presenter mPresenter;
     private OnFragmentInteractionListener mListener;
+    private EditText transIDSearchView;
+    private View parentLayout;
 //    private ProductListListener listener;
 
     @Override
@@ -73,15 +80,52 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
         View root = inflater.inflate(R.layout.fragment_manage_transactions, container,
                 false);
 
-        // Set up the items view
-        ListView listView = (ListView) root.findViewById(R.id.list_view);
+        transIDSearchView = root.findViewById(R.id.search_transaction_id);
+        transIDSearchView.setSelectAllOnFocus(true);
+        transIDSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    searchTransactionById();
+                }
+                return false;
+            }
+        });
+        transIDSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    Log.d("focus", "focus lost");
+                    searchTransactionById();
+                } else {
+                    Log.d("focus", "focus");
+                }
+            }
+        });
+
+        final Button searchButton = root.findViewById(R.id.button_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchTransactionById();
+            }
+        });
+
+        ListView listView = root.findViewById(R.id.list_view);
         listView.setAdapter(mListAdapter);
 
-
+        parentLayout = root;
         return root;
     }
 
-
+    private void searchTransactionById() {
+        try {
+            int transIDSearch = Integer.parseInt(transIDSearchView.getText().toString());
+            mPresenter.searchTransactionById(transIDSearch);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void showTransactions(List<Transaction> items) {
@@ -158,13 +202,27 @@ public class ManageTransactionsFragment extends Fragment implements ManageTransa
             });
             return rowView;
         }
+
+        public void setTransactions(List<Transaction> mTransactions) {
+            this.mTransactions = mTransactions;
+            notifyDataSetChanged();
+        }
     }
 
     public interface ItemListListener{
         void addItem();
     }
 
+    @Override
+    public void setTransactions(List<Transaction> transactions) {
+        mListAdapter.setTransactions(transactions);
+    }
 
+    @Override
+    public void showSnackBar(String msg) {
+        Snackbar mySnackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_LONG);
+        mySnackbar.show();
+    }
 
 
 }

@@ -16,6 +16,8 @@ public interface ManageTransactionsContract {
         void showCancellationFeedback();
         void showRefundFeedback();
         void addedPaymentFeedback();
+        void showSnackBar(String message);
+        void setTransactions(List<Transaction> transactions);
     }
 
     interface Presenter extends BasePresenter {
@@ -23,5 +25,6 @@ public interface ManageTransactionsContract {
         void cancelTransaction(String transactionId);
         void refundTransaction(String transactionId);
         void addPaymentToTransaction();
+        void searchTransactionById(int id);
     }
 }
