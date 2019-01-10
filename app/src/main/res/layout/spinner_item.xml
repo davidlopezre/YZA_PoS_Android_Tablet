@@ -6,7 +6,8 @@
     android:maxLines="1"
     android:textSize="@dimen/font_size_h4"
     android:textColor="#000000"
-    android:padding="@dimen/margin_linear_elements"
+    android:background="@drawable/spinner_item_border"
+    android:padding="@dimen/margin_spinner_items"
     >
 
 </TextView>

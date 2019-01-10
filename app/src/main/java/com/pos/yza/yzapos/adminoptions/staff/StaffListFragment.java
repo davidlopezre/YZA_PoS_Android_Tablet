@@ -161,14 +161,6 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
                 }
             });
 
-            ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.deleteStaffMember(staffMember);
-                }
-            });
-
 
             return rowView;
         }

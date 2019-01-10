@@ -44,7 +44,7 @@ public class ProductListPresenter implements ProductListContract.Presenter {
                     categoryNames.add(c.getName());
                     Log.i("cat",c.getName());
                 }
-                mItemListView.setUpSpinnerAdapter(categoryNames);
+                mItemListView.setUpSpinnerAdapter(categories);
             }
 
             @Override
@@ -52,23 +52,38 @@ public class ProductListPresenter implements ProductListContract.Presenter {
 
             }
         });
-        loadProducts();
+
+        loadProductsByCategory(mItemListView.getChosenProductCategory());
     }
 
     @Override
-    public void loadProducts() {
-        ProductCategory category = new ProductCategory(1, "", new ArrayList<CategoryProperty>());
-        mProductsRepository.getProducts(new ProductsDataSource.LoadProductsCallback() {
-            @Override
-            public void onProductsLoaded(List<Product> products) {
-                mItemListView.showProducts(new ArrayList<Product>(products));
-            }
+    public void loadProductsByCategory(ProductCategory category) {
+        if (category == null) {
+            mProductsRepository.getProducts(new ProductsDataSource.LoadProductsCallback() {
+                @Override
+                public void onProductsLoaded(List<Product> products) {
+                    mItemListView.showProducts(new ArrayList<Product>(products));
+                }
 
-            @Override
-            public void onDataNotAvailable() {
+                @Override
+                public void onDataNotAvailable() {
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            mProductsRepository.getProductsByCategory(category, new ProductsDataSource.LoadProductsCallback() {
+                @Override
+                public void onProductsLoaded(List<Product> products) {
+                    mItemListView.showProducts(new ArrayList<Product>(products));
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+
+                }
+            });
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@
     <dimen name="font_size_content">20dp</dimen>
     <dimen name="font_size_h4">25dp</dimen>
     <dimen name="margin_linear_elements">7dp</dimen>
+    <dimen name="margin_spinner_items">10dp</dimen>
     <dimen name="padding_horizontal">20dp</dimen>
     <dimen name="balance_view_width">250dp</dimen>
     <dimen name="search_blank_width">400dp</dimen>

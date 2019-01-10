@@ -67,7 +67,7 @@ public class CategoryListFragment extends Fragment implements CategoryListContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_item, container,
+        View root = inflater.inflate(R.layout.fragment_admin_product_categories, container,
                 false);
 
         // Set up the items view
@@ -85,9 +85,6 @@ public class CategoryListFragment extends Fragment implements CategoryListContra
             }
         });
 
-        Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
-        // Apply the adapter to the spinner
-//        spinner.setAdapter(mSpinnerAdapter);
 
         return root;
     }
@@ -152,15 +149,6 @@ public class CategoryListFragment extends Fragment implements CategoryListContra
 
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(category.getName());
-
-            ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.deleteCategory(category);
-                }
-            });
-
 
             return rowView;
         }

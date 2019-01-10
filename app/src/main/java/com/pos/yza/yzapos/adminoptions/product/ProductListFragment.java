@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +29,10 @@ import java.util.List;
 public class ProductListFragment extends Fragment implements ProductListContract.View {
     private ProductAdapter mListAdapter;
     private ProductListContract.Presenter mPresenter;
-    private ArrayAdapter<String> mSpinnerAdapter;
+    private ArrayAdapter<ProductCategory> mSpinnerAdapter;
     private ProductListListener listener;
+
+    private final String TAG = "ADMIN_PROD_LIST_FRAG";
 
     @Override
     public void onAttach(Context context) {
@@ -51,8 +57,8 @@ public class ProductListFragment extends Fragment implements ProductListContract
         super.onCreate(savedInstanceState);
         mListAdapter = new ProductAdapter(new ArrayList<Product>());
         mSpinnerAdapter =
-                new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_list_item_1);
+                new ArrayAdapter<>(getActivity(),
+                        R.layout.spinner_item);
     }
 
     @Override
@@ -66,7 +72,8 @@ public class ProductListFragment extends Fragment implements ProductListContract
         mPresenter = presenter;
     }
 
-    public void setUpSpinnerAdapter(List<String> content){
+    public void setUpSpinnerAdapter(List<ProductCategory> content){
+        mSpinnerAdapter.clear();
         mSpinnerAdapter.addAll(content);
     }
 
@@ -93,8 +100,20 @@ public class ProductListFragment extends Fragment implements ProductListContract
         });
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
-        // Apply the adapter to the spinner
         spinner.setAdapter(mSpinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                ProductCategory productCategory = mSpinnerAdapter.getItem(position);
+                mPresenter.loadProductsByCategory(productCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         return root;
     }
@@ -165,14 +184,21 @@ public class ProductListFragment extends Fragment implements ProductListContract
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(product.getName());
 
-            ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.button_del_item);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
+            rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPresenter.deleteProduct(product);
+                    chosenLineItemIndex = i;
+                    Log.i(TAG, "product chosen is: " + adapter.getItem(chosenLineItemIndex));
+                    DialogFragment dialog = new RemoveLineItemDialog();
+                    // Create a new bundle to pass the product name to the QuantityDialog fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CLICKED", adapter.getItem(chosenLineItemIndex).toString());
+                    dialog.setArguments(bundle);
+                    dialog.setTargetFragment(CartFragment.this, 0);
+                    dialog.show(getFragmentManager(), "dialog");
+
                 }
             });
-
 
             return rowView;
         }
@@ -180,5 +206,13 @@ public class ProductListFragment extends Fragment implements ProductListContract
 
     public interface ProductListListener {
         void addProduct();
+    }
+
+    @Override
+    public ProductCategory getChosenProductCategory() {
+        if (mSpinnerAdapter.getCount() > 0){
+            return mSpinnerAdapter.getItem(1);
+        }
+        return null;
     }
 }

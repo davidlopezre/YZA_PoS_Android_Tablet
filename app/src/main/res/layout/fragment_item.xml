@@ -4,13 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:prompt="@string/choose_category"
-        android:entries="@array/spinner_example">
-    </Spinner>
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_item_border"
+        android:layout_margin="@dimen/margin_linear_elements"
+        >
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/choose_category"
+            android:entries="@array/spinner_example"
+            >
+        </Spinner>
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="wrap_content"

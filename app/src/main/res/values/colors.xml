@@ -10,6 +10,7 @@
     <color name="drawerNoShadow">#80ffffff</color>
     <color name="buttonPink">#E28484</color>
     <color name="mustard">#FFC857</color>
+    <color name="mustard_lighter">#f7e676</color>
     <color name="eagleGreen">#084C61</color>
     <color name="rosywhite">#fcf0ef</color>
 </resources>
