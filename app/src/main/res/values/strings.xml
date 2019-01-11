@@ -6,6 +6,7 @@
     <string name="generate_report">Generate Report</string>
     <string name="add">Add</string>
     <string name="edit">Edit</string>
+    <string name="save">Save</string>
     <string name="del">Delete</string>
     <string name="next">Next</string>
     <string name="admin_options">Admin Options</string>
@@ -17,6 +18,7 @@
     <string name="view_products">View Products</string>
     <string name="view_payments">Payments</string>
     <string name="print">Print</string>
+
     <string name="choose_category">Choose Category</string>
     <string name="choose_staff">Choose Staff Name</string>
 

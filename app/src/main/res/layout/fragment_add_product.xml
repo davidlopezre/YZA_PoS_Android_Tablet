@@ -26,13 +26,19 @@
         android:id="@+id/unit_of_measure"
         android:hint="@string/unit_of_measure"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/unit_price"
         android:hint="@string/unit_price"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/button_add_item"

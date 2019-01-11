@@ -130,6 +130,8 @@ public class SessionStorage extends Application {
         return staffMap.get(id);
     }
 
+    public static ProductCategory getProductCategory(int id) { return categoryMap.get(id); }
+
 
 
 

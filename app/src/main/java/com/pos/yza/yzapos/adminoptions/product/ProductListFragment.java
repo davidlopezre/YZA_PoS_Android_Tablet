@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -166,6 +167,15 @@ public class ProductListFragment extends Fragment implements ProductListContract
                 return true;
             }
         });
+
+        Button editButton = popupView.findViewById(R.id.button_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.editProduct(product);
+                popupWindow.dismiss();
+            }
+        });
     }
 
     private void addProductPropertiesViews(LinearLayout layout, Product product) {
@@ -239,16 +249,6 @@ public class ProductListFragment extends Fragment implements ProductListContract
                 @Override
                 public void onClick(View view) {
                     showProductDetailsUi(product);
-//                    chosenLineItemIndex = i;
-//                    Log.i(TAG, "product chosen is: " + adapter.getItem(chosenLineItemIndex));
-//                    DialogFragment dialog = new RemoveLineItemDialog();
-//                    // Create a new bundle to pass the product name to the QuantityDialog fragment
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("CLICKED", adapter.getItem(chosenLineItemIndex).toString());
-//                    dialog.setArguments(bundle);
-//                    dialog.setTargetFragment(CartFragment.this, 0);
-//                    dialog.show(getFragmentManager(), "dialog");
-
                 }
             });
 
@@ -258,6 +258,7 @@ public class ProductListFragment extends Fragment implements ProductListContract
 
     public interface ProductListListener {
         void addProduct();
+        void editProduct(Product product);
     }
 
     @Override
@@ -267,4 +268,6 @@ public class ProductListFragment extends Fragment implements ProductListContract
         }
         return null;
     }
+
+
 }

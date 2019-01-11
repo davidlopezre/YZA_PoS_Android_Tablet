@@ -3,6 +3,7 @@ package com.pos.yza.yzapos.adminoptions.addproduct;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
@@ -51,23 +52,7 @@ public class AddProductPresenter implements AddProductContract.Presenter {
 
 
     public void loadCategories() {
-        mCategoriesRepository.getCategories(new CategoriesDataSource.LoadCategoriesCallback() {
-            @Override
-            public void onCategoriesLoaded(List<ProductCategory> categories) {
-                Log.d("categoriesResponse", "inside load categories");
-                for (ProductCategory c : categories) {
-                    Log.d("categoriesResponse", "Category: " + c.getName());
-                    Log.d("categoriesResponse", "Properties: " + c.detailString());
-                }
-
-                processCategories(categories);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-
-            }
-        });
+        processCategories(SessionStorage.getAllCategories());
     }
 
     private void processCategories(List<ProductCategory> categories) {

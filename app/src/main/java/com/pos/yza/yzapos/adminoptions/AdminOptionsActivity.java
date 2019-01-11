@@ -19,10 +19,13 @@ import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListFragment;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListPresenter;
+import com.pos.yza.yzapos.adminoptions.editproduct.EditProductFragment;
+import com.pos.yza.yzapos.adminoptions.editproduct.EditProductPresenter;
 import com.pos.yza.yzapos.adminoptions.product.ProductListFragment;
 import com.pos.yza.yzapos.adminoptions.product.ProductListPresenter;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListPresenter;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
@@ -41,6 +44,8 @@ public class AdminOptionsActivity extends AppCompatActivity
     private AddStaffPresenter mAddStaffPresenter;
 
     private AddCategoryPresenter mAddCategoryPresenter;
+
+    private EditProductPresenter mEditProductPresenter;
 
     boolean isDrawerLocked;
 
@@ -201,5 +206,20 @@ public class AdminOptionsActivity extends AppCompatActivity
         mAddCategoryPresenter = new AddCategoryPresenter(
                 Injection.provideCategoriesRepository(getApplicationContext()),
                 mAddCategoryFragment);
+    }
+
+    @Override
+    public void editProduct(Product product) {
+
+        EditProductFragment mEditProductFragment = EditProductFragment.newInstance();
+        mEditProductFragment.show(getSupportFragmentManager(),"edititem");
+
+        // Create the presenter
+        mEditProductPresenter = new EditProductPresenter(
+                Injection.provideProductsRepository(getApplicationContext()),
+                Injection.provideCategoriesRepository(getApplicationContext()),
+                mEditProductFragment,
+                product);
+
     }
 }

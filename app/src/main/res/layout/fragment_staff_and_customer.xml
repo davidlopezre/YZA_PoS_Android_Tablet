@@ -14,14 +14,21 @@
         android:textColor="@color/eagleGreen"
         />
 
-    <Spinner
-        android:id="@+id/staff_selection"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:prompt="@string/choose_staff"
-        android:entries="@array/spinner_example"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_item_border"
+        android:layout_margin="@dimen/margin_linear_elements"
         >
-    </Spinner>
+        <Spinner
+            android:id="@+id/staff_selection"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:prompt="@string/choose_staff"
+            android:entries="@array/spinner_example"
+            >
+        </Spinner>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.pos.yza.yzapos.adminoptions.addproduct;
+package com.pos.yza.yzapos.adminoptions;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -21,22 +22,25 @@ public class CategoryAdapter extends ArrayAdapter<ProductCategory> {
     // Your sent context
     private Context context;
     // Your custom mCategories for the spinner (User)
-    private List<ProductCategory> mCategories;
+    private Map<Integer, ProductCategory> mCategories;
 
     public CategoryAdapter(Context context, int textViewResourceId,
                        List<ProductCategory> mCategories) {
         super(context, textViewResourceId, mCategories);
         this.context = context;
-        setList(mCategories);
+        setMap(mCategories);
     }
 
     public void replaceData(List<ProductCategory> categories) {
-        setList(categories);
+        setMap(categories);
         notifyDataSetChanged();
     }
 
-    private void setList(List<ProductCategory> categories) {
-        mCategories = checkNotNull(categories);
+    private void setMap(List<ProductCategory> categories) {
+        for(ProductCategory category: categories){
+            mCategories.put(category.getId(), category);
+        }
+
     }
 
     @Override

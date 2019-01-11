@@ -41,8 +41,7 @@ public class StaffAndCustomerDetailsFragment extends Fragment implements StaffAn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
-        mSpinnerAdapter =
-                new ArrayAdapter<Staff>(getActivity(),
+        mSpinnerAdapter = new ArrayAdapter<>(getActivity(),
                         R.layout.spinner_item);
     }
 

@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.DeleteJsonObjectRequest;
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
@@ -40,8 +41,11 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
     private static ProductsRemoteDataSource INSTANCE;
 
     public final static String PRODUCT_PROPERTY_ID = "product_property_id",
-    PRODUCT_PROPERTY_VALUE = "value",
-                               CATEGORY_PROPERTY_ID = "category_property";
+                               PRODUCT_PROPERTY_VALUE = "value",
+                               CATEGORY_PROPERTY_ID = "category_property",
+                               UNIT_PRICE = "unit_price",
+                               UNIT_OF_MEASURE = "unit_of_measure",
+                               PRODUCT_PROPERTIES = "properties";
 
 //    private final String ROOT = "http://35.197.185.80:8000/";
     private final String ROOT = Constants.APIADDRESS;
@@ -270,7 +274,11 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                     String unitOfMeasure = object.getString("unit_of_measure");
 
                     int categoryId = object.getInt("category");
-                    ProductCategory category = new ProductCategory(categoryId,"", new ArrayList<CategoryProperty>());
+
+                    ProductCategory category = SessionStorage.getProductCategory(categoryId);
+                    if (category == null) {
+                        category = new ProductCategory(categoryId, "", new ArrayList<CategoryProperty>());
+                    }
 
                     JSONArray propertiesJson = object.getJSONArray("properties");
                     ArrayList<ProductProperty> properties = new ArrayList<ProductProperty>();

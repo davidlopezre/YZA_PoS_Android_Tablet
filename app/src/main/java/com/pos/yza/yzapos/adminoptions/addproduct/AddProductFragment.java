@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.adminoptions.CategoryAdapter;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
@@ -65,10 +66,10 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
         View root = inflater.inflate(R.layout.fragment_add_product, container,
                 false);
 
-        Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
+        Spinner spinner = root.findViewById(R.id.spinner);
         spinner.setAdapter(mSpinnerAdapter);
 
-        propertyLayout = (LinearLayout) root.findViewById(R.id.layout_category_properties);
+        propertyLayout = root.findViewById(R.id.layout_category_properties);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
