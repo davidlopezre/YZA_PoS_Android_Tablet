@@ -62,7 +62,7 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_add_item, container,
+        View root = inflater.inflate(R.layout.fragment_add_product, container,
                 false);
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);

@@ -8,23 +8,33 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
+import com.pos.yza.yzapos.util.Formatters;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class ProductListFragment extends Fragment implements ProductListContract.View {
     private ProductAdapter mListAdapter;
@@ -125,8 +135,49 @@ public class ProductListFragment extends Fragment implements ProductListContract
     }
 
     @Override
-    public void showProductDetailsUi(String productId) {
+    public void showProductDetailsUi(Product product) {
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_product_details, null);
 
+        TextView nameView = popupView.findViewById(R.id.product_name);
+        nameView.setText(product.getName());
+        TextView priceView = popupView.findViewById(R.id.product_price);
+        String pricePerUnit = Formatters.amountFormat.format(product.getUnitPrice())
+                              + " / " + product.getUnitMeasure();
+        priceView.setText(pricePerUnit);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window token
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+    }
+
+    private void addProductPropertiesViews(LinearLayout layout, Product product) {
+        for (ProductProperty productProperty: product.getProperties()) {
+            TextView propertyView = new TextView(getContext());
+            propertyView.setTextAppearance(getContext(), R.style.ProductDetailsTextView);
+            propertyView.setText(productProperty.getValue());
+            layout.addView(propertyView);
+
+            // save a reference to the textview for later
+//            myTextViews[i] = propertyView;
+        }
     }
 
     @Override
@@ -187,15 +238,16 @@ public class ProductListFragment extends Fragment implements ProductListContract
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    chosenLineItemIndex = i;
-                    Log.i(TAG, "product chosen is: " + adapter.getItem(chosenLineItemIndex));
-                    DialogFragment dialog = new RemoveLineItemDialog();
-                    // Create a new bundle to pass the product name to the QuantityDialog fragment
-                    Bundle bundle = new Bundle();
-                    bundle.putString("CLICKED", adapter.getItem(chosenLineItemIndex).toString());
-                    dialog.setArguments(bundle);
-                    dialog.setTargetFragment(CartFragment.this, 0);
-                    dialog.show(getFragmentManager(), "dialog");
+                    showProductDetailsUi(product);
+//                    chosenLineItemIndex = i;
+//                    Log.i(TAG, "product chosen is: " + adapter.getItem(chosenLineItemIndex));
+//                    DialogFragment dialog = new RemoveLineItemDialog();
+//                    // Create a new bundle to pass the product name to the QuantityDialog fragment
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("CLICKED", adapter.getItem(chosenLineItemIndex).toString());
+//                    dialog.setArguments(bundle);
+//                    dialog.setTargetFragment(CartFragment.this, 0);
+//                    dialog.show(getFragmentManager(), "dialog");
 
                 }
             });

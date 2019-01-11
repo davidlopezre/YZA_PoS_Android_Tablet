@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_wide"
+    android:background="@color/colorMainIc"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/font_size_h4"
+        android:id="@+id/product_name"
+        android:text="@string/category"
+        android:textColor="@color/eagleGreen"
+        android:layout_margin="@dimen/margin_linear_elements"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/font_size_h4"
+        android:id="@+id/product_price"
+        android:text="@string/category"/>
+
+    <Button
+        android:id="@+id/button_edit"
+        android:layout_width="@dimen/search_blank_width"
+        android:layout_height="wrap_content"
+        android:text="@string/edit"
+        android:background="@color/eagleGreen"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_size_h4"
+        android:layout_marginTop="@dimen/padding_wide"/>
+
+
+</LinearLayout>

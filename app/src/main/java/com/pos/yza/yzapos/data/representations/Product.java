@@ -64,7 +64,7 @@ public final class Product {
         for (ProductProperty property : properties){
             name += " " + property.getValue();
         }
-        return name;
+        return name.trim();
     }
 
     @Override

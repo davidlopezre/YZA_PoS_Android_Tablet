@@ -15,7 +15,7 @@ public interface ProductListContract {
     interface View extends BaseView<Presenter> {
         void setUpSpinnerAdapter(List<ProductCategory> content);
         void showProducts(List<Product> products);
-        void showProductDetailsUi(String productId);
+        void showProductDetailsUi(Product product);
         void showFilteringPopUpMenu();
         void showAddProduct();
         void showEditProduct();
