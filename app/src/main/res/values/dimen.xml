@@ -8,11 +8,13 @@
     <dimen name="margin_spinner_items">10dp</dimen>
     <dimen name="margin_form_labels">12dp</dimen>
     <dimen name="padding_horizontal">20dp</dimen>
+    <dimen name="padding_semi_wide">30dp</dimen>
     <dimen name="padding_wide">40dp</dimen>
     <dimen name="balance_view_width">250dp</dimen>
     <dimen name="search_blank_width">400dp</dimen>
     <dimen name="search_blank_height">50dp</dimen>
     <dimen name="payment_list_height">200dp</dimen>
     <dimen name="popup_button_width">400dp</dimen>
+    <dimen name="drawer_item_height">50dp</dimen>
 
 </resources>

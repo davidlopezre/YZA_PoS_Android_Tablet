@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_settings_white_150dp"
+        android:text="Manage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textAlignment="center"
+        android:textColor="@color/colorMainIc"
+        android:textSize="@dimen/font_size_h4"
+        android:paddingTop="@dimen/padding_semi_wide"
+        android:paddingBottom="@dimen/padding_semi_wide"/>
+
+</LinearLayout>

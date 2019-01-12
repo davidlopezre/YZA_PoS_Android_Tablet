@@ -51,8 +51,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:background="@color/buttonPink"
-        app:menu="@menu/drawer_actions">
+        android:background="@color/colorMainIc"
+        app:menu="@menu/drawer_actions"
+        app:theme="@style/NavigationDrawerStyle"
+        app:headerLayout="@layout/admin_options_drawer_header" >
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

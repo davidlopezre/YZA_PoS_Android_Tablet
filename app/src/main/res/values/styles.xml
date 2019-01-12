@@ -64,4 +64,22 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <!-- text size in menu-->
+        <item name="android:textSize">@dimen/font_size_content</item>
+        <item name="android:textStyle">normal</item>
+
+        <!-- item size in menu-->
+        <item name="android:listPreferredItemHeightSmall">@dimen/drawer_item_height</item>
+        <item name="listPreferredItemHeightSmall">@dimen/drawer_item_height</item>
+
+        <!-- item padding left in menu-->
+        <item name="android:listPreferredItemPaddingLeft">@dimen/padding_horizontal</item>
+        <item name="listPreferredItemPaddingLeft">@dimen/padding_horizontal</item>
+
+        <!-- item padding right in menu-->
+        <item name="android:listPreferredItemPaddingRight">@dimen/padding_horizontal</item>
+        <item name="listPreferredItemPaddingRight">@dimen/padding_horizontal</item>
+    </style>
+
 </resources>
