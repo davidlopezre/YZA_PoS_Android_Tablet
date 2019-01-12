@@ -222,18 +222,36 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
 
     @Override
-    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits){
+    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits,
+                            @NonNull List<ProductProperty> propertyEdits){
         Log.i("editProduct", "in remote data source");
         Uri builtUri = Uri.parse(ROOT + PRODUCTS + productId + "/")
                 .buildUpon()
                 .build();
 
+        JSONObject productJSON = new JSONObject(edits);
+
+        JSONArray propertiesJSON = new JSONArray();
+        try {
+            for (ProductProperty property : propertyEdits) {
+                JSONObject propertyJSON = new JSONObject();
+                propertyJSON.put(CATEGORY_PROPERTY_ID, property.getCategoryPropertyId());
+                propertyJSON.put(PRODUCT_PROPERTY_VALUE, property.getValue());
+                propertiesJSON.put(propertyJSON);
+            }
+            productJSON.put(PRODUCT_PROPERTIES, propertiesJSON);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("editProduct", productJSON.toString());
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(
                 Request.Method.PATCH, builtUri.toString(),
-                new JSONObject(edits),new Response.Listener<JSONObject>() {
+                productJSON,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("editProduct", "success");
+                Log.i("editProduct", "response: "+ response.toString());
             }
         }, new Response.ErrorListener() {
             @Override

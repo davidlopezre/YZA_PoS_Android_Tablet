@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,5 +42,6 @@ public interface ProductsDataSource {
 
     void deleteProduct(@NonNull String productId);
 
-    void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits);
+    void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits,
+                     @NonNull List<ProductProperty> propertyEdits);
 }

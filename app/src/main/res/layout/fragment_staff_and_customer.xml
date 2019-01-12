@@ -45,7 +45,10 @@
         android:ems="10"
         android:text="@string/name"
         android:textSize="@dimen/font_size_h4"
-        android:selectAllOnFocus="true"/>
+        android:selectAllOnFocus="true"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/editText_surname"
@@ -54,7 +57,10 @@
         android:ems="10"
         android:text="@string/surname"
         android:textSize="@dimen/font_size_h4"
-        android:selectAllOnFocus="true"/>
+        android:selectAllOnFocus="true"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/button_next"

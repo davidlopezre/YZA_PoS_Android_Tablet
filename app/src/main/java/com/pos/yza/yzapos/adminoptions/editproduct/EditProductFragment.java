@@ -1,8 +1,10 @@
 package com.pos.yza.yzapos.adminoptions.editproduct;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,17 +21,17 @@ import android.widget.TextView;
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.util.Formatters;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class EditProductFragment extends DialogFragment implements EditProductContract.View {
     private EditProductContract.Presenter mPresenter;
-    private ArrayAdapter<ProductCategory> mSpinnerAdapter;
-    private Spinner categorySpinner;
-    private ProductCategory currentCategory;
     private LinearLayout propertyLayout;
+    private List<EditText> propertyAnswers;
 
     private final String TAG = "EDIT_PROD_FRAG";
 
@@ -49,7 +51,7 @@ public class EditProductFragment extends DialogFragment implements EditProductCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, 0);
-        mSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item);
+        propertyAnswers = new ArrayList<>();
     }
 
     @Override
@@ -69,12 +71,7 @@ public class EditProductFragment extends DialogFragment implements EditProductCo
 
         propertyLayout = root.findViewById(R.id.layout_category_properties);
 
-        Spinner spinner = root.findViewById(R.id.category_spinner);
-        spinner.setAdapter(mSpinnerAdapter);
-
-        spinner.setOnItemSelectedListener(new CategoryAdapterViewListener());
-
-        categorySpinner = spinner;
+        initialiseForm();
 
         EditText unitMeasure = root.findViewById(R.id.unit_of_measure);
         unitMeasure.setText(mPresenter.getProduct().getUnitMeasure());
@@ -85,73 +82,50 @@ public class EditProductFragment extends DialogFragment implements EditProductCo
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mPresenter.saveProduct(unitMeasure.getText().toString(),
+                                       unitPrice.getText().toString());
+                Snackbar snackbar = Snackbar.make(propertyLayout, "Edited", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                int finishTime = 2;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dismiss();
+                    }
+                }, finishTime * 1000);
             }
         });
+
 
         return root;
     }
 
-    @Override
-    public void showCategories(List<ProductCategory> categories) {
-        mSpinnerAdapter.clear();
-        mSpinnerAdapter.addAll(categories);
-        initialiseForm();
-    }
-
     private void initialiseForm() {
         ProductCategory productCategory = mPresenter.getProduct().getCategory();
-        int position = findSpinnerPosition(categorySpinner, productCategory);
-        categorySpinner.setSelection(position);
-        Log.i(TAG, "setting spinner to category " + productCategory.getName());
-        Log.i(TAG, "pos: " + position);
+
+        for (CategoryProperty categoryProperty : productCategory.getPropertyList()) {
+            TextView label_property = new TextView(getContext());
+            label_property.setTextAppearance(getContext(), R.style.FormLabel);
+            label_property.setPadding(0, 12, 0, 0);
+            label_property.setText(Formatters.capitalise(categoryProperty.getName()));
+
+            EditText editText_property = (EditText) View.inflate(getContext(), R.layout.edittext_one_line_done, null);
+            editText_property.setId(categoryProperty.getId());
+            editText_property.setText(mPresenter.getProductPropertyValue(categoryProperty.getId()));
+
+            Log.i(TAG, "catpropid: " + categoryProperty.getId() + " editviewid: " + editText_property.getId());
+
+            propertyLayout.addView(label_property);
+            propertyLayout.addView(editText_property);
+            propertyAnswers.add(editText_property);
+
+        }
+        Log.i(TAG, "form initialised");
     }
 
-    private int findSpinnerPosition(Spinner spinner, ProductCategory category) {
-        Log.i(TAG, "in finding spinner pos");
-        for (int i = 0; i < spinner.getCount(); i++) {
-            ProductCategory category_i = (ProductCategory) spinner.getItemAtPosition(i);
-            Log.i(TAG, "category name " + category_i.getName());
-            if (category_i.getName().equals(category.getName())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    private class CategoryAdapterViewListener implements AdapterView.OnItemSelectedListener {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            currentCategory = (ProductCategory) adapterView.getItemAtPosition(i);
-            Log.i("category_spinner", currentCategory.getName());
-            propertyLayout.removeAllViews();
-            boolean sameAsProductCategory = currentCategory.getName().equals(mPresenter.getProductCategoryName());
-
-            for (CategoryProperty property : currentCategory.getPropertyList()) {
-                TextView label_property = new TextView(getContext());
-                label_property.setTextAppearance(getContext(), R.style.FormLabel);
-                label_property.setPadding(0, 12, 0, 0);
-                label_property.setText(Formatters.capitalise(property.getName()));
-
-                EditText editText_property = new EditText(getContext());
-                editText_property.setTextAppearance(getContext(), R.style.FormAnswer);
-                editText_property.setId(property.getId());
-
-                if (sameAsProductCategory) {
-                    editText_property.setText(mPresenter.getProductPropertyValue(property.getId()));
-                }
-
-                propertyLayout.addView(label_property);
-                propertyLayout.addView(editText_property);
-                Log.i("category_spinner", "added " + property.getName());
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
+    @Override
+    public List<EditText> getPropertyEditTexts() {
+        return propertyAnswers;
     }
 
 

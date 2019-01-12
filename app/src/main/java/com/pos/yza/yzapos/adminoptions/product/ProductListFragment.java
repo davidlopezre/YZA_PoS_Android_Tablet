@@ -178,18 +178,6 @@ public class ProductListFragment extends Fragment implements ProductListContract
         });
     }
 
-    private void addProductPropertiesViews(LinearLayout layout, Product product) {
-        for (ProductProperty productProperty: product.getProperties()) {
-            TextView propertyView = new TextView(getContext());
-            propertyView.setTextAppearance(getContext(), R.style.ProductDetailsTextView);
-            propertyView.setText(productProperty.getValue());
-            layout.addView(propertyView);
-
-            // save a reference to the textview for later
-//            myTextViews[i] = propertyView;
-        }
-    }
-
     @Override
     public void showFilteringPopUpMenu() {
 
@@ -242,8 +230,16 @@ public class ProductListFragment extends Fragment implements ProductListContract
             }
             final Product product = getItem(i);
 
-            TextView titleTV = (TextView) rowView.findViewById(R.id.title);
+            TextView titleTV = rowView.findViewById(R.id.title);
             titleTV.setText(product.getName());
+
+            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
+            imageEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showProductDetailsUi(product);
+                }
+            });
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override

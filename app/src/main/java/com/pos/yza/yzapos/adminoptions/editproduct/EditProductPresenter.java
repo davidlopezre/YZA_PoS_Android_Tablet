@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.adminoptions.editproduct;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Product;
@@ -23,6 +24,8 @@ public class EditProductPresenter implements EditProductContract.Presenter{
     private EditProductContract.View mEditProductView;
     private Product mProduct;
 
+    private final String TAG = "EDIT_PROD_PRES";
+
     public EditProductPresenter(@NonNull ProductsRepository productsRepository,
                                 @NonNull CategoriesRepository categoriesRepository,
                                 @NonNull EditProductContract.View view,
@@ -35,7 +38,7 @@ public class EditProductPresenter implements EditProductContract.Presenter{
     }
 
     public void start(){
-        loadCategories();
+
     }
 
     public String getProductName() {
@@ -50,41 +53,34 @@ public class EditProductPresenter implements EditProductContract.Presenter{
         return mProduct.getCategory().getName();
     }
 
+    public int getProductPropertyId(int categoryPropertyId) {
+        return mProduct.getProductPropertyId(categoryPropertyId);
+    }
+
     public String getProductPropertyValue(int categoryPropertyId){
         return mProduct.getProductPropertyValue(categoryPropertyId);
     }
 
-    public void loadCategories() {
-        processCategories(SessionStorage.getAllCategories());
-    }
-
-    private void processCategories(List<ProductCategory> categories) {
-        if (categories.isEmpty()) {
-            // Show a message indicating there are no tasks for that filter type.
-            processEmptyCategories();
-        } else {
-            // Show the list of tasks
-            mEditProductView.showCategories(categories);
-            // Set the filter label's text.
-//            showFilterLabel();
-        }
-    }
-
-    private void processEmptyCategories() {
-
-    }
-
     @Override
-    public void saveProduct(ProductCategory category, String unitOfMeasure, String unitPrice,
-                            ArrayList<ProductProperty> properties) {
+    public void saveProduct(String unitOfMeasure, String unitPrice) {
         HashMap<String, String> editMap = new HashMap<>();
-        editMap.put(ProductsRemoteDataSource.CATEGORY_PROPERTY_ID, category.getId() + "");
         editMap.put(ProductsRemoteDataSource.UNIT_OF_MEASURE, unitOfMeasure);
         editMap.put(ProductsRemoteDataSource.UNIT_PRICE, unitPrice);
 
+        List<ProductProperty> properties = getFormProperties();
+        mProductsRepository.editProduct(Integer.toString(mProduct.getId()), editMap,
+                                        properties);
 
+    }
 
-        mProductsRepository.editProduct(Integer.toString(mProduct.getId()), editMap);
-
+    private List<ProductProperty> getFormProperties() {
+        List<ProductProperty> propertyEdits = new ArrayList<>();
+        for (EditText propertyAnswer : mEditProductView.getPropertyEditTexts()) {
+            ProductProperty propertyEdit = new ProductProperty(propertyAnswer.getId(),
+                    propertyAnswer.getText().toString());
+            propertyEdits.add(propertyEdit);
+            Log.i(TAG, "Adding to form props: " + propertyEdit);
+        }
+        return propertyEdits;
     }
 }

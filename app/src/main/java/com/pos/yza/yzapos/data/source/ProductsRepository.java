@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.ProductProperty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,8 +121,9 @@ public class ProductsRepository implements ProductsDataSource{
     }
 
     @Override
-    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits){
-        mProductsRemoteDataSource.editProduct(productId, edits);
+    public void editProduct(@NonNull String productId, @NonNull HashMap<String,String> edits,
+                            @NonNull List<ProductProperty> propertyEdits){
+        mProductsRemoteDataSource.editProduct(productId, edits, propertyEdits);
     }
 
 }

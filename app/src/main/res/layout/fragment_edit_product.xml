@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="@dimen/popup_button_width"
             android:layout_height="wrap_content"
-            android:text="@string/category"
+            android:text="@string/edit"
             android:textSize="@dimen/font_size_h4"
             android:id="@+id/dialog_title"
             android:focusable="true"
@@ -25,20 +25,6 @@
             android:textColor="@color/eagleGreen"
             android:padding="@dimen/margin_linear_elements"
             />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            style="@style/FormLabel"
-            />
-        <Spinner
-            android:id="@+id/category_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="@dimen/margin_linear_elements"
-            >
-        </Spinner>
 
         <LinearLayout
             android:id="@+id/layout_category_properties"

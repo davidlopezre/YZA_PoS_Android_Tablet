@@ -55,6 +55,16 @@ public final class Product {
         return properties;
     }
 
+    public int getProductPropertyId(int categoryPropertyId) {
+        for (ProductProperty productProperty : properties) {
+            Log.i("Product", "prod prop's cat prop id: " + productProperty.getCategoryPropertyId());
+            if (productProperty.getCategoryPropertyId() == categoryPropertyId){
+                return productProperty.getProductPropertyId();
+            }
+        }
+        return -1;
+    }
+
     public String getProductPropertyValue(int categoryPropertyId) {
         for (ProductProperty productProperty : properties) {
             if (productProperty.getCategoryPropertyId() == categoryPropertyId){
