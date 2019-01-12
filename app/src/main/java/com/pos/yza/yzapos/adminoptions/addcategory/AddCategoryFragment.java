@@ -89,6 +89,6 @@ public class AddCategoryFragment extends DialogFragment implements AddCategoryCo
 
     @Override
     public void showFeedback() {
-        DialogFragmentUtils.giveFeedback((DialogFragment) this, getContext(), "Category");
+        DialogFragmentUtils.giveCreatedFeedback((DialogFragment) this, getContext(), "Category");
     }
 }

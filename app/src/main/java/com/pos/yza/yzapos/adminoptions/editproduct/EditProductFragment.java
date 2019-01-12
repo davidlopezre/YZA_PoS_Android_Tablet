@@ -10,18 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
+import com.pos.yza.yzapos.util.DialogFragmentUtils;
 import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
@@ -84,15 +81,6 @@ public class EditProductFragment extends DialogFragment implements EditProductCo
             public void onClick(View view) {
                 mPresenter.saveProduct(unitMeasure.getText().toString(),
                                        unitPrice.getText().toString());
-                Snackbar snackbar = Snackbar.make(propertyLayout, "Edited", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                int finishTime = 2;
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        dismiss();
-                    }
-                }, finishTime * 1000);
             }
         });
 
@@ -128,5 +116,9 @@ public class EditProductFragment extends DialogFragment implements EditProductCo
         return propertyAnswers;
     }
 
+    @Override
+    public void showFeedback() {
+        DialogFragmentUtils.giveEditedFeedback(this, getContext(), "Product");
+    }
 
 }

@@ -1,48 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:background="@color/colorMainIc">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:textAlignment="center"/>
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp">
-    </Spinner>
 
-    <LinearLayout
-        android:id="@+id/layout_category_properties"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorMainIc"
+        android:padding="@dimen/padding_wide">
+
+        <TextView
+            android:layout_width="@dimen/popup_button_width"
+            android:layout_height="wrap_content"
+            android:text="@string/add_product"
+            android:textSize="@dimen/font_size_h4"
+            android:id="@+id/dialog_title"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textAlignment="center"
+            android:textColor="@color/eagleGreen"
+            android:padding="@dimen/margin_linear_elements"
+            />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp">
+        </Spinner>
+
+        <LinearLayout
+            android:id="@+id/layout_category_properties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unit_of_measure"
+            style="@style/FormLabel"
+            />
+        <EditText
+            android:id="@+id/unit_of_measure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:hint="book/page/etc"
+            style="@style/FormAnswer"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unit_price"
+            style="@style/FormLabel"
+            />
+        <EditText
+            android:id="@+id/unit_price"
+            android:hint="0.0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            style="@style/FormAnswer"
+            />
+
+        <Button
+            android:id="@+id/button_add_item"
+            android:text="@string/add"
+            android:layout_height="wrap_content"
+            android:layout_width="@dimen/popup_button_width"
+            android:background="@color/eagleGreen"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_size_h4"
+            android:layout_margin="@dimen/margin_form_labels" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/unit_of_measure"
-        android:hint="@string/unit_of_measure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:maxLines="1"/>
-
-    <EditText
-        android:id="@+id/unit_price"
-        android:hint="@string/unit_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:maxLines="1"/>
-
-    <Button
-        android:id="@+id/button_add_item"
-        android:text="@string/add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</ScrollView>

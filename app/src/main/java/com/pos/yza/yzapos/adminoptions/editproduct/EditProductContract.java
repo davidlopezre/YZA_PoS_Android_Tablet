@@ -11,6 +11,7 @@ import java.util.List;
 public interface EditProductContract {
     interface View extends BaseView<Presenter> {
         List<EditText> getPropertyEditTexts();
+        void showFeedback();
     }
 
     interface Presenter extends BasePresenter {

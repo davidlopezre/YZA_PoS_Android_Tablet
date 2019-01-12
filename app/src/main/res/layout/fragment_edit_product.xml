@@ -75,7 +75,8 @@
             android:background="@color/eagleGreen"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/font_size_h4"
-            android:layout_margin="@dimen/margin_linear_elements"/>
+            android:layout_margin="@dimen/margin_form_labels"
+            />
     </LinearLayout>
 
 </ScrollView>

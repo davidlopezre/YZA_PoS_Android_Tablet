@@ -12,6 +12,7 @@
     <string name="admin_options">Admin Options</string>
     <string name="staff">Staff</string>
     <string name="products">Products</string>
+    <string name="add_product">Add Product</string>
     <string name="product_categories">Product Categories</string>
     <string name="payments">Payments</string>
     <string name="view">View</string>
@@ -59,6 +60,7 @@
     <string name="home_address">Home Address</string>
     <string name="add_property">Add property</string>
     <string name="something_created">successfully created!</string>
+    <string name="something_edited">successfully edited!</string>
     <string name="transaction_created">Transaction created!</string>
     <string name="select_quantity">Select quantity</string>
     <string name="quantity_dialog_default_clicked">None</string>

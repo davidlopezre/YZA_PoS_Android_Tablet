@@ -5,5 +5,5 @@ package com.pos.yza.yzapos.util;
  */
 
 public class Constants {
-    public static String APIADDRESS = "http://18d9cabf.ngrok.io/";
+    public static String APIADDRESS = "http://c086602a.ngrok.io/";
 }

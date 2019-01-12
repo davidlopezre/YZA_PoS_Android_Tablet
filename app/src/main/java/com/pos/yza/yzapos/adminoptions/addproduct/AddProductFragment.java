@@ -9,29 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
-import com.pos.yza.yzapos.adminoptions.CategoryAdapter;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
-import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.util.DialogFragmentUtils;
+import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddProductFragment extends DialogFragment implements AddProductContract.View {
     private AddProductContract.Presenter mPresenter;
-
-    private CategoryAdapter mSpinnerAdapter;
-
+    private ArrayAdapter<ProductCategory> mSpinnerAdapter;
     private ProductCategory currentCategory;
-
     private LinearLayout propertyLayout;
+    private List<EditText> propertyAnswers;
 
     public AddProductFragment(){
 
@@ -44,8 +43,10 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mSpinnerAdapter = new CategoryAdapter(getActivity(), android.R.layout.simple_list_item_1,
-                new ArrayList<ProductCategory>());
+        setStyle(STYLE_NO_TITLE, 0);
+        mSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item);
+        propertyAnswers = new ArrayList<>();
+
     }
 
     @Override
@@ -74,15 +75,22 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                currentCategory = (ProductCategory)adapterView.getItemAtPosition(i);
+                currentCategory = (ProductCategory) adapterView.getItemAtPosition(i);
                 Log.i("category_spinner", currentCategory.getName());
                 propertyLayout.removeAllViews();
-                for (int j = 0; j < currentCategory.getPropertyList().size(); j++) {
-                    CategoryProperty property = currentCategory.getPropertyList().get(j);
-                    EditText editText_property = new EditText(getContext());
-                    editText_property.setHint(property.getName());
+                propertyAnswers.clear();
+                for (CategoryProperty property : currentCategory.getPropertyList()) {
+                    TextView label_property = new TextView(getContext());
+                    label_property.setTextAppearance(getContext(), R.style.FormLabel);
+                    label_property.setPadding(0, 12, 0, 0);
+                    label_property.setText(Formatters.capitalise(property.getName()));
+
+                    EditText editText_property = (EditText) View.inflate(getContext(), R.layout.edittext_one_line_done, null);
                     editText_property.setId(property.getId());
+
+                    propertyLayout.addView(label_property);
                     propertyLayout.addView(editText_property);
+                    propertyAnswers.add(editText_property);
                     Log.i("category_spinner", "added " + property.getName());
                 }
             }
@@ -93,25 +101,15 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
             }
         });
 
-        final EditText unitOfMeasure = (EditText) root.findViewById(R.id.unit_of_measure);
-        final EditText unitPrice = (EditText) root.findViewById(R.id.unit_price);
+        final EditText unitOfMeasure = root.findViewById(R.id.unit_of_measure);
+        final EditText unitPrice = root.findViewById(R.id.unit_price);
 
-
-        Button button = (Button) root.findViewById(R.id.button_add_item);
+        Button button = root.findViewById(R.id.button_add_item);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ArrayList<ProductProperty> properties = new ArrayList<ProductProperty>();
-                final int childCount = propertyLayout.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    EditText property = (EditText) propertyLayout.getChildAt(i);
-                    properties.add(new ProductProperty(property.getId(), property.getText().toString()));
-
-                }
-
                 mPresenter.confirmProduct(currentCategory, unitOfMeasure.getText().toString(),
-                        unitPrice.getText().toString(), properties);
+                        unitPrice.getText().toString());
             }
         });
 
@@ -125,11 +123,17 @@ public class AddProductFragment extends DialogFragment implements AddProductCont
 
     @Override
     public void showCategories(List<ProductCategory> categories) {
-        mSpinnerAdapter.replaceData(categories);
+        mSpinnerAdapter.clear();
+        mSpinnerAdapter.addAll(categories);
     }
 
     @Override
     public void showFeedback() {
-        DialogFragmentUtils.giveFeedback(this, getContext(), "Product");
+        DialogFragmentUtils.giveCreatedFeedback(this, getContext(), "Product");
+    }
+
+    @Override
+    public List<EditText> getPropertyEditTexts() {
+        return propertyAnswers;
     }
 }

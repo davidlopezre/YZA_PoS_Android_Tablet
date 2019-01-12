@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.adminoptions.addproduct;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.Product;
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class AddProductPresenter implements AddProductContract.Presenter {
     private final AddProductContract.View mAddProductView;
-
     private final ProductsRepository mProductsRepository;
-
     private final CategoriesRepository mCategoriesRepository;
+
+    private final String TAG = "ADD_PROD_PRES";
 
     public AddProductPresenter(@NonNull ProductsRepository productsRepository,
                                @NonNull CategoriesRepository categoriesRepository,
@@ -31,7 +32,6 @@ public class AddProductPresenter implements AddProductContract.Presenter {
         mProductsRepository = productsRepository;
         mCategoriesRepository = categoriesRepository;
         mAddProductView = view;
-
         mAddProductView.setPresenter(this);
     }
 
@@ -41,10 +41,10 @@ public class AddProductPresenter implements AddProductContract.Presenter {
     }
 
     @Override
-    public void confirmProduct(ProductCategory category, String unitOfMeasure, String unitPrice,
-                               ArrayList<ProductProperty> properties) {
+    public void confirmProduct(ProductCategory category, String unitOfMeasure, String unitPrice) {
         Log.i("saveItem", "in presenter");
         Double newUnitPrice = Double.parseDouble(unitPrice);
+        ArrayList<ProductProperty> properties = getFormProperties();
         Product product = new Product(newUnitPrice, unitOfMeasure, category, properties);
         mProductsRepository.saveProduct(product);
         mAddProductView.showFeedback();
@@ -69,5 +69,16 @@ public class AddProductPresenter implements AddProductContract.Presenter {
 
     private void processEmptyCategories() {
 
+    }
+
+    private ArrayList<ProductProperty> getFormProperties() {
+        ArrayList<ProductProperty> propertyEdits = new ArrayList<>();
+        for (EditText propertyAnswer : mAddProductView.getPropertyEditTexts()) {
+            ProductProperty propertyEdit = new ProductProperty(propertyAnswer.getId(),
+                    propertyAnswer.getText().toString());
+            propertyEdits.add(propertyEdit);
+            Log.i(TAG, "Adding to form props: " + propertyEdit);
+        }
+        return propertyEdits;
     }
 }

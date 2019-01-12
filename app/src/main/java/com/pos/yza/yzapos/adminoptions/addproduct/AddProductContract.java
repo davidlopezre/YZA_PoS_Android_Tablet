@@ -1,5 +1,7 @@
 package com.pos.yza.yzapos.adminoptions.addproduct;
 
+import android.widget.EditText;
+
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.util.BasePresenter;
@@ -17,10 +19,10 @@ public interface AddProductContract {
         void showProductProperties();
         void showCategories(List<ProductCategory> categories);
         void showFeedback();
+        List<EditText> getPropertyEditTexts();
     }
 
     interface Presenter extends BasePresenter {
-        void confirmProduct(ProductCategory category, String unitOfMeasure, String unitPrice,
-                            ArrayList<ProductProperty> properties);
+        void confirmProduct(ProductCategory category, String unitOfMeasure, String unitPrice);
     }
 }

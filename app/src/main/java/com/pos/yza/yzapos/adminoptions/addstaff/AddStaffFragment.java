@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.util.DialogFragmentUtils;
@@ -73,6 +72,6 @@ public class AddStaffFragment extends DialogFragment implements AddStaffContract
 
     @Override
     public void showFeedback() {
-        DialogFragmentUtils.giveFeedback(this, getContext(), "Staff");
+        DialogFragmentUtils.giveCreatedFeedback(this, getContext(), "Staff");
     }
 }

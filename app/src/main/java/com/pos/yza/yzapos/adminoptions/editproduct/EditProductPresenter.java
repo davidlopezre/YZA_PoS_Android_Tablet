@@ -70,7 +70,7 @@ public class EditProductPresenter implements EditProductContract.Presenter{
         List<ProductProperty> properties = getFormProperties();
         mProductsRepository.editProduct(Integer.toString(mProduct.getId()), editMap,
                                         properties);
-
+        mEditProductView.showFeedback();
     }
 
     private List<ProductProperty> getFormProperties() {
