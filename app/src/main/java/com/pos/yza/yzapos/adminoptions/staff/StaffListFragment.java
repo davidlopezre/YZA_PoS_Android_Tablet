@@ -153,13 +153,13 @@ public class StaffListFragment extends Fragment implements StaffListContract.Vie
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(staffMember.getName());
 
-            ImageButton editButton = (ImageButton) rowView.findViewById(R.id.button_edit_item);
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.editStaffMember(staffMember);
-                }
-            });
+//            ImageButton editButton = (ImageButton) rowView.findViewById(R.id.button_edit_item);
+//            editButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    mPresenter.editStaffMember(staffMember);
+//                }
+//            });
 
 
             return rowView;

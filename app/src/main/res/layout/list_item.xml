@@ -17,17 +17,4 @@
         android:paddingTop="16dp"
         android:layout_centerVertical="true"/>
 
-    <ImageButton
-        android:id="@+id/button_edit_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:src="@drawable/ic_edit"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"/>
-
 </RelativeLayout>

@@ -160,13 +160,13 @@ public class CategoryListFragment extends Fragment implements CategoryListContra
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(category.getName());
 
-            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
-            imageEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showProductCategoryDetailsUi(category);
-                }
-            });
+//            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
+//            imageEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    showProductCategoryDetailsUi(category);
+//                }
+//            });
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override

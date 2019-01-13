@@ -233,13 +233,13 @@ public class ProductListFragment extends Fragment implements ProductListContract
             TextView titleTV = rowView.findViewById(R.id.title);
             titleTV.setText(product.getName());
 
-            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
-            imageEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showProductDetailsUi(product);
-                }
-            });
+//            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
+//            imageEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    showProductDetailsUi(product);
+//                }
+//            });
 
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override

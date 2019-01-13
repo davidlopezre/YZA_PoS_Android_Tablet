@@ -54,12 +54,14 @@
     <string name="confirm">confirm</string>
     <string name="quantity">Quantity</string>
     <string name="product_category">Product category</string>
-    <string name="surname">Surname</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="phone_number">Phone Number</string>
     <string name="home_address">Home Address</string>
     <string name="add_property">Add property</string>
     <string name="add_category">Add Category</string>
+    <string name="add_staff">Add Staff</string>
     <string name="something_created">successfully created!</string>
     <string name="something_edited">successfully edited!</string>
     <string name="transaction_created">Transaction created!</string>

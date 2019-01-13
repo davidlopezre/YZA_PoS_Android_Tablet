@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="@string/surname"
+        android:text="@string/last_name"
         android:textSize="@dimen/font_size_h4"
         android:selectAllOnFocus="true"
         android:imeOptions="actionDone"

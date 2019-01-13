@@ -28,6 +28,7 @@ public class AddStaffFragment extends DialogFragment implements AddStaffContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override

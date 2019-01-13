@@ -1,47 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
     android:background="@color/colorMainIc">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        android:textAlignment="center"/>
 
-    <EditText
-        android:id="@+id/name"
-        android:hint="@string/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorMainIc"
+        android:padding="@dimen/padding_wide">
 
-    <EditText
-        android:id="@+id/surname"
-        android:hint="@string/surname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="@dimen/popup_button_width"
+            android:layout_height="wrap_content"
+            android:text="@string/add_staff"
+            android:textSize="@dimen/font_size_h4"
+            android:id="@+id/dialog_title"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textAlignment="center"
+            android:textColor="@color/eagleGreen"
+            android:padding="@dimen/margin_linear_elements"
+            />
 
-    <EditText
-        android:id="@+id/phone_number"
-        android:hint="@string/phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/first_name"
+            style="@style/FormLabel"
+            />
 
-    <EditText
-        android:id="@+id/email"
-        android:hint="@string/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            style="@style/FormAnswer"/>
 
-    <EditText
-        android:id="@+id/home_address"
-        android:hint="@string/home_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/last_name"
+            style="@style/FormLabel"
+            />
 
-    <Button
-        android:id="@+id/button_add_staff"
-        android:text="@string/add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            style="@style/FormAnswer"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_number"
+            style="@style/FormLabel"
+            />
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="phone"
+            android:maxLines="1"
+            style="@style/FormAnswer"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            style="@style/FormLabel"
+            />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            style="@style/FormAnswer" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/home_address"
+            style="@style/FormLabel"
+            />
+
+        <EditText
+            android:id="@+id/home_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            style="@style/FormAnswer"/>
+
+        <Button
+            android:id="@+id/button_add_staff"
+            android:text="@string/add"
+            android:layout_height="wrap_content"
+            android:layout_width="@dimen/popup_button_width"
+            android:background="@color/eagleGreen"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_size_h4"
+            android:layout_margin="@dimen/margin_form_labels" />
+    </LinearLayout>
+</ScrollView>
