@@ -1,5 +1,7 @@
 package com.pos.yza.yzapos;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import com.pos.yza.yzapos.newtransaction.NewTransactionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "MAIN_ACTIVITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,70 +33,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void admin(View view){
-        Intent intent = new Intent(getApplicationContext(), AdminOptionsActivity.class);
-        startActivity(intent);
+        showDialog(this);
+
     }
 
     public void manageTransactions (View view) {
         Intent intent = new Intent(getApplicationContext(), ManageTransactionsActivity.class);
         startActivity(intent);
+
     }
 
-    public void showDialog()
-    {
+    private void startAdminOptions() {
+        Intent intent = new Intent(getApplicationContext(), AdminOptionsActivity.class);
+        startActivity(intent);
+    }
 
+    private void showDialog(Context context) {
+        Log.i(TAG, "showing dialog");
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.password_prompt, null);
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.enter_password);
         alertDialogBuilder.setView(promptsView);
 
-//        final EditText userInput = (EditText) promptsView
-//                .findViewById(R.id.user_input);
-//
-//
-//        // set dialog message
-//        alertDialogBuilder
-//                .setCancelable(false)
-//                .setNegativeButton("Go",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog,int id) {
-//                                /** DO THE METHOD HERE WHEN PROCEED IS CLICKED*/
-//                                String user_text = (userInput.getText()).toString();
-//
-//                                /** CHECK FOR USER'S INPUT **/
-//                                if (user_text.equals("oeg"))
-//                                {
-//                                    Log.d(user_text, "HELLO THIS IS THE MESSAGE CAUGHT :)");
-//                                    Search_Tips(user_text);
-//
-//                                }
-//                                else{
-//                                    Log.d(user_text,"string is empty");
-//                                    String message = "The password you have entered is incorrect." + " \n \n" + "Please try again!";
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                                    builder.setTitle("Error");
-//                                    builder.setMessage(message);
-//                                    builder.setPositiveButton("Cancel", null);
-//                                    builder.setNegativeButton("Retry", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            showDialog();
-//                                        }
-//                                    });
-//                                    builder.create().show();
-//
-//                                }
-//                            }
-//                        })
-//                .setPositiveButton("Cancel",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog,int id) {
-//                                dialog.dismiss();
-//                            }
-//
-//                        }
-//
-//                );
+        final EditText userInput = promptsView.findViewById(R.id.password);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Go",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                /** DO THE METHOD HERE WHEN PROCEED IS CLICKED*/
+                                String user_text = (userInput.getText()).toString();
+
+                                /** CHECK FOR USER'S INPUT **/
+                                if (user_text.equals("bulaklaksabukid"))
+                                {
+                                    Log.d(user_text, "HELLO THIS IS THE MESSAGE CAUGHT :)");
+                                    startAdminOptions();
+
+                                }
+                                else{
+                                    Log.d(user_text,"input is wrong");
+                                    String message = "The password you have entered is incorrect.";
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                    builder.setTitle(message);
+                                    builder.setNegativeButton("Cancel", null);
+                                    builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            showDialog(context);
+                                        }
+                                    });
+                                    builder.create().show();
+
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.dismiss();
+                            }
+
+                        }
+
+                );
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();

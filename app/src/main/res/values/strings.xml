@@ -71,4 +71,6 @@
     <string name="properties">Properties</string>
 
     <string name="transaction_id">Transaction ID</string>
+
+    <string name="enter_password">Enter Password</string>
 </resources>
