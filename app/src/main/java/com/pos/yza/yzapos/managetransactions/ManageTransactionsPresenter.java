@@ -33,7 +33,6 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
 
     @Override
     public void start() {
-        loadTransactions();
     }
 
     @Override
