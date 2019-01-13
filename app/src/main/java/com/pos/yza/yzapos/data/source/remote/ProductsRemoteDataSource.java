@@ -45,7 +45,8 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
                                CATEGORY_PROPERTY_ID = "category_property",
                                UNIT_PRICE = "unit_price",
                                UNIT_OF_MEASURE = "unit_of_measure",
-                               PRODUCT_PROPERTIES = "properties";
+                               PRODUCT_PROPERTIES = "properties",
+                               DELETED = "deleted";
 
 //    private final String ROOT = "http://35.197.185.80:8000/";
     private final String ROOT = Constants.APIADDRESS;
@@ -95,6 +96,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
         Uri builtUri = Uri.parse(ROOT + PRODUCTS)
                 .buildUpon()
                 .appendQueryParameter("category", Integer.toString(category.getId()))
+                .appendQueryParameter("deleted", "False")
                 .build();
 
         Log.d("requestTest",builtUri.toString());
@@ -114,6 +116,7 @@ public class ProductsRemoteDataSource implements ProductsDataSource {
 
         Uri builtUri = Uri.parse(ROOT + PRODUCTS)
                 .buildUpon()
+                .appendQueryParameter("deleted", "False")
                 .build();
 
         Log.d("requestTest",builtUri.toString());

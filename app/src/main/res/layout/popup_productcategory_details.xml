@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="@dimen/font_size_h4"
-        android:id="@+id/product_name"
+        android:id="@+id/product_category_name"
         android:text="@string/category"
         android:textColor="@color/eagleGreen"
         />
@@ -23,18 +23,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="@dimen/font_size_h4"
-        android:id="@+id/product_price"
-        android:text="@string/category"/>
+        android:id="@+id/category_properties"
+        android:text="@string/properties"/>
 
-    <Button
-        android:id="@+id/button_edit"
-        android:layout_width="@dimen/search_blank_width"
-        android:layout_height="wrap_content"
-        android:text="@string/edit"
-        android:background="@color/eagleGreen"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_size_h4"
-        android:layout_marginTop="@dimen/padding_wide"/>
+    <!--<Button-->
+        <!--android:id="@+id/button_edit"-->
+        <!--android:layout_width="@dimen/search_blank_width"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/edit"-->
+        <!--android:background="@color/eagleGreen"-->
+        <!--android:textColor="@color/colorAccent"-->
+        <!--android:textSize="@dimen/font_size_h4"-->
+        <!--android:layout_marginTop="@dimen/padding_wide"/>-->
 
 
 </LinearLayout>

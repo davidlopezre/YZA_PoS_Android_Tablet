@@ -33,6 +33,7 @@ public class AddCategoryFragment extends DialogFragment implements AddCategoryCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class AddCategoryFragment extends DialogFragment implements AddCategoryCo
         buttonAddProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText editText_property = new EditText(getContext());
+                EditText editText_property = (EditText) View.inflate(getContext(), R.layout.edittext_one_line_done, null);
                 editText_property.setHint("Enter property");
                 propertyLayout.addView(editText_property);
             }

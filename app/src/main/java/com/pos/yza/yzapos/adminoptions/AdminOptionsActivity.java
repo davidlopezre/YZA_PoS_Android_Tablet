@@ -19,6 +19,8 @@ import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffFragment;
 import com.pos.yza.yzapos.adminoptions.addstaff.AddStaffPresenter;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListFragment;
 import com.pos.yza.yzapos.adminoptions.category.CategoryListPresenter;
+import com.pos.yza.yzapos.adminoptions.editcategory.EditCategoryFragment;
+import com.pos.yza.yzapos.adminoptions.editcategory.EditCategoryPresenter;
 import com.pos.yza.yzapos.adminoptions.editproduct.EditProductFragment;
 import com.pos.yza.yzapos.adminoptions.editproduct.EditProductPresenter;
 import com.pos.yza.yzapos.adminoptions.product.ProductListFragment;
@@ -26,6 +28,7 @@ import com.pos.yza.yzapos.adminoptions.product.ProductListPresenter;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListFragment;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListPresenter;
 import com.pos.yza.yzapos.data.representations.Product;
+import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.source.remote.ProductsRemoteDataSource;
 import com.pos.yza.yzapos.util.ActivityUtils;
 
@@ -36,28 +39,20 @@ public class AdminOptionsActivity extends AppCompatActivity
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
 
     private DrawerLayout mDrawerLayout;
+    boolean isDrawerLocked;
+    private Toolbar toolbar;
+    private NavigationView mNavigationView;
 
     private ProductListPresenter mProductListPresenter;
+    private StaffListPresenter mStaffListPresenter;
+    private CategoryListPresenter mCategoryListPresenter;
 
     private AddProductPresenter mAddProductPresenter;
-
     private AddStaffPresenter mAddStaffPresenter;
-
     private AddCategoryPresenter mAddCategoryPresenter;
 
     private EditProductPresenter mEditProductPresenter;
-
-    boolean isDrawerLocked;
-
-    private StaffListPresenter mStaffListPresenter;
-
-    private CategoryListPresenter mCategoryListPresenter;
-
-    private ProductsRemoteDataSource mProductsRemoteDataSource;
-
-    private Toolbar toolbar;
-
-    private NavigationView mNavigationView;
+    private EditCategoryPresenter mEditCategoryPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +215,20 @@ public class AdminOptionsActivity extends AppCompatActivity
                 Injection.provideCategoriesRepository(getApplicationContext()),
                 mEditProductFragment,
                 product);
+
+    }
+
+    @Override
+    public void editCategory(ProductCategory category) {
+
+        EditCategoryFragment mEditCategoryFragment = EditCategoryFragment.newInstance();
+        mEditCategoryFragment.show(getSupportFragmentManager(),"editcategory");
+
+        // Create the presenter
+        mEditCategoryPresenter = new EditCategoryPresenter(
+                Injection.provideCategoriesRepository(getApplicationContext()),
+                mEditCategoryFragment,
+                category);
 
     }
 }

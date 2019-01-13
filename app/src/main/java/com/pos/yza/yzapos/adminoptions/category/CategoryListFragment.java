@@ -6,22 +6,32 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pos.yza.yzapos.R;
 import com.pos.yza.yzapos.adminoptions.staff.StaffListContract;
+import com.pos.yza.yzapos.data.representations.CategoryProperty;
+import com.pos.yza.yzapos.data.representations.Product;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
 import com.pos.yza.yzapos.data.representations.Staff;
+import com.pos.yza.yzapos.util.Formatters;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class CategoryListFragment extends Fragment implements CategoryListContract.View {
     private CategoryAdapter mListAdapter;
@@ -150,11 +160,82 @@ public class CategoryListFragment extends Fragment implements CategoryListContra
             TextView titleTV = (TextView) rowView.findViewById(R.id.title);
             titleTV.setText(category.getName());
 
+            ImageButton imageEdit = rowView.findViewById(R.id.button_edit_item);
+            imageEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showProductCategoryDetailsUi(category);
+                }
+            });
+
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showProductCategoryDetailsUi(category);
+                }
+            });
+
             return rowView;
         }
     }
 
     public interface CategoryListListener{
         void addCategory();
+        void editCategory(ProductCategory category);
+    }
+
+
+    private void showProductCategoryDetailsUi(ProductCategory productCategory) {
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_productcategory_details, null);
+
+        TextView nameView = popupView.findViewById(R.id.product_category_name);
+        nameView.setText(productCategory.getName());
+        TextView propertiesView = popupView.findViewById(R.id.category_properties);
+        propertiesView.setText(getPropertiesDescription(productCategory));
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window token
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+
+//        Button editButton = popupView.findViewById(R.id.button_edit);
+//        editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.editCategory(productCategory);
+//                popupWindow.dismiss();
+//            }
+//        });
+    }
+
+    private String getPropertiesDescription(ProductCategory category) {
+        String description = "";
+        List<CategoryProperty> properties = category.getPropertyList();
+        for (int i = 0; i < properties.size(); i++) {
+            if (i > 0) {
+                description += ", " + properties.get(i).getName();
+            }
+            else {
+                description += properties.get(i).getName();
+            }
+        }
+        return description;
     }
 }
