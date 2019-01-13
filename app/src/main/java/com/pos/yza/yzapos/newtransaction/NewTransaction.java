@@ -2,6 +2,7 @@ package com.pos.yza.yzapos.newtransaction;
 
 import android.util.Log;
 
+import com.pos.yza.yzapos.SessionStorage;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Payment;
 import com.pos.yza.yzapos.data.representations.Transaction;
@@ -62,7 +63,7 @@ public class NewTransaction {
             String firstName = customerDetails.get("firstname");
             String surname = customerDetails.get("surname");
 
-            Transaction transaction = new Transaction(firstName, surname, 1, staffId);
+            Transaction transaction = new Transaction(firstName, surname, SessionStorage.getBranch().getBranchId(), staffId);
 
             transaction.setLineItems(new ArrayList<LineItem>(processCart(transaction)));
 
@@ -70,7 +71,7 @@ public class NewTransaction {
                 paymentAmount = getTotalDue();
             }
             if (paymentAmount > 0) {
-                Payment payment = new Payment(new Date(), paymentAmount, 1, transaction);
+                Payment payment = new Payment(new Date(), paymentAmount, SessionStorage.getBranch().getBranchId(), transaction);
                 transaction.addPayment(payment);
             }
 

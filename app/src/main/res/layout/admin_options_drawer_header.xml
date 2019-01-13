@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_settings_white_150dp"
-        android:text="Manage"
+        android:text="Admin Options"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textAlignment="center"
         android:textColor="@color/colorMainIc"

@@ -103,7 +103,7 @@ public class SessionStorage extends Application {
     }
 
     public void getInitBranch() {
-        branch = new Branch(1, "TESTBRANCH", "TESTADD");
+        branch = new Branch(1, "UP", "UP");
     }
 
     public static Branch getBranch() {
@@ -131,8 +131,5 @@ public class SessionStorage extends Application {
     }
 
     public static ProductCategory getProductCategory(int id) { return categoryMap.get(id); }
-
-
-
 
 }
