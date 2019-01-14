@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.pos.yza.yzapos.data.representations.Branch;
 import com.pos.yza.yzapos.data.representations.ProductProperty;
 import com.pos.yza.yzapos.data.representations.Transaction;
 
@@ -128,6 +129,11 @@ public class TransactionsRepository implements TransactionsDataSource {
     public void refundTransaction(@NonNull String transactionId){
         Log.i("refundTrans", "in repo");
         mTransactionRemoteDataSource.refundTransaction(transactionId);
+    }
+
+    public void sendReport(@NonNull Branch branch, @NonNull int year, @NonNull int month, @NonNull int day) {
+        Log.i("sendReport", "in repo");
+        mTransactionRemoteDataSource.sendReport(branch, year, month, day);
     }
 
 

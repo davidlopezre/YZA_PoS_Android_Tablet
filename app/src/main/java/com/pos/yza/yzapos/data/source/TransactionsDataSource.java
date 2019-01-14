@@ -3,6 +3,7 @@ package com.pos.yza.yzapos.data.source;
 import android.support.annotation.NonNull;
 
 import com.android.volley.Response;
+import com.pos.yza.yzapos.data.representations.Branch;
 import com.pos.yza.yzapos.data.representations.Transaction;
 
 import org.json.JSONObject;
@@ -44,6 +45,8 @@ public interface TransactionsDataSource {
     void cancelTransaction(@NonNull String transactionId);
 
     void refundTransaction(@NonNull String transactionId);
+
+    void sendReport(@NonNull Branch branch, @NonNull int year, @NonNull int month, @NonNull int day);
 
 }
 

@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.pos.yza.yzapos.DeleteJsonObjectRequest;
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.data.representations.Branch;
 import com.pos.yza.yzapos.data.representations.CategoryProperty;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.Payment;
@@ -69,6 +70,7 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
     private final String ROOT = Constants.APIADDRESS;
     private final String TRANSACTIONS = "transaction/";
     private final String DELETE_OLD_TRANSACTIONS = "delete-old-transactions/";
+    private final String SEND_REPORT = "send-report/";
 
     private RequestQueue mRequestQueue;
 
@@ -253,19 +255,6 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
                 },
                 new TransactionsRemoteDataSource.ErrorListener());
 
-//        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,
-//                builtUri.toString(), new JSONObject(), new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.i("deleteOldTrans", "success");
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e("deleteOldTrans", "Error occurred ", error);
-//            }
-//        });
-
         addToRequestQueue(jsObjRequest);
     }
 
@@ -321,6 +310,32 @@ public class TransactionsRemoteDataSource implements TransactionsDataSource {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("refundTrans", "Error occurred ", error);
+            }
+        });
+
+        addToRequestQueue(jsObjRequest);
+    }
+
+    public void sendReport(@NonNull Branch branch, @NonNull int year, @NonNull int month, @NonNull int day) {
+        Log.i("sendReport", "in remote data source");
+        Uri builtUri = Uri.parse(ROOT +  SEND_REPORT + branch.getBranchId() + "/"
+                                + year + "/" + month + "/" + day + "/")
+                .buildUpon()
+                .build();
+
+        Log.d("sendReportUri",builtUri.toString());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(
+                Request.Method.GET, builtUri.toString(),
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("sendReport", "success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
 
