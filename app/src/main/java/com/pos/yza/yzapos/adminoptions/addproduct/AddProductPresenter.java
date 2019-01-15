@@ -52,7 +52,19 @@ public class AddProductPresenter implements AddProductContract.Presenter {
 
 
     public void loadCategories() {
-        processCategories(SessionStorage.getAllCategories());
+        mCategoriesRepository.getCategories(new CategoriesDataSource.LoadCategoriesCallback() {
+            @Override
+            public void onCategoriesLoaded(List<ProductCategory> categories) {
+                processCategories(categories);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+
+
     }
 
     private void processCategories(List<ProductCategory> categories) {

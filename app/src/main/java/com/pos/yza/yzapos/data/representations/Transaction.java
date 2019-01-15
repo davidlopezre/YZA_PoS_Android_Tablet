@@ -202,6 +202,10 @@ public final class Transaction {
         return payments;
     }
 
+    public Date getDateTime() {
+        return dateTime;
+    }
+
     public double getAmount() {
         double amount = 0;
 

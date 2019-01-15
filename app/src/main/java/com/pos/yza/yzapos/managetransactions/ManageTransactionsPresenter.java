@@ -33,6 +33,29 @@ public class ManageTransactionsPresenter implements ManageTransactionsContract.P
 
     @Override
     public void start() {
+        loadLastTransaction();
+    }
+
+    private void loadLastTransaction() {
+        mTransactionsRepository.getTransactions(new TransactionsDataSource.LoadTransactionsCallback() {
+            @Override
+            public void onTransactionsLoaded(List<Transaction> transactions) {
+                Transaction lastTransaction = transactions.get(0);
+                for (Transaction transaction: transactions) {
+                    if (transaction.getDateTime().after(lastTransaction.getDateTime())) {
+                        lastTransaction = transaction;
+                    }
+                }
+                ArrayList<Transaction> toShow = new ArrayList<>();
+                toShow.add(lastTransaction);
+                mManageTransactionsView.showTransactions(toShow);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
     }
 
     @Override
