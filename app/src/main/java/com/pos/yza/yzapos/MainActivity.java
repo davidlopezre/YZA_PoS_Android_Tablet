@@ -133,5 +133,4 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mTransactionsRepository.sendReport(SessionStorage.getBranch(), year, month + 1, day);
     }
 
-
 }

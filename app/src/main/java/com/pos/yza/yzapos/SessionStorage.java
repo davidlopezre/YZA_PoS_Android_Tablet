@@ -103,7 +103,7 @@ public class SessionStorage extends Application {
     }
 
     public void getInitBranch() {
-        branch = new Branch(1, "UP", "UP");
+        branch = new Branch(1, "UP", "U2 Centennial Dorm Emilio Jacinto UP Diliman");
     }
 
     public static Branch getBranch() {

@@ -46,4 +46,5 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttons_layout"
         android:onClick="generateReport"/>
+
 </android.support.constraint.ConstraintLayout>

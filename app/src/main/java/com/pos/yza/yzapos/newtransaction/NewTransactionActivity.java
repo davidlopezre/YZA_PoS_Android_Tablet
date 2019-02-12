@@ -16,9 +16,12 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.pos.yza.yzapos.Injection;
+import com.pos.yza.yzapos.Printer;
 import com.pos.yza.yzapos.R;
+import com.pos.yza.yzapos.ReceiptLayouts;
 import com.pos.yza.yzapos.data.representations.LineItem;
 import com.pos.yza.yzapos.data.representations.ProductCategory;
+import com.pos.yza.yzapos.data.representations.Transaction;
 import com.pos.yza.yzapos.data.source.TransactionsRepository;
 import com.pos.yza.yzapos.newtransaction.cart.CartFragment;
 import com.pos.yza.yzapos.newtransaction.cart.CartActions;
@@ -36,6 +39,7 @@ import com.pos.yza.yzapos.util.ActivityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class NewTransactionActivity extends AppCompatActivity
@@ -55,6 +59,8 @@ public class NewTransactionActivity extends AppCompatActivity
 
     private NewTransaction transaction = new NewTransaction();
     private TransactionsRepository mTransactionsRepository;
+
+    private Printer mPrinter;
 
     private View parentLayout;
 
@@ -88,7 +94,8 @@ public class NewTransactionActivity extends AppCompatActivity
         mCartPresenter = new CartPresenter(cartFragment);
         // Initialise the repo
         mTransactionsRepository = Injection.provideTransactionsRepository(this);
-
+        // Create printer
+        mPrinter = Printer.getInstance(this);
     }
 
     @Override
@@ -212,7 +219,8 @@ public class NewTransactionActivity extends AppCompatActivity
 
     private void completeTransaction(Object data) {
         transaction.setPayment(data);
-        mTransactionsRepository.saveTransaction(transaction.createTransaction(),
+        Transaction createdTransaction = transaction.createTransaction();
+        mTransactionsRepository.saveTransaction(createdTransaction,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -224,18 +232,27 @@ public class NewTransactionActivity extends AppCompatActivity
                                     getString(R.string.transaction_created) + " #"
                                             + response.getInt("transaction_id"),
                                     Snackbar.LENGTH_LONG);
+
+                            String receiptPrint = ReceiptLayouts.getLayoutTransaction(createdTransaction);
+                            mPrinter.sendData(ReceiptLayouts.getHeader());
+                            mPrinter.sendData("Transaction: #" + response.getInt("transaction_id"));
+                            mPrinter.sendData(receiptPrint);
                         }
-                        catch (JSONException e) {
+                        catch (JSONException | IOException e) {
                             mySnackbar = Snackbar.make(parentLayout,
                                     getString(R.string.transaction_created),
                                     Snackbar.LENGTH_LONG);
                             e.printStackTrace();
                         }
+
+
+
                         mySnackbar.show();
                         int finishTime = 2;
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             public void run() {
+//                                mPrinter.closeBT();
                                 finish();
                             }
                         }, finishTime * 1000);
@@ -262,4 +279,5 @@ public class NewTransactionActivity extends AppCompatActivity
 
         return super.dispatchTouchEvent(event);
     }
+
 }
